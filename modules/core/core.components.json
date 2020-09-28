@@ -1,0 +1,73 @@
+{
+  "regions": {
+    "content": {
+      "title": "Content",
+      "description": "Is used to display data.",
+      "path": "src/regions/content/Content.js"
+    },
+    "form": {
+      "title": "Form",
+      "description": "Is used to alter data.",
+      "path": "src/regions/form/Form.js"
+    }
+  },
+  "containers": {
+    "accordion": {
+      "title": "Accordion",
+      "description": "An element which contains elements in a specific arrangement.",
+      "path": "src/containers/Accordion.js"
+    },
+    "list": {
+      "title": "List",
+      "description": "An element which contains elements in a specific arrangement.",
+      "path": "src/containers/List.js"
+    },
+    "tab": {
+      "title": "Tab",
+      "description": "An element which contains elements in a specific arrangement.",
+      "path": "src/containers/Tab.js"
+    }
+  },
+  "elements": {
+    "tile": {
+      "title": "Tile",
+      "description": "Displays the tile.",
+      "path": "src/components/content/Tile.js"
+    },
+    "textfield": {
+      "title": "Textfield",
+      "description": "An element which changes information.",
+      "path": "src/elements/Textfield.js"
+    },
+    "button": {
+      "title": "Textfield",
+      "description": "An element which changes information.",
+      "path": "src/elements/Textfield.js"
+    },
+    "textarea": {
+      "title": "Textarea",
+      "description": "An element which changes information.",
+      "path": "src/elements/Textarea.js"
+    },
+    "colorpicker": {
+      "title": "Color-Picker",
+      "description": "An element which changes information.",
+      "path": "src/elements/Colorpicker.js"
+    },
+    "switch": {
+      "title": "Switch",
+      "description": "An element which changes information.",
+      "path": "src/elements/Switch.js"
+    },
+    "headline": {
+      "title": "Headline",
+      "description": "An element which should resemble the headline.",
+      "path": "src/elements/Headline.js"
+    },
+    "paragraph": {
+      "title": "Paragraph",
+      "description": "An element which should resemble a paragraph.",
+      "path": "src/elements/Paragraph.js"
+    }
+  }
+}

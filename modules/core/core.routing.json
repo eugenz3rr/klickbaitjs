@@ -1,0 +1,55 @@
+{
+  "core.tile.add": {
+    "path": "/tile/:board/add",
+    "title": "Add Tile",
+    "description": "Adds a tile to the current board.",
+    "regions": [
+      {
+        "type": "form",
+        "title": "Tile form",
+        "description": "Edit / add current tile.",
+        "path": "src/regions/form/AddTile.js"
+      }
+    ]
+  },
+  "core.settings": {
+    "path": "/core/settings",
+    "title": "Settings",
+    "description": "Default settings",
+    "regions": [
+      {
+        "type": "form",
+        "title": "Tile form",
+        "description": "Edit / add current tile.",
+        "path": "src/regions/form/Settings.js"
+      }
+    ]
+  },
+  "core.board": {
+    "path": "/core/board",
+    "title": "Board",
+    "description": "Board where the tiles are located at.",
+    "regions": [
+      {
+        "type": "content",
+        "title": "Tile display",
+        "description": "This part displays the currently edited / added tile.",
+        "path": "src/regions/content/Board.js",
+        "icon": "home"
+      }
+    ]
+  },
+  "core.modules": {
+    "path": "/core/modules",
+    "title": "Modules",
+    "description": "This displays all modules.",
+    "regions": [
+      {
+        "type": "content",
+        "title": "",
+        "description": "",
+        "path": "src/regions/content/Modules.js"
+      }
+    ]
+  }
+}

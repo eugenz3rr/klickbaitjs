@@ -1,0 +1,28 @@
+0 info it worked if it ends with ok
+1 verbose cli [
+1 verbose cli   'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Users\\Eugen Zerr\\Documents\\projects\\advanced_soundboard_mobile\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'dev'
+1 verbose cli ]
+2 info using npm@2.15.12
+3 info using node@v12.18.3
+4 verbose stack Error: missing script: dev
+4 verbose stack     at run (C:\Users\Eugen Zerr\Documents\projects\advanced_soundboard_mobile\node_modules\npm\lib\run-script.js:142:19)
+4 verbose stack     at C:\Users\Eugen Zerr\Documents\projects\advanced_soundboard_mobile\node_modules\npm\lib\run-script.js:58:5
+4 verbose stack     at C:\Users\Eugen Zerr\Documents\projects\advanced_soundboard_mobile\node_modules\npm\node_modules\read-package-json\read-json.js:356:5
+4 verbose stack     at checkBinReferences_ (C:\Users\Eugen Zerr\Documents\projects\advanced_soundboard_mobile\node_modules\npm\node_modules\read-package-json\read-json.js:320:45)
+4 verbose stack     at final (C:\Users\Eugen Zerr\Documents\projects\advanced_soundboard_mobile\node_modules\npm\node_modules\read-package-json\read-json.js:354:3)
+4 verbose stack     at then (C:\Users\Eugen Zerr\Documents\projects\advanced_soundboard_mobile\node_modules\npm\node_modules\read-package-json\read-json.js:124:5)
+4 verbose stack     at C:\Users\Eugen Zerr\Documents\projects\advanced_soundboard_mobile\node_modules\npm\node_modules\read-package-json\read-json.js:311:12
+4 verbose stack     at C:\Users\Eugen Zerr\Documents\projects\advanced_soundboard_mobile\node_modules\npm\node_modules\graceful-fs\graceful-fs.js:78:16
+4 verbose stack     at FSReqCallback.readFileAfterClose [as oncomplete] (internal/fs/read_file_context.js:63:3)
+5 verbose cwd C:\Users\Eugen Zerr\Documents\projects\advanced_soundboard_mobile\www\vue
+6 error Windows_NT 10.0.19041
+7 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\Eugen Zerr\\Documents\\projects\\advanced_soundboard_mobile\\node_modules\\npm\\bin\\npm-cli.js" "run" "dev"
+8 error node v12.18.3
+9 error npm  v2.15.12
+10 error missing script: dev
+11 error If you need help, you may report this error at:
+11 error     <https://github.com/npm/npm/issues>
+12 verbose exit [ 1, true ]

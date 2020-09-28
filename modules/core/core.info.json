@@ -1,0 +1,8 @@
+{
+  "name": "Klickbait - Mymodule",
+  "description": "This module is supposed to be an example module.",
+  "group": "klickbait",
+  "type": "module",
+  "version": "1.0.0",
+  "dependencies": []
+}

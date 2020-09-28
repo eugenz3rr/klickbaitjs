@@ -1,0 +1,12 @@
+{
+  "name": "installation",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently --kill-others \"node installer.js\" \"http-server\" \"npm run dev --prefix vue/app\" \"npm run dev --prefix core\" \"npm run dev --prefix common\"",
+    "build": "concurrently --kill-others \"npm run build --prefix core\" \"npm run build --prefix vue/app\""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^5.3.0"
+  }
+}
