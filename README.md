@@ -1,4 +1,4 @@
-# KlickbaitJS
+# KlickbaitJS - Documentn not ready
 
 In short. KlickbaitJS was created to create a module based frontent CMS for AndroidApps (Created on top of cordova).
 This CMS is currently under heavy development. So it'll most likely experience no backwards compatible versions.
@@ -27,8 +27,11 @@ Current tasks:
 - [Installation](#installation)
 - [Modules](#modules)
   - [Info](#info)
-  - [Routing](#routing)
   - [Components](#components)
+    - [Elements](#elements)
+    - [Containers](#containers)
+    - [Regions](#regions)
+  - [Routing](#routing)
 - [Features](#features)
 - [Contributing](#contributing)
 
@@ -82,6 +85,34 @@ Here the basic information about the module is placed and defined so the user do
 > Where do I place it?
 - `[ROOT]/modules/[YOURMODULE]/[YOURMODULE].info.json`
 
+### Components
+
+Components in this CMS are more or less [elements](#elements) which have a specified purpose.
+
+For example, we currently have an element named "paragraph". This element has the purpose to displaying information and therefore simply called "element".
+
+Of course there could be a use case in which you would like to contain an element inside another element for that purpose we have "container-elements" (e.g. Accordion).
+
+The last element in this CMS is called "region". Regions are elements containing other elements. They have the role to deliver special code. Currently in the core are "content" which handles just the display of elements 
+and form which handles the loading, building, validating, submitting and saving of a submitted form.
+
+```json5
+{
+  "regions": {
+    "content": {
+        "title": "Content",
+        "description": "Is used to display data.",
+        "path": "",
+      }
+    }
+  }
+}
+```
+
+> Where do I place it?
+- `[ROOT]/modules/[YOURMODULE]/[YOURMODULE].components.json`
+
+
 ### Routing
 
 The routing defines pages which should be reachable.
@@ -114,5 +145,5 @@ Like for example a login form, or a video chat page.
 ````
 
 > Where do I place it?
-- `[ROOT]/modules/[YOURMODULE]/[YOURMODULE].info.json`
+- `[ROOT]/modules/[YOURMODULE]/[YOURMODULE].routing.json`
 
