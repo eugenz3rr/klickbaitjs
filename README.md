@@ -18,6 +18,8 @@ Current tasks:
 - [ ] Create more content and form elements.
 - [ ] Move regions into core from vue app (content, form). 
 - [ ] Create a simple way of injecting css into the page.
+- [ ] Add Vue i18n for translation.
+
 
 - [ ] Create events on render elements.
 
@@ -93,8 +95,9 @@ For example, we currently have an element named "paragraph". This element has th
 
 Of course there could be a use case in which you would like to contain an element inside another element for that purpose we have "container-elements" (e.g. Accordion).
 
-The last element in this CMS is called "region". Regions are elements containing other elements. They have the role to deliver special code. Currently in the core are "content" which handles just the display of elements 
-and form which handles the loading, building, validating, submitting and saving of a submitted form.
+The last element in this CMS is called "region". Regions are elements containing other elements. They have the role to deliver special code.
+Currently in the core is "content" which handles just the display of elements 
+and "form" which handles the loading, building, validating, submitting and saving of a submitted form.
 
 ```json5
 {
@@ -111,6 +114,27 @@ and form which handles the loading, building, validating, submitting and saving 
 
 > Where do I place it?
 - `[ROOT]/modules/[YOURMODULE]/[YOURMODULE].components.json`
+
+## Elements
+
+As Yoda would say: "Defining elements you must, register in the components.json you should."
+Before Vue starts Modules will load the elements first as they're all used by container- and region elements.
+For consistency, I define the elements first then I build container and regions around them.
+Beneath you'll see an example element which is simply an ES6-Function returning a Vue configuration.
+
+````JavaScript
+
+Module => {
+  const component = {
+    name: "MyCustomElement",
+    template: "<div>{{ myvariable}}</div> ",
+  }
+
+  return component;
+};
+
+````
+
 
 
 ### Routing
