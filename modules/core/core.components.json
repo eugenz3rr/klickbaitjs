@@ -68,6 +68,11 @@
       "title": "Paragraph",
       "description": "An element which should resemble a paragraph.",
       "path": "src/elements/Paragraph.js"
+    },
+    "dropdown": {
+      "title": "Dropdown",
+      "description": "An element which should resemble a paragraph.",
+      "path": "src/elements/Dropdown.js"
     }
   }
 }

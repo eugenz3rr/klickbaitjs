@@ -13,8 +13,5 @@ Module => {
         }
     };
 
-    return {
-        name: 'tile',
-        component,
-    };
+    return component;
 };
