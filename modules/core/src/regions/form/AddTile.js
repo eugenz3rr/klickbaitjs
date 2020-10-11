@@ -15,69 +15,16 @@ const AddTile = {
     "build": (Module, values) => {
         let build = {};
 
+        build.tile = {
+            '#type': 'tile',
+            '#title': '#tile_name',
+        };
+
         build.tile_name = {
             '#type': 'textfield',
             '#title': 'Default Tile name',
             '#description': 'This name will be used as default for each tile.',
             '#value': Module.fallback(values, 'tile_name', 'Rüdiger'),
-        };
-
-        build.tile_description = {
-            '#type': 'textarea',
-            '#title': 'Default Tile description',
-            '#description': 'This description will be used for describing ur tile.',
-            '#value': Module.fallback(values, 'tile_description', 'NICHT SO TIEF RÜDIGER!'),
-            '#autoGrow': true,
-            '#clearable': true,
-        };
-
-        build.tile_enabled = {
-            '#type': 'switch',
-            '#title': 'Enable this module',
-            '#description': 'This enables the module.',
-            '#value': Module.fallback(values, 'tile_enabled', false),
-        };
-
-        build.my_accordion = {
-            '#type': 'accordion',
-            '#panels': [{
-                '#title': 'My first tab lol',
-                '#content': {
-                    'my_accordion_switch': {
-                        '#type': 'switch',
-                        '#title': 'Enable this module',
-                        '#description': 'This enables the module.',
-                        '#value': Module.fallback(values, 'my_accordion_switch', false),
-                    },
-                    'my_accordion_description': {
-                        '#type': 'textarea',
-                        '#title': 'Default Tile description',
-                        '#description': 'This description will be used for describing ur tile.',
-                        '#value': Module.fallback(values, 'my_accordion_description', 'NICHT SO TIEF RÜDIGER!'),
-                        '#autoGrow': true,
-                        '#clearable': true,
-                    }
-                }
-            }, {
-                '#title': 'My second tab lol',
-                '#content': {
-                    'my_second_accordion_switch': {
-                        '#type': 'switch',
-                        '#title': 'Enable this module',
-                        '#description': 'This enables the module.',
-                        '#value': Module.fallback(values, 'my_second_accordion_switch', false),
-                    },
-                    'my_second_accordion_description': {
-                        '#type': 'textarea',
-                        '#title': 'Default Tile description',
-                        '#description': 'This description will be used for describing ur tile.',
-                        '#value': Module.fallback(values, 'my_second_accordion_description', 'NICHT SO TIEF RÜDIGER!'),
-                        '#autoGrow': true,
-                        '#clearable': true,
-                    }
-                }
-            },
-            ],
         };
 
         return build;

@@ -15,27 +15,32 @@ const Settings = {
     "build": (Module, values) => {
         let build = {};
 
-        build.dropdown_special = {
-            '#type': 'dropdown',
-            '#title': 'Default Tile name',
-            '#description': 'This name will be used as default for each tile.',
-            '#items': [
-                {
-                    text: "Default tile", value: "default",
+        build.two_column = {
+            '#type': 'two_column',
+            '#first': {
+                dropdown_special: {
+                    '#type': 'dropdown',
+                    '#title': 'Default Tile name',
+                    '#description': 'This name will be used as default for each tile.',
+                    '#items': [
+                        {
+                            text: "Default tile", value: "default",
+                        },
+                        {
+                            text: "Board tile", value: "board",
+                        }
+                    ],
+                    '#value': Module.fallback(values, 'dropdown_special', 'board')
                 },
-                {
-                    text: "Board tile", value: "board",
+            },
+            '#second': {
+                tile_name: {
+                    '#type': 'textfield',
+                    '#title': 'Default Tile name',
+                    '#description': 'This name will be used as default for each tile.',
+                    '#value': Module.fallback(values, 'tile_name', 'Rüdiger'),
                 }
-            ],
-
-            '#value': Module.fallback(values, 'dropdown_special', 'board')
-        }
-
-        build.tile_name = {
-            '#type': 'textfield',
-            '#title': 'Default Tile name',
-            '#description': 'This name will be used as default for each tile.',
-            '#value': Module.fallback(values, 'tile_name', 'Rüdiger'),
+            },
         };
 
         build.tile_description = {

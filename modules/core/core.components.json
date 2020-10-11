@@ -26,13 +26,18 @@
       "title": "Tab",
       "description": "An element which contains elements in a specific arrangement.",
       "path": "src/containers/Tab.js"
+    },
+    "two_column": {
+      "title": "Two Column",
+      "description": "An element which enables to split content on the left and content on the right.",
+      "path": "src/containers/layouts/TwoColumn.js"
     }
   },
   "elements": {
     "tile": {
       "title": "Tile",
       "description": "Displays the tile.",
-      "path": "src/components/content/Tile.js"
+      "path": "src/elements/custom/Tile.js"
     },
     "textfield": {
       "title": "Textfield",
