@@ -105,7 +105,7 @@ Module => {
         document.head.append(style);
     }
 
-    addStyle(`
+    Module.appendStyle(`
     div.v-textarea {
       margin-top: 20px;
       margin-bottom: 20px;

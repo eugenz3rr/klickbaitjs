@@ -81,15 +81,9 @@ Module => {
             });
         },
     };
+    Module.appendStyle(`src/elements/css/Colorpicker.css`, component.name);
 
-    function addStyle(styleString) {
-        const style = document.createElement('style');
-        style.textContent = styleString;
-        style.setAttribute('data-module', component.name);
-        document.head.append(style);
-    }
-
-    addStyle(`
+    Module.appendStyle(`
     div.v-text-field > .v-input__control > .v-input__slot {
         background - color: var(--background) !important;
     }

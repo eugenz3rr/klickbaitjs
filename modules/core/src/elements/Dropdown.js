@@ -200,15 +200,5 @@ Module => {
             });
         },
     };
-
-    function addStyle(styleString) {
-        const style = document.createElement('style');
-        style.textContent = styleString;
-        style.setAttribute('data-module', component.name);
-        document.head.append(style);
-    }
-
-    addStyle(``);
-
     return component;
 };

@@ -19,7 +19,7 @@ const Board = {
         let build = {};
 
         build.headline = {
-            '#type': 'headline',
+            '#type': 'paragraph',
             '#title': 'Tiles',
             '#description': 'Tiles are usually located here.',
         };

@@ -71,6 +71,17 @@ export default class Module extends Console {
             }
         }
     }
+    appendStyle(path, id) {
+        // If the source was already appended just ignore the rest.
+        if (document.querySelector(`style[data-source-id="${id}"]`))
+            return;
+        this.fileSystem.read(`${this.path}${path}`).then(value => {
+            const style = document.createElement('style');
+            style.textContent = value;
+            style.setAttribute('data-source-id', id);
+            document.head.append(style);
+        }).catch(() => { });
+    }
     /**
      *
      */

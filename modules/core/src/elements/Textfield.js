@@ -84,7 +84,7 @@ Module => {
         document.head.append(style);
     }
 
-    addStyle(`
+    Module.appendStyle(`
     div.v-text-field {
       margin-top: 20px;
       margin-bottom: 20px;

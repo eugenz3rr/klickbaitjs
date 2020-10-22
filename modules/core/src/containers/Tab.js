@@ -98,7 +98,7 @@ Module => {
         document.head.append(style);
     }
 
-    addStyle(`
+    Module.appendStyle(`
     .v-tabs {
       margin-top: 20px;
     }
