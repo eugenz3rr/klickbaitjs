@@ -1,0 +1,12 @@
+.v-expansion-panels {
+    z-index: 0 !important;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.v-expansion-panels :before {
+    border: solid 1px var(--accent);
+    box-shadow: none !important;
+}
+.v-expansion-panels :first-child:before {
+    border-bottom: none;
+}

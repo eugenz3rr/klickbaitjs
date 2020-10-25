@@ -342,38 +342,7 @@ Module => {
         }
     };
 
-    function addStyle(styleString) {
-        const style = document.createElement('style');
-        style.textContent = styleString;
-        style.setAttribute('data-module', component.name);
-        document.head.append(style);
-    }
-
-    addStyle(`
-    .tile-audio-editor .audio-editor-item {
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-    .tile-audio-editor .audio-editor-item.extra {
-      margin-top: 40px;
-    }
-    .tile-audio-editor .cursor {
-      background-color: black;
-    }
-    .tile-audio-editor .selection.segment {
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-    .tile-audio-editor .selection.point {
-      background-color: red;
-    }
-    .tile-audio-editor > h2 {
-      margin-top: 10px;
-      margin-bottom: 10px;
-      border-bottom: 1px solid;
-      font-weight: initial;
-      padding-bottom: 5px;
-    }
-    `);
+    Module.appendStyle(`src/elements/css/Sound.css`, component.name);
 
     return component;
 };

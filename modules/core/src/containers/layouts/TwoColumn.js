@@ -54,7 +54,6 @@ Module => {
                 changed: 0
             };
         },
-
         mounted: async function () {
 
             // this.first = Module.fallback(this.element, '#first', {});
@@ -84,31 +83,7 @@ Module => {
         },
     };
 
-    function addStyle(styleString) {
-        const style = document.createElement('style');
-        style.textContent = styleString;
-        style.setAttribute('data-module', component.name);
-        document.head.append(style);
-    }
-
-    Module.appendStyle(`
-        .two-column {
-            display: grid;
-            grid-template-columns: 50% 50%;
-            grid-template-rows: auto;
-            column-gap: 10px;
-            grid-template-areas: 
-              "first second";
-        }
-        
-        .first-column {
-            grid-area: first;
-        }
-        
-        .second-column {
-            grid-area: second;
-        }
-    `)
+    Module.appendStyle(`src/containers/layouts/css/TwoColumn.css`, component.name);
 
     return component;
 };

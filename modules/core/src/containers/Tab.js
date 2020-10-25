@@ -90,35 +90,7 @@ Module => {
             }
         },
     };
-
-    function addStyle(styleString) {
-        const style = document.createElement('style');
-        style.textContent = styleString;
-        style.setAttribute('data-module', component.name);
-        document.head.append(style);
-    }
-
-    Module.appendStyle(`
-    .v-tabs {
-      margin-top: 20px;
-    }
-    .v-tabs .v-tabs-slider {
-      background-color: var(--accent) !important;
-    }
-    .v-tabs .v-tabs-bar {
-      background-color: var(--secondary) !important;
-    }
-    .v-tabs .v-tabs-bar .v-tab {
-      color: var(--font) !important;
-    }
-    
-    .v-window {
-      margin-bottom: 20px;
-    }
-    .v-window .v-card {
-      background-color: var(--primary) !important;
-    }
-    `);
+    Module.appendStyle(`src/containers/css/Tab.css`, component.name);
 
     return component;
 };

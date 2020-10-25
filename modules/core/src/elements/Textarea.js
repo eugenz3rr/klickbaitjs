@@ -105,28 +105,7 @@ Module => {
         },
     };
 
-    function addStyle(styleString) {
-        const style = document.createElement('style');
-        style.textContent = styleString;
-        style.setAttribute('data-module', component.name);
-        document.head.append(style);
-    }
-
-    Module.appendStyle(`
-    div.v-textarea {
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-    div.v-textarea > .v-input__control > .v-input__slot {
-      background-color: var(--background) !important;
-    }
-    div.v-textarea > .v-input__control > .v-input__slot textarea, div.v-textarea > .v-input__control > .v-input__slot label, div.v-textarea > .v-input__control > .v-input__slot div.v-messages {
-      color: var(--font) !important;
-    }
-    div.v-textarea > .v-input__control > .v-input__slot button.v-icon, div.v-textarea > .v-input__control > .v-input__slot > fieldset {
-      color: var(--accent) !important;
-      border-color: var(--accent) !important;
-    }`);
+    Module.appendStyle(`src/elements/Textfield.css`, component.name);
 
     return component;
 };

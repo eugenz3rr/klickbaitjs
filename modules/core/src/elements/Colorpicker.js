@@ -106,24 +106,5 @@ Module => {
     };
     Module.appendStyle(`src/elements/css/Colorpicker.css`, component.name);
 
-    Module.appendStyle(`
-    div.v-text-field > .v-input__control > .v-input__slot {
-        background - color: var(--background) !important;
-    }
-    
-    div.v-text-field > .v-input__control > .v-input__slot input,
-        div.v-text-field > .v-input__control > .v-input__slot label.v-label,
-        div.v-text-field > .v-input__control div.v-messages {
-        color: var(--font) !important;
-    }
-    
-    div.v-text-field > .v-input__control > .v-input__slot button.v-icon,
-        div.v-text-field > .v-input__control > .v-input__slot:before,
-        div.v-text-field > .v-input__control > .v-input__slot:after,
-        div.v-text-field > .v-input__control > .v-input__slot > fieldset {
-        color: var(--accent) !important;
-        border-color: var(--accent) !important;
-    }`);
-
     return component;
 };

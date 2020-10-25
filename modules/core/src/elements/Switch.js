@@ -69,34 +69,7 @@ Module => {
     },
   };
 
-  function addStyle(styleString) {
-    const style = document.createElement('style');
-    style.textContent = styleString;
-    style.setAttribute('data-module', component.name);
-    document.head.append(style);
-  }
   Module.appendStyle(`src/elements/css/Switch.css`, component.name);
-
-  Module.appendStyle(`
-  div.v-input--switch {
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
   
-  div.v-input--switch > .v-input__control > .v-input__slot {
-    background-color: var(--background) !important;
-  }
-  
-  div.v-input--switch > .v-input__control > .v-input__slot label.v-label,
-    div.v-input--switch > .v-input__control div.v-messages {
-    color: var(--font) !important;
-  }
-  
-  div.v-input--switch > .v-input__control > .v-input__slot button.v-icon,
-  div.v-input--switch > .v-input__control > .v-input__slot .primary--text {
-    color: var(--accent) !important;
-    border-color: var(--accent) !important;
-  }`);
-
   return component;
 };

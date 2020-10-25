@@ -96,27 +96,7 @@ Module => {
         },
     };
 
-    function addStyle(styleString) {
-        const style = document.createElement('style');
-        style.textContent = styleString;
-        style.setAttribute('data-module', component.name);
-        document.head.append(style);
-    }
-
-    Module.appendStyle(`
-    .v-expansion-panels {
-      z-index: 0 !important;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-    .v-expansion-panels :before {
-      border: solid 1px var(--accent);
-      box-shadow: none !important;
-    }
-    .v-expansion-panels :first-child:before {
-      border-bottom: none;
-    }
-    `);
+    Module.appendStyle(`src/containers/css/List.css`, component.name);
 
     return component;
 };
