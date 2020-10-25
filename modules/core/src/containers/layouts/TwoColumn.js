@@ -91,7 +91,7 @@ Module => {
         document.head.append(style);
     }
 
-    addStyle(`
+    Module.appendStyle(`
         .two-column {
             display: grid;
             grid-template-columns: 50% 50%;

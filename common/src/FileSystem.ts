@@ -30,7 +30,7 @@ export default interface FileSystem {
    * @param {string} filename
    * @returns Returns text-content of a file.
    */
-  read(filename: string): string,
+  read(filename: string): Promise<string>,
 
   /**
    * @param {string} filename

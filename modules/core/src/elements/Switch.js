@@ -75,8 +75,9 @@ Module => {
     style.setAttribute('data-module', component.name);
     document.head.append(style);
   }
+  Module.appendStyle(`src/elements/css/Switch.css`, component.name);
 
-  addStyle(`
+  Module.appendStyle(`
   div.v-input--switch {
     margin-top: 20px;
     margin-bottom: 20px;

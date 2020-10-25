@@ -103,7 +103,7 @@ Module => {
         document.head.append(style);
     }
 
-    addStyle(`
+    Module.appendStyle(`
     .v-expansion-panels {
       z-index: 0 !important;
       margin-top: 20px;
