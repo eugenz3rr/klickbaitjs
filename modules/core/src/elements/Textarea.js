@@ -60,7 +60,14 @@ Module => {
                 solo: false,
             };
         },
-
+        watch: {
+            value: {
+                handler: function (value) {
+                    Module.emit(`${this.element}.update`, value);
+                },
+                deep: true
+            }
+        },
         mounted: async function () {
 
             // Iterate trough all items and set them.

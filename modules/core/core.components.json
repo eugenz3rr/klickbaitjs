@@ -45,9 +45,14 @@
       "path": "src/elements/Textfield.js"
     },
     "button": {
-      "title": "Textfield",
+      "title": "Button",
       "description": "An element which changes information.",
-      "path": "src/elements/Textfield.js"
+      "path": "src/elements/Button.js"
+    },
+    "redirect_button": {
+      "title": "Redirect Button",
+      "description": "This button takes all current work and redirects the user and the content the user edited.",
+      "path": "src/elements/RedirectButton.js"
     },
     "textarea": {
       "title": "Textarea",
@@ -55,7 +60,7 @@
       "path": "src/elements/Textarea.js"
     },
     "colorpicker": {
-      "title": "Color-Picker",
+      "title": "Color Picker",
       "description": "An element which changes information.",
       "path": "src/elements/Colorpicker.js"
     },
@@ -78,6 +83,16 @@
       "title": "Dropdown",
       "description": "An element which should resemble a paragraph.",
       "path": "src/elements/Dropdown.js"
+    },
+    "upload": {
+      "title": "Upload",
+      "description": "An element which enables the user to upload files.",
+      "path": "src/elements/Upload.js"
+    },
+    "sound": {
+      "title": "Sound",
+      "description": "An element which enables the user to upload files.",
+      "path": "src/elements/Sound.js"
     }
   }
 }

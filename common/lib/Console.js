@@ -7,9 +7,12 @@ export default class Console extends Helper {
         console.debug(data.join('\n'));
     }
     emit(event, detail) {
-        dispatchEvent(new CustomEvent(event, {
-            detail,
-        }));
+        // @ts-ignore
+        window.EventBus.$emit(event, detail);
+    }
+    off(event, detail) {
+        // @ts-ignore
+        window.EventBus.$off(event, detail);
     }
     alterEvent(event, detail) {
         dispatchEvent(new CustomEvent(`${event}.alter`, {
@@ -18,6 +21,6 @@ export default class Console extends Helper {
     }
     on(event, callback) {
         // @ts-ignore
-        window.addEventListener(event, callback);
+        window.EventBus.$on(event, callback);
     }
 }

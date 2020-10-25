@@ -2,17 +2,19 @@ Module => {
     const component = {
         name: 'Color-Picker',
         template:
-            '<v-color-picker\n' +
-            '      v-model="value"\n' +
-            '      :canvas-height="canvasHeight"\n' +
-            '      :hide-canvas="hideCanvas"\n' +
-            '      :hide-inputs="hideInputs"\n' +
-            '      :hide-mode-switch="hideModeSwitch"\n' +
-            '      :mode="mode"\n' +
-            '      :show-swatches="showSwatches"\n' +
-            '      :swatches="swatches"\n' +
-            '      :swatches-max-height="swatchesMaxHeight"\n' +
-            '      :width="canvasHeight"\n' +
+            '<v-color-picker' +
+            '      :style="style" ' +
+            '      :class="classCSS" ' +
+            '      v-model="value"' +
+            '      :canvas-height="canvasHeight"' +
+            '      :hide-canvas="hideCanvas"' +
+            '      :hide-inputs="hideInputs"' +
+            '      :hide-mode-switch="hideModeSwitch"' +
+            '      :mode="mode"' +
+            '      :show-swatches="showSwatches"' +
+            '      :swatches="swatches"' +
+            '      :swatches-max-height="swatchesMaxHeight"' +
+            '      :width="canvasHeight"' +
             '  />',
         props: {
 
@@ -33,7 +35,7 @@ Module => {
         },
         data() {
             return {
-                value: "",
+                value: {},
                 canvasHeight: "",
                 hideCanvas: false,
                 hideModeSwitch: false,
@@ -42,8 +44,24 @@ Module => {
                 showSwatches: false,
                 swatches: undefined,
                 swatchesMaxHeight: 150,
-                width: 300
+                width: 300,
+                info: {},
+                style: {},
+                classCSS: {},
+                events: {
+                    submit: {
+                        event: () => {}
+                    }
+                }
             };
+        },
+        watch: {
+            value: {
+                handler: function (value) {
+                    EventBus.$emit(`${this.element}.update`, value);
+                },
+                deep: true
+            }
         },
         mounted: async function () {
 
@@ -69,17 +87,22 @@ Module => {
                 this[key.replace('#', '')] = value;
             }
 
-            const info = this.region.regionRaw.info;
+            this.info = this.region.regionRaw.info;
 
-            Module.emit(`register.receive.${info.id}`);
+            EventBus.$emit(`register.receive.${this.info.id}`);
 
-            Module.on(`submit.event.${info.id}`, () => {
-                Module.emit(`submit.receive.${info.id}`, {
+            this.events.submit.event = () => {
+                EventBus.$emit(`submit.receive.${this.info.id}`, {
                     key: this.element,
                     value: this.value
                 });
-            });
+            };
+
+            EventBus.$on(`submit.event.${this.info.id}`, this.events.submit.event);
         },
+        beforeDestroy: function () {
+            EventBus.$off(`submit.event.${this.info.id}`, this.events.submit.event);
+        }
     };
 
     function addStyle(styleString) {

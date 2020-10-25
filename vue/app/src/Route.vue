@@ -83,7 +83,7 @@ export default {
   mounted: function () {
   },
   props: {
-    route: Object
+    route: Object,
   },
   components: {
     'as-content': Content,

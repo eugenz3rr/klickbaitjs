@@ -51,5 +51,44 @@
         "path": "src/regions/content/Modules.js"
       }
     ]
+  },
+  "core.templates": {
+    "path": "/tile/templates",
+    "title": "Templates",
+    "description": "Here you choose your tiles before adding your final stuff.",
+    "regions": [
+      {
+        "type": "form",
+        "title": "",
+        "description": "",
+        "path": "src/regions/form/TileTemplates.js"
+      }
+    ]
+  },
+  "core.sound": {
+    "path": "/tile/sound",
+    "title": "Sound",
+    "description": "Here you choose your tiles before adding your final stuff.",
+    "regions": [
+      {
+        "type": "form",
+        "title": "",
+        "description": "",
+        "path": "src/regions/form/EditSound.js"
+      }
+    ]
+  },
+  "add.tile.text": {
+    "path": "/add/tile/text",
+    "title": "Tile Text",
+    "description": "Here you choose the text style for your tile.",
+    "regions": [
+      {
+        "type": "form",
+        "title": "",
+        "description": "",
+        "path": "src/regions/form/tile/TileText.js"
+      }
+    ]
   }
 }

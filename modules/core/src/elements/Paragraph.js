@@ -2,10 +2,10 @@ Module => {
     const component = {
         name: 'S-Paragraph',
         template:
-            '  <v-card class="ma-4">\n' +
-            '    <v-card-title v-html="title"/>\n' +
-            '    <v-card-subtitle v-html="description"/>\n' +
-            '    <v-card-text v-html="value"/>\n' +
+            '  <v-card>' +
+            '    <v-card-title v-html="title"/>' +
+            '    <v-card-subtitle v-html="description"/>' +
+            '    <v-card-text :style="{ color: textColor }" v-html="value"/>' +
             '  </v-card>',
         props: {
 
@@ -24,6 +24,12 @@ Module => {
                 title: "",
                 description: "",
                 value: "",
+                textColor: "",
+                events: {
+                    update: {
+                        event: () => {}
+                    }
+                }
             };
         },
 
@@ -47,8 +53,26 @@ Module => {
                     continue;
                 }
 
+                if (value.includes('~')) {
+                    const event = content => {
+                        this[key.replace('#', '')] = content;
+                    };
+                    this.events.update[`${value.replace('~', '')}.update`] = event;
+
+                    EventBus.$on(`${value.replace('~', '')}.update` , event);
+                    continue;
+                }
+
                 // Set the new value.
                 this[key.replace('#', '')] = value;
+            }
+        },
+        beforeDestroy: function () {
+            const keys = Object.keys(this.events.update);
+
+            for (let i = 0; i < keys.length; i++) {
+                const key = keys[i];
+                EventBus.$off(key, this.events.update[key]);
             }
         },
     };

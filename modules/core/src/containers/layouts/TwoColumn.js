@@ -12,7 +12,7 @@ Module => {
         components,
         template:
             '<div class="two-column mt-2">' +
-            '   <v-card class="first-column">' +
+            '   <v-card class="first-column" flat>' +
             '       <v-card-text>' +
             '             <component v-for="(renderElement, element) in first"' +
             '                        :is="`as-${renderElement[\'#type\']}`"' +
@@ -22,7 +22,7 @@ Module => {
             '                        :region="region"/>' +
             '       </v-card-text>' +
             '   </v-card>' +
-            '   <v-card class="second-column">' +
+            '   <v-card class="second-column" flat>' +
             '       <v-card-text>' +
             '             <component v-for="(renderElement, element) in second"' +
             '                        :is="`as-${renderElement[\'#type\']}`"' +

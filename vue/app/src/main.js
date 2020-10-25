@@ -224,29 +224,26 @@ let start = async () => {
     const Manager = window.Manager;
 
     const router = new VueRouter({});
-
+    console.log(Manager.routeManager.routes.length)
     // Register routes in the vue-router.
     for (let i = 0; i < Manager.routeManager.routes.length; i++) {
         const route = Manager.routeManager.routes[i];
 
         router.addRoutes([
             {
+                name: route.id,
                 path: route.path,
                 component: Route,
                 props: {
-                    route: route
-                }
-            }
-            ]);
-        }
+                    default: true,
+                    route,
+                },
+                params: {}
+            }]);
+    }
 
-        const defaultPath = "/core/board";
-
-        // Default page.
-        if (router.currentRoute.path !== defaultPath) {
-            //router.push('/core/board');
-        }
-
+    // Default page.
+    //await router.push({ name: 'core.board'});
 
     new Vue({
         el: '#advanced-soundboard',
@@ -274,5 +271,7 @@ document.addEventListener('deviceready', async () => {
 }, false);
 
 if (!cordovaExists) {
-    start().then(() => {}).catch(() => {});
+    start().then(() => {
+    }).catch(() => {
+    });
 }

@@ -1,7 +1,5 @@
 import Console from "../../Console";
 import Component from "./Component";
-import {VueConfiguration} from "vue/types/vue";
-import {ComponentOptions} from "vue";
 
 export default class ComponentManager extends Console {
 

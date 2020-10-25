@@ -28,6 +28,14 @@ Module => {
              */
             region: Object,
         },
+        watch: {
+            value: {
+                handler: function (value) {
+                    EventBus.$emit(`${this.element}.update`, value);
+                },
+                deep: true
+            }
+        },
         data() {
             return {
                 value: "",
