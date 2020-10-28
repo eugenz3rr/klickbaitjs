@@ -1,8 +1,9 @@
 Module => {
     const component = {
-        name: 'S-Button',
+        name: 'S-Redirect-Button',
         template:
             '<v-btn' +
+            '   v-if="vif || vif !== undefined"' +
             '   @click="submit"' +
             '   :absolute="absolute"' +
             '   :active-class="activeClass"' +
@@ -66,9 +67,36 @@ Module => {
              */
             element: String,
         },
+        events: {
+            input_change: function (event, value) {
+                const params = this.$route.params;
+
+                if (!(value in params)) {
+                    return;
+                }
+
+                const update_length = Object.keys(this.update).length;
+                let found = undefined;
+                for (let i = 0; i < update_length; i++) {
+                    const update = this.update[i];
+
+                    if (update.value === value) {
+                        found = update;
+                        break;
+                    }
+                }
+
+                if (found === undefined) {
+                    return;
+                }
+
+                this[found.key] = params[value];
+            }
+        },
         data() {
             return {
                 title: "",
+                vif: true,
                 appendIcon: false,
                 prependIcon: false,
                 absolute: false,
@@ -118,9 +146,9 @@ Module => {
                 width: undefined,
                 xLarge: false,
                 xSmall: false,
+                update: []
             };
         },
-
         mounted: async function () {
 
             // Iterate trough all items and set them.
@@ -141,16 +169,29 @@ Module => {
                     continue;
                 }
 
+                if (value.constructor.name === 'string' && value.includes('~')) {
+                    this.update.push({
+                        key: key.replace('#', ''),
+                        value: value.replace('~', '')
+                    });
+                    continue;
+                }
+
                 // Set the new value.
                 this[key.replace('#', '')] = value;
             }
         },
-
         methods: {
             submit: function () {
+                if (!('params' in this.to)) {
+                    this.to.params = {};
+                }
 
-                // TODO: What do we do if there are multiple forms currently present??
-                EventBus.$emit(`submit.redirect`, this.to);
+                this.to.params = Object.assign(
+                    this.to.params,
+                    this.$route.params
+                );
+                this.$router.push(this.to)
             }
         }
     };

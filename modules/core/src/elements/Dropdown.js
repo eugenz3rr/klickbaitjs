@@ -163,7 +163,15 @@ Module => {
              */
             region: Object,
         },
-
+        watch: {
+            value: {
+                handler: function (value) {
+                    this.$route.params[this.element] = value;
+                    this.$trigger('input_change', this.element);
+                },
+                deep: true
+            }
+        },
         mounted: async function () {
 
             // Iterate trough all items and set them.
@@ -190,14 +198,7 @@ Module => {
 
             const info = this.region.regionRaw.info;
 
-            Module.emit(`register.receive.${info.id}`);
-
-            Module.on(`submit.event.${info.id}`, () => {
-                Module.emit(`submit.receive.${info.id}`, {
-                    key: this.element,
-                    value: this.value
-                });
-            });
+            this.$route.params[this.element] = value;
         },
     };
     return component;

@@ -28,8 +28,10 @@ Module => {
             '      </v-btn>' +
             '    </v-toolbar>' +
             '' +
+            '   <div class="my-4">' +
             '    <v-slider' +
             '        v-if="Playlist"' +
+            '        class="my-10"' +
             '        color="accent"' +
             '        thumb-color="accent"' +
             '        track-fill-color="accent"' +
@@ -43,9 +45,11 @@ Module => {
             '        hint="Change the volume of the played tile."' +
             '        persistent-hint' +
             '    />' +
+            '   </div>' +
             '' +
-            '    <div id="playlist"></div>' +
+            '    <div id="playlist" class="mt-4 mb-10"></div>' +
             '' +
+            '   <div class="mt-3 mb-7">' +
             '    <v-slider' +
             '        v-if="Playlist && cursor === \'cursor\'"' +
             '        class="audio-editor-item extra"' +
@@ -61,7 +65,6 @@ Module => {
             '        thumb-label="always"' +
             '        persistent-hint' +
             '    />' +
-            '' +
             '    <v-range-slider' +
             '        v-if="Playlist && cursor === \'select\'"' +
             '        class="audio-editor-item extra"' +
@@ -77,10 +80,11 @@ Module => {
             '        thumb-label="always"' +
             '        persistent-hint' +
             '    />' +
+            '   </div>' +
             '' +
             '    <v-btn v-if="Playlist && cursor === \'select\'" block depressed @click="trim" color="secondary">Trim</v-btn>' +
             '' +
-            '    <v-toolbar v-if="cursor === \'shift\'" class="audio-editor-item" color="secondary">' +
+            '    <v-toolbar v-if="cursor === \'shift\'" class="audio-editor-item mt-6" color="secondary">' +
             '      <v-btn icon @click="alignLeft">' +
             '        <v-icon color="accent">format_align_left</v-icon>' +
             '      </v-btn>' +
@@ -95,8 +99,6 @@ Module => {
             '      </v-btn>' +
             '    </v-toolbar>' +
             '' +
-            '    <v-btn v-if="Playlist" class="audio-editor-item" block tile @click="save" color="success">Save</v-btn>' +
-            '    <v-btn class="audio-editor-item" block tile color="error" @click="leave">Cancel</v-btn>' +
             '  </div>',
         props: {
 
@@ -128,24 +130,24 @@ Module => {
                 CursorPositionMax: 0,
                 SelectionSegment: [0, 0],
                 Playlist: null,
-                EventEmiter: null,
-                file: [],
+                EventEmitter: null,
+                files: [],
             };
         },
         watch: {
             MasterVolume: function (val) {
                 if (val && this.Playlist) {
-                    this.EventEmiter.emit("mastervolumechange", val);
+                    this.EventEmitter.emit("mastervolumechange", val);
                 }
             },
             CursorPosition: function (val) {
                 if (val && this.Playlist) {
-                    this.EventEmiter.emit("setcursorposition", val);
+                    this.EventEmitter.emit("setcursorposition", val);
                 }
             },
             SelectionSegment: function (val) {
                 if (val && this.Playlist) {
-                    this.EventEmiter.emit("select", val[0], val[1]);
+                    this.EventEmitter.emit("select", val[0], val[1]);
                 }
             }
         },
@@ -196,111 +198,115 @@ Module => {
 
             window.Playlist = this.Playlist;
 
-            this.Playlist.load([]).then(() => {
-                this.Playlist.initExporter();
-                this.EventEmiter = this.Playlist.getEventEmitter();
+            await this.Playlist.load([]);
+
+            this.Playlist.initExporter();
+            this.EventEmitter = this.Playlist.getEventEmitter();
+            this.CursorPositionMax = this.Playlist.duration;
+            this.SelectionSegmentMax = this.Playlist.duration;
+
+            this.EventEmitter.on("finished", () => {
+                this.state = "pause";
+            });
+
+            this.EventEmitter.on("audiosourcesrendered", () => {
                 this.CursorPositionMax = this.Playlist.duration;
                 this.SelectionSegmentMax = this.Playlist.duration;
-
-                this.EventEmiter.on("finished", () => {
-                    this.state = "pause";
-                });
-
-                this.EventEmiter.on("audiosourcesrendered", () => {
-                    this.CursorPositionMax = this.Playlist.duration;
-                    this.SelectionSegmentMax = this.Playlist.duration;
-                });
-
-                this.EventEmiter.on("finished", () => {
-                    this.CursorPositionMax = this.Playlist.duration;
-                    this.SelectionSegmentMax = this.Playlist.duration;
-                });
-
-                this.EventEmiter.on("shift", (time, track) => {
-                    this.trimmed[0] += time;
-                    this.trimmed[1] += time;
-
-                    this.CursorPositionMax = this.Playlist.duration;
-                    this.SelectionSegmentMax = this.Playlist.duration;
-                });
-
-                this.EventEmiter.emit("newtrack", this.file);
-
-                this.EventEmiter.on("audiosourcesloaded", () => {
-                });
-
-                this.EventEmiter.on("audiosourcesrendered", () => {
-
-                    // We need to set the color manually for the audio viewer.
-                    /** @type {NodeListOf<HTMLElement>} */
-                    const canvases = this.document.querySelectorAll('.playlist .channel canvas');
-
-                    for (let i = 0; i < canvases.length; i++) {
-
-                        /** @type {HTMLElement} */
-                        const canvas = canvases[i];
-                        canvas.style.backgroundColor = this.settings.theme().accent;
-                    }
-                });
-
-                this.EventEmiter.on("audiorenderingfinished", async (type, blob) => {
-
-                    let result;
-                    await new Promise(resolve => {
-                        let fileReader = new FileReader();
-
-                        fileReader.onload = dataUrl => {
-                            result = dataUrl.target.result;
-                            resolve();
-                        }
-
-                        fileReader.readAsDataURL(blob);
-                    });
-
-                    Module.emit("sound.prepare", result);
-                });
             });
+
+            this.EventEmitter.on("finished", () => {
+                this.CursorPositionMax = this.Playlist.duration;
+                this.SelectionSegmentMax = this.Playlist.duration;
+            });
+
+            this.EventEmitter.on("shift", (time, track) => {
+                this.trimmed[0] += time;
+                this.trimmed[1] += time;
+
+                this.CursorPositionMax = this.Playlist.duration;
+                this.SelectionSegmentMax = this.Playlist.duration;
+            });
+
+            for (let i = 0; i < this.files.length; i++) {
+                const file = this.files[i];
+                this.EventEmitter.emit("newtrack", file);
+            }
+
+            this.EventEmitter.on("audiosourcesloaded", () => {
+            });
+
+            this.EventEmitter.on("audiosourcesrendered", () => {
+
+                // We need to set the color manually for the audio viewer.
+                /** @type {NodeListOf<HTMLElement>} */
+                const canvases = this.document.querySelectorAll('.playlist .channel canvas');
+
+                for (let i = 0; i < canvases.length; i++) {
+
+                    /** @type {HTMLElement} */
+                    const canvas = canvases[i];
+                    canvas.style.backgroundColor = this.settings.theme().accent;
+                }
+            });
+
+            this.EventEmitter.on("audiorenderingfinished", async (type, blob) => {
+
+                let result;
+                await new Promise(resolve => {
+                    let fileReader = new FileReader();
+
+                    fileReader.onload = dataUrl => {
+                        result = dataUrl.target.result;
+                        resolve();
+                    }
+
+                    fileReader.readAsDataURL(blob);
+                });
+
+                Module.emit("sound.prepare", result);
+            });
+
         },
         methods: {
             play: function () {
                 if (!this.Playlist) {
                     return;
                 }
-                this.EventEmiter.emit("play");
+                this.EventEmitter.emit("play");
                 this.state = "play";
             },
             pause: function () {
                 if (!this.Playlist) {
                     return;
                 }
-                this.EventEmiter.emit("pause");
+                this.EventEmitter.emit("pause");
                 this.state = "pause";
             },
             stop: function () {
                 if (!this.Playlist) {
                     return;
                 }
-                this.EventEmiter.emit("stop");
+                this.EventEmitter.emit("stop");
                 this.state = "pause";
             },
             save: function () {
                 if (!this.Playlist) {
                     return;
                 }
-                this.EventEmiter.emit("startaudiorendering", "wav");
+                this.EventEmitter.emit("startaudiorendering", "wav");
             },
             trim: function () {
                 if (!this.Playlist) {
                     return;
                 }
-                this.EventEmiter.emit("trim");
+                this.EventEmitter.emit("trim");
                 this.trimmed = this.SelectionSegment;
             },
             alignLeft: function () {
                 if (!this.Playlist) {
                     return;
                 }
-                this.EventEmiter.emit(
+                this.EventEmitter.emit(
                     "shift",
                     this.trimmed[0] * -1,
                     this.Playlist.activeTrack || this.Playlist.tracks[0]
@@ -310,7 +316,7 @@ Module => {
                 if (!this.Playlist) {
                     return;
                 }
-                this.EventEmiter.emit(
+                this.EventEmitter.emit(
                     "shift",
                     this.stepSize * -1,
                     this.Playlist.activeTrack || this.Playlist.tracks[0]
@@ -320,7 +326,7 @@ Module => {
                 if (!this.Playlist) {
                     return;
                 }
-                this.EventEmiter.emit(
+                this.EventEmitter.emit(
                     "shift",
                     this.stepSize,
                     this.Playlist.activeTrack || this.Playlist.tracks[0]
@@ -330,7 +336,7 @@ Module => {
                 if (!this.Playlist) {
                     return;
                 }
-                this.EventEmiter.emit("statechange", state);
+                this.EventEmitter.emit("statechange", state);
                 this.cursor = state;
                 if (this.cursor === "select") {
                     this.SelectionSegment = [0, this.CursorPosition];

@@ -2,14 +2,14 @@ Module => {
     const component = {
         name: 'Textfield',
         template:
-            '  <v-text-field\n' +
-            '      v-model="value"\n' +
-            '      :label="title"\n' +
-            '      :hint="description"\n' +
-            '      :placeholder="placeholder"\n' +
-            '      :min="min"\n' +
-            '      :max="max"\n' +
-            '      :persistent-hint="persistentHint"\n' +
+            '  <v-text-field' +
+            '      v-model="value"' +
+            '      :label="title"' +
+            '      :hint="description"' +
+            '      :placeholder="placeholder"' +
+            '      :min="min"' +
+            '      :max="max"' +
+            '      :persistent-hint="persistentHint"' +
             '  />',
         props: {
 
@@ -31,7 +31,8 @@ Module => {
         watch: {
             value: {
                 handler: function (value) {
-                    EventBus.$emit(`${this.element}.update`, value);
+                    this.$route.params[this.element] = value;
+                    this.$trigger('input_change', this.element);
                 },
                 deep: true
             }
@@ -74,14 +75,7 @@ Module => {
 
             const info = this.region.regionRaw.info;
 
-            Module.emit(`register.receive.${info.id}`);
-
-            Module.on(`submit.event.${info.id}`, () => {
-                Module.emit(`submit.receive.${info.id}`, {
-                    key: this.element,
-                    value: this.value
-                });
-            });
+            this.$route.params[this.element] = this.value;
         },
     };
 

@@ -26,6 +26,7 @@ const Settings = {
 
         build.title = {
             '#type': 'sound',
+            '#files': Module.fallback(data, 'sound_upload', []),
         };
 
 

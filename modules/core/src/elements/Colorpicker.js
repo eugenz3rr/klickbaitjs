@@ -48,17 +48,13 @@ Module => {
                 info: {},
                 style: {},
                 classCSS: {},
-                events: {
-                    submit: {
-                        event: () => {}
-                    }
-                }
             };
         },
         watch: {
             value: {
                 handler: function (value) {
-                    EventBus.$emit(`${this.element}.update`, value);
+                    this.$route.params[this.element] = value;
+                    this.$trigger('input_change', this.element);
                 },
                 deep: true
             }
@@ -89,20 +85,8 @@ Module => {
 
             this.info = this.region.regionRaw.info;
 
-            EventBus.$emit(`register.receive.${this.info.id}`);
-
-            this.events.submit.event = () => {
-                EventBus.$emit(`submit.receive.${this.info.id}`, {
-                    key: this.element,
-                    value: this.value
-                });
-            };
-
-            EventBus.$on(`submit.event.${this.info.id}`, this.events.submit.event);
+            this.$route.params[this.element] = this.value;
         },
-        beforeDestroy: function () {
-            EventBus.$off(`submit.event.${this.info.id}`, this.events.submit.event);
-        }
     };
     Module.appendStyle(`src/elements/css/Colorpicker.css`, component.name);
 

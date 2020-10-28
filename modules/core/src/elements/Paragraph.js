@@ -25,14 +25,35 @@ Module => {
                 description: "",
                 value: "",
                 textColor: "",
-                events: {
-                    update: {
-                        event: () => {}
-                    }
-                }
+                update: [],
             };
         },
+        events: {
+            input_change: function (event, value) {
+                const params = this.$route.params;
 
+                if (!(value in params)) {
+                    return;
+                }
+
+                const update_length = Object.keys(this.update).length;
+                let found = undefined;
+                for (let i = 0; i < update_length; i++) {
+                    const update = this.update[i];
+
+                    if (update.value === value) {
+                        found = update;
+                        break;
+                    }
+                }
+
+                if (found === undefined) {
+                    return;
+                }
+
+                this[found.key] = params[value];
+            }
+        },
         mounted: async function () {
 
             // Iterate trough all items and set them.
@@ -54,25 +75,15 @@ Module => {
                 }
 
                 if (value.includes('~')) {
-                    const event = content => {
-                        this[key.replace('#', '')] = content;
-                    };
-                    this.events.update[`${value.replace('~', '')}.update`] = event;
-
-                    EventBus.$on(`${value.replace('~', '')}.update` , event);
+                    this.update.push({
+                        key: key.replace('#', ''),
+                        value: value.replace('~', '')
+                    });
                     continue;
                 }
 
                 // Set the new value.
                 this[key.replace('#', '')] = value;
-            }
-        },
-        beforeDestroy: function () {
-            const keys = Object.keys(this.events.update);
-
-            for (let i = 0; i < keys.length; i++) {
-                const key = keys[i];
-                EventBus.$off(key, this.events.update[key]);
             }
         },
     };

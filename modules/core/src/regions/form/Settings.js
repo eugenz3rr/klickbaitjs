@@ -52,6 +52,7 @@ const Settings = {
             '#to': {
                 name: 'add.tile.text'
             },
+            '#block': true,
             '#color': 'info',
             '#outlined': true
         };
@@ -71,11 +72,28 @@ const Settings = {
                 {
                     '#title': 'Sound',
                     '#content': {
+                        'paragraph': {
+                            '#type': 'paragraph',
+                            '#flat': true,
+                            '#value': 'Add your sound file, so we can start to edit :D'
+                        },
                         'sound_upload': {
                             '#type': 'upload',
                             '#title': 'Sound File',
                             '#description': 'Select your sound file.',
                             '#value': undefined,
+                        },
+                        alter_text: {
+                            '#type': 'redirect_button',
+                            '#title': 'Edit audio file',
+                            '#appendIcon': 'audiotrack',
+                            '#vif': '~sound_upload',
+                            '#to': {
+                                name: 'core.sound'
+                            },
+                            '#block': true,
+                            '#color': 'info',
+                            '#outlined': true
                         }
                     }
                 },

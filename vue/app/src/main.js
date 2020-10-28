@@ -1,6 +1,7 @@
 // Main application.
 import VueRouter from 'vue-router';
 import Route from "./Route";
+import EventManager from "vue-event-manager";
 import * as Common from "./../../../common/lib/Library";
 
 // Import Components.
@@ -14,6 +15,7 @@ Vue.use(Vuetify);
 Vue.use(VueI18n);
 Vue.use(Vue2TouchEvents);
 Vue.use(VueRouter);
+Vue.use(EventManager);
 
 Vue.component('route', Route);
 
