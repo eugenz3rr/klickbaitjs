@@ -1,34 +1,9 @@
 {
-  "core.tile.add": {
-    "path": "/tile/:board/add",
-    "title": "Add Tile",
-    "description": "Adds a tile to the current board.",
-    "regions": [
-      {
-        "type": "form",
-        "title": "Tile form",
-        "description": "Edit / add current tile.",
-        "path": "src/regions/form/AddTile.js"
-      }
-    ]
-  },
-  "core.settings": {
-    "path": "/core/settings",
-    "title": "Settings",
-    "description": "Default settings",
-    "regions": [
-      {
-        "type": "form",
-        "title": "Tile form",
-        "description": "Edit / add current tile.",
-        "path": "src/regions/form/Settings.js"
-      }
-    ]
-  },
   "core.board": {
     "path": "/core/board",
     "title": "Board",
     "description": "Board where the tiles are located at.",
+    "hide": false,
     "regions": [
       {
         "type": "content",
@@ -36,6 +11,20 @@
         "description": "This part displays the currently edited / added tile.",
         "path": "src/regions/content/Board.js",
         "icon": "home"
+      }
+    ]
+  },
+  "core.settings": {
+    "path": "/core/settings",
+    "title": "Settings",
+    "description": "Default settings",
+    "hide": false,
+    "regions": [
+      {
+        "type": "form",
+        "title": "Tile form",
+        "description": "Edit / add current tile.",
+        "path": "src/regions/form/Settings.js"
       }
     ]
   },
@@ -75,6 +64,32 @@
         "title": "",
         "description": "",
         "path": "src/regions/form/EditSound.js"
+      }
+    ]
+  },
+  "add.tile.image": {
+    "path": "/tile/image",
+    "title": "Image",
+    "description": "Here you choose your tiles before adding your final stuff.",
+    "regions": [
+      {
+        "type": "form",
+        "title": "",
+        "description": "",
+        "path": "src/regions/form/EditImage.js"
+      }
+    ]
+  },
+  "add.tile": {
+    "path": "/add/tile",
+    "title": "Add Tile",
+    "description": "Default settings",
+    "regions": [
+      {
+        "type": "form",
+        "title": "Tile form",
+        "description": "Edit / add current tile.",
+        "path": "src/regions/form/tile/AddTile.js"
       }
     ]
   },

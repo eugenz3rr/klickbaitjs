@@ -35,7 +35,7 @@ const Form = {
             '#title': 'Confirm',
             '#prependIcon': 'exit_to_app',
             '#to': {
-                name: 'core.settings'
+                name: 'add.tile'
             },
             '#color': 'green',
             '#outlined': true,

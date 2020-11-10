@@ -14,15 +14,15 @@ const Settings = {
 
     "build": (Module, values, data) => {
         let build = {};
-
-        console.log(data)
-
         build.two_column = {
             '#type': 'two_column',
             '#first': {
                 tile: {
                     '#type': 'tile',
                     '#title': '~tile_title',
+                    '#images': '~image_upload',
+                    '#sounds': '~sound_upload',
+                    '#classes': '~tile_style',
                     '#backgroundColor': '~tile_color',
                     '#textColor': Module.fallback(data, 'text_color', '#000000'),
                 },
@@ -45,6 +45,31 @@ const Settings = {
             '#value': Module.fallback(data, 'tile_title', 'My sound!'),
         };
 
+        build.tile_style = {
+            '#type': 'dropdown',
+            '#title': 'Tile Style',
+            '#description': 'The style is used to make your tile look nice.',
+            '#value': Module.fallback(values, 'tile_style', Module.fallback(data, 'tile_style', ['default'])),
+            '#items': [
+                {
+                    'text': 'Default',
+                    'value': ['default']
+                },
+                {
+                    'text': 'Image Background',
+                    'value': ['image']
+                },
+                {
+                    'text': 'Horizontal 50/50',
+                    'value': ['horizontal-50-50']
+                },
+                {
+                    'text': 'Vertical 50/50',
+                    'value': ['vertical-50-50']
+                },
+            ]
+        }
+
         build.alter_text = {
             '#type': 'redirect_button',
             '#title': 'Customize Text',
@@ -57,33 +82,26 @@ const Settings = {
             '#outlined': true
         };
 
-        // build.alter_image = {
-        //     '#type': 'redirect_button',
-        //     '#title': 'Tile',
-        //     '#to': {
-        //         name: 'core.templates'
-        //     },
-        //     '#color': 'info'
-        // };
-
         build.advanced_settings = {
             '#type': 'accordion',
             '#panels': [
                 {
                     '#title': 'Sound',
                     '#content': {
-                        'paragraph': {
+                        paragraph: {
                             '#type': 'paragraph',
                             '#flat': true,
+                            '#title': 'Description',
+                            '#description': 'This is very cool',
                             '#value': 'Add your sound file, so we can start to edit :D'
                         },
-                        'sound_upload': {
+                        sound_upload: {
                             '#type': 'upload',
                             '#title': 'Sound File',
                             '#description': 'Select your sound file.',
-                            '#value': undefined,
+                            '#value': Module.fallback(values, 'sound_upload', Module.fallback(data, 'sound_upload', [])),
                         },
-                        alter_text: {
+                        sound_upload_edit: {
                             '#type': 'redirect_button',
                             '#title': 'Edit audio file',
                             '#appendIcon': 'audiotrack',
@@ -100,20 +118,27 @@ const Settings = {
                 {
                     '#title': 'Image',
                     '#content': {
-                        'my_second_accordion_switch': {
-                            '#type': 'switch',
-                            '#title': 'Enable this module',
-                            '#description': 'This enables the module.',
-                            '#value': Module.fallback(values, 'my_second_accordion_switch', false),
+                        image_upload: {
+                            '#type': 'upload',
+                            '#title': 'Image File',
+                            '#description': 'Select your sound file.',
+                            '#persistentHint': true,
+                            '#value': Module.fallback(values, 'image_upload', Module.fallback(data, 'image_upload', [])),
                         },
-                        'my_second_accordion_description': {
-                            '#type': 'textarea',
-                            '#title': 'Default Tile description',
-                            '#description': 'This description will be used for describing ur tile.',
-                            '#value': Module.fallback(values, 'my_second_accordion_description', 'NICHT SO TIEF RÜDIGER!'),
-                            '#autoGrow': true,
-                            '#clearable': true,
-                        }
+
+                        image_upload_edit: {
+                            '#type': 'redirect_button',
+                            '#title': 'Edit image file',
+                            '#appendIcon': 'crop_original',
+                            '#vif': '~image_upload',
+                            '#to': {
+                                name: 'add.tile.image'
+                            },
+                            '#show': false,
+                            '#block': true,
+                            '#color': 'info',
+                            '#outlined': true
+                        },
                     }
                 },
             ],

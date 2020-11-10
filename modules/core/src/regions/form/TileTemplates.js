@@ -34,7 +34,7 @@ const Settings = {
             '#type': 'button',
             '#title': 'Tile',
             '#to': {
-                name: 'core.settings',
+                name: 'add.tile',
                 params: {
                     tile_title: ""
                 }
@@ -46,7 +46,7 @@ const Settings = {
             '#type': 'button',
             '#title': 'Board',
             '#to': {
-                name: 'core.settings'
+                name: 'add.tile'
             },
             '#color': 'info'
         };
@@ -55,7 +55,7 @@ const Settings = {
             '#type': 'button',
             '#title': 'Hardcore',
             '#to': {
-                name: 'core.settings',
+                name: 'add.tile',
                 params: {
                     tile_title: "yo I'm hardcore hehe",
                     tile_color: "#ff0000",

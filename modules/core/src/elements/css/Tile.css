@@ -1,0 +1,92 @@
+.tile {
+    overflow: hidden;
+}
+
+/*
+ Default tile.
+*/
+
+.tile.default {
+    display: grid;
+    grid-template-areas:
+            'text text'
+            'text text';
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+}
+
+.tile.default > .v-card__text {
+    grid-area: text;
+}
+
+.tile.default > .v-image {
+    display: none;
+}
+
+/*
+ Image tile.
+*/
+
+.tile.image {
+    background-color: transparent !important;
+    box-shadow: none !important;
+
+    display: grid;
+    grid-template-areas:
+            'image image'
+            'image image';
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+}
+
+.tile.image > .v-card__text {
+    display: none;
+}
+
+.tile.image > .v-image {
+    grid-area: image;
+}
+
+
+/*
+ Image tile.
+*/
+
+.tile.horizontal-50-50 {
+    display: grid;
+    grid-template-areas:
+            'text text'
+            'image image';
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+}
+
+.tile.horizontal-50-50 > .v-card__text {
+    grid-area: text;
+}
+
+.tile.horizontal-50-50 > .v-image {
+    grid-area: image;
+}
+
+
+/*
+ Image tile.
+*/
+
+.tile.vertical-50-50 {
+    display: grid;
+    grid-template-areas:
+            'text image'
+            'text image';
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+}
+
+.tile.vertical-50-50 > .v-card__text {
+    grid-area: text;
+}
+
+.tile.vertical-50-50 > .v-image {
+    grid-area: image;
+}

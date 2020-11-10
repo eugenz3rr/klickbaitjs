@@ -31,11 +31,10 @@ Module => {
             '   <div class="my-4">' +
             '    <v-slider' +
             '        v-if="Playlist"' +
-            '        class="my-10"' +
+            '        class="my-10 audio-editor-item"' +
             '        color="accent"' +
             '        thumb-color="accent"' +
             '        track-fill-color="accent"' +
-            '        class="audio-editor-item"' +
             '        append-icon="volume_up"' +
             '        prepend-icon="volume_down"' +
             '        v-model="MasterVolume"' +
@@ -98,7 +97,10 @@ Module => {
             '        <v-icon color="accent">chevron_right</v-icon>' +
             '      </v-btn>' +
             '    </v-toolbar>' +
-            '' +
+            '   <v-btn class="mb-3" block color="success" :loading="loading" outlined @click="save">' +
+            '       <v-icon left>save</v-icon>' +
+            '       Save' +
+            '   </v-btn>' +
             '  </div>',
         props: {
 
@@ -132,6 +134,8 @@ Module => {
                 Playlist: null,
                 EventEmitter: null,
                 files: [],
+                loading: false,
+                to: undefined,
             };
         },
         watch: {
@@ -193,7 +197,12 @@ Module => {
                     fadeColor: '#000000'
                 },
                 seekStyle: "line",
-                zoomLevels: [500, 1000, 3000, 5000]
+                zoomLevels: [
+                    500,
+                    1000,
+                    3000,
+                    5000
+                ]
             });
 
             window.Playlist = this.Playlist;
@@ -241,33 +250,37 @@ Module => {
                 /** @type {NodeListOf<HTMLElement>} */
                 const canvases = this.document.querySelectorAll('.playlist .channel canvas');
 
-                for (let i = 0; i < canvases.length; i++) {
-
-                    /** @type {HTMLElement} */
+                /*for (let i = 0; i < canvases.length; i++) {
                     const canvas = canvases[i];
                     canvas.style.backgroundColor = this.settings.theme().accent;
-                }
+                }*/
             });
 
-            this.EventEmitter.on("audiorenderingfinished", async (type, blob) => {
-
-                let result;
-                await new Promise(resolve => {
-                    let fileReader = new FileReader();
-
-                    fileReader.onload = dataUrl => {
-                        result = dataUrl.target.result;
-                        resolve();
-                    }
-
-                    fileReader.readAsDataURL(blob);
-                });
-
-                Module.emit("sound.prepare", result);
+            this.EventEmitter.on("audiorenderingfinished", (type, blob) => {
+                this.value = [
+                    new File(
+                        [blob],
+                        `edited_sound.${Date.now()}`, {
+                            type: `audio/${type}`
+                        })
+                ];
+                this.$route.params[this.element] = this.value;
+                this.submit();
             });
 
         },
         methods: {
+            submit: function () {
+                if (!('params' in this.to)) {
+                    this.to.params = {};
+                }
+
+                this.to.params = Object.assign(
+                    this.to.params,
+                    this.$route.params
+                );
+                this.$router.push(this.to)
+            },
             play: function () {
                 if (!this.Playlist) {
                     return;
@@ -293,6 +306,7 @@ Module => {
                 if (!this.Playlist) {
                     return;
                 }
+                this.loading = true;
                 this.EventEmitter.emit("startaudiorendering", "wav");
             },
             trim: function () {

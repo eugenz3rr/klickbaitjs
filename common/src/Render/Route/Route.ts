@@ -15,6 +15,7 @@ export default class Route extends Console {
     public title: string = '';
     public description: string = '';
     public icon: string = '';
+    public hide: boolean = true;
 
     public regionManager: RegionManager;
 
@@ -39,5 +40,6 @@ export default class Route extends Console {
         this.title = this.fallback(data, 'title', 'No title');
         this.description = this.fallback(data, 'description', 'No description.');
         this.icon = this.fallback(data, 'icon', '');
+        this.hide = this.fallback(data, 'hide', true);
     }
 }

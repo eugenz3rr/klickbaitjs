@@ -54,8 +54,9 @@ Module => {
             '   :success="success"' +
             '   :success-messages="successMessages"' +
             '   :suffix="suffix"' +
-            '   :truncate-length="truncateLength"' +
-            '/>',
+            '   :truncate-length="truncateLength">' +
+            ' <div>{{description}}</div>' +
+            '</v-file-input>',
         data() {
             return {
                 title: undefined,
@@ -132,7 +133,6 @@ Module => {
         watch: {
             value: {
                 handler: function (value) {
-                    console.log(value)
                     this.$route.params[this.element] = value;
                     this.$trigger('input_change', this.element);
                 },
@@ -162,9 +162,6 @@ Module => {
                 // Set the new value.
                 this[key.replace('#', '')] = value;
             }
-
-            const info = this.region.regionRaw.info;
-
             this.$route.params[this.element] = this.value;
         },
     };

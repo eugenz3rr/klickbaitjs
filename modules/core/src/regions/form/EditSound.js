@@ -7,7 +7,7 @@ const Settings = {
     "info": {
         "title": "Edit Sound",
         "description": "This page is used to contain a big element wich",
-        "id": "tile_templates",
+        "id": "sound_edit",
         "tab": "misc",
         "location": "settings",
         "submit": false
@@ -24,11 +24,25 @@ const Settings = {
     "build": (Module, values, data) => {
         let build = {};
 
-        build.title = {
+        build.sound_upload = {
             '#type': 'sound',
             '#files': Module.fallback(data, 'sound_upload', []),
+            '#to': {
+                name: 'add.tile'
+            },
         };
 
+        build.alter_tile = {
+            '#type': 'redirect_button',
+            '#title': 'cancel',
+            '#appendIcon': 'clear',
+            '#to': {
+                name: 'add.tile'
+            },
+            '#block': true,
+            '#color': 'red',
+            '#outlined': true
+        };
 
         return build;
     },

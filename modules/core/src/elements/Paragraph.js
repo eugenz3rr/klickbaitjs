@@ -2,7 +2,8 @@ Module => {
     const component = {
         name: 'S-Paragraph',
         template:
-            '  <v-card>' +
+            '  <v-card' +
+            '   :flat="flat">' +
             '    <v-card-title v-html="title"/>' +
             '    <v-card-subtitle v-html="description"/>' +
             '    <v-card-text :style="{ color: textColor }" v-html="value"/>' +
@@ -24,6 +25,7 @@ Module => {
                 title: "",
                 description: "",
                 value: "",
+                flat: false,
                 textColor: "",
                 update: [],
             };
@@ -74,7 +76,7 @@ Module => {
                     continue;
                 }
 
-                if (value.includes('~')) {
+                if (value.constructor.name === 'String' && value.includes('~')) {
                     this.update.push({
                         key: key.replace('#', ''),
                         value: value.replace('~', '')

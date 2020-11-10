@@ -93,6 +93,11 @@
       "title": "Sound",
       "description": "An element which enables the user to upload files.",
       "path": "src/elements/Sound.js"
+    },
+    "image": {
+      "title": "Image",
+      "description": "An element which enables the user to upload files.",
+      "path": "src/elements/Image.js"
     }
   }
 }

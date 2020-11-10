@@ -3,7 +3,7 @@ Module => {
         name: 'S-Redirect-Button',
         template:
             '<v-btn' +
-            '   v-if="vif || vif !== undefined"' +
+            '   v-if="show"' +
             '   @click="submit"' +
             '   :absolute="absolute"' +
             '   :active-class="activeClass"' +
@@ -93,10 +93,21 @@ Module => {
                 this[found.key] = params[value];
             }
         },
+        watch: {
+            vif: {
+                handler: function (value) {
+                    if (Array.isArray(value)) {
+                        this.show = value.length !== 0;
+                    }
+                },
+                deep: true
+            }
+        },
         data() {
             return {
                 title: "",
                 vif: true,
+                show: true,
                 appendIcon: false,
                 prependIcon: false,
                 absolute: false,
@@ -156,7 +167,7 @@ Module => {
 
             for (let i = 0; i < keys.length; i++) {
                 const key = keys[i];
-                const value = this.renderElement[key];
+                let value = this.renderElement[key];
                 const dataKey = key.replace('#', '');
 
                 // Check if data is mappable.
@@ -169,12 +180,17 @@ Module => {
                     continue;
                 }
 
-                if (value.constructor.name === 'string' && value.includes('~')) {
+                if (value.constructor.name === 'String' && value.includes('~')) {
                     this.update.push({
                         key: key.replace('#', ''),
                         value: value.replace('~', '')
                     });
-                    continue;
+
+                    if (key.replace('#', '') in this && value.replace('~', '') in this.$route.params) {
+                        value = this.$route.params[value.replace('~', '')];
+                    } else {
+                        continue;
+                    }
                 }
 
                 // Set the new value.

@@ -10,6 +10,9 @@ import Vue from "vue";
 import Vuetify from "vuetify/dist/vuetify";
 import VueI18n from 'vue-i18n';
 import Vue2TouchEvents from 'vue2-touch-events';
+import Cropper from "cropperjs";
+
+window.Cropper = Cropper;
 
 Vue.use(Vuetify);
 Vue.use(VueI18n);

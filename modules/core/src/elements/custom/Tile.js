@@ -2,8 +2,17 @@ Module => {
     const component = {
         name: 'Tile',
         template:
-            '<v-card width="150px" height="150px" :color="backgroundColor">' +
+            '<v-card ' +
+            '       v-ripple' +
+            '       v-touch:tap="click"' +
+            '       width="150px" ' +
+            '       height="150px" ' +
+            '       :color="backgroundColor" ' +
+            '       class="tile" ' +
+            '       :class="classes">' +
             '   <v-card-text :style="{ color: textColor }">{{ title }}</v-card-text>' +
+            '   <v-img v-if="src !== undefined" :src="src" width="150px" height="150px" :color="backgroundColor">' +
+            '   </v-img>' +
             '</v-card>',
         data() {
             return {
@@ -11,8 +20,43 @@ Module => {
                 backgroundColor: '',
                 textColor: '#000000',
                 changed: 0,
-                update: []
+                src: undefined,
+                audio: [],
+                classes: ['default'],
+                images: [],
+                sounds: [],
+                update: [],
             };
+        },
+        watch: {
+            images: {
+                handler: function (value) {
+                    if (value.length === 0) {
+                        this.src = '';
+                        return;
+                    }
+                    const fileReader = new FileReader()
+                    fileReader.onload = () => {
+                        this.src = fileReader.result;
+                    }
+                    fileReader.readAsDataURL(value[0]);
+                },
+                deep: true
+            },
+            sounds: {
+                handler: function (value) {
+                    if (value.length === 0) {
+                        this.src = '';
+                        return;
+                    }
+                    const fileReader = new FileReader()
+                    fileReader.onload = () => {
+                        this.audio = new Audio(fileReader.result);
+                    }
+                    fileReader.readAsDataURL(value[0]);
+                },
+                deep: true
+            }
         },
         props: {
 
@@ -82,14 +126,41 @@ Module => {
                         key: key.replace('#', ''),
                         value: value.replace('~', '')
                     });
-                    continue;
+
+                    //continue;
+                    if (key.replace('#', '') in this && value.replace('~', '') in this.$route.params) {
+                        value = this.$route.params[value.replace('~', '')];
+                    }
+                    else {
+                        continue;
+                    }
                 }
 
                 // Set the new value.
                 this[key.replace('#', '')] = value;
             }
         },
+        methods: {
+            click: function () {
+                if (this.audio.constructor.name !== 'HTMLAudioElement') {
+                    return;
+                }
+
+                this.audio.pause();
+                this.audio.currentTime = 0;
+                this.audio.play();
+            }
+        },
+        destroyed: function () {
+            if (this.audio.constructor.name !== 'HTMLAudioElement') {
+                return;
+            }
+
+            this.audio.pause();
+        }
     };
+
+    Module.appendStyle(`src/elements/css/Tile.css`, component.name);
 
     return component;
 };

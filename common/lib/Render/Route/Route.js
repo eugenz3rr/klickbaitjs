@@ -9,6 +9,7 @@ export default class Route extends Console {
         this.title = '';
         this.description = '';
         this.icon = '';
+        this.hide = true;
         this.module = module;
         this.routeManager = module.routeManager;
         this.routeManager.routes.push(this);
@@ -23,5 +24,6 @@ export default class Route extends Console {
         this.title = this.fallback(data, 'title', 'No title');
         this.description = this.fallback(data, 'description', 'No description.');
         this.icon = this.fallback(data, 'icon', '');
+        this.hide = this.fallback(data, 'hide', true);
     }
 }

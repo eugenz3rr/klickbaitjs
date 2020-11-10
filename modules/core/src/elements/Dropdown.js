@@ -198,7 +198,7 @@ Module => {
 
             const info = this.region.regionRaw.info;
 
-            this.$route.params[this.element] = value;
+            this.$route.params[this.element] = this.value;
         },
     };
     return component;

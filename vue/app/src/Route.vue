@@ -41,6 +41,7 @@
         <v-list-item
             v-for="route in route.module.moduleManager.manager.routeManager.routes"
             :key="route.title"
+            v-if="!route.hide"
             link
             :to="{
               path: route.path

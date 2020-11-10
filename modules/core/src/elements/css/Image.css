@@ -1,0 +1,8 @@
+.tile-image-editor #tile-image {
+    display: block;
+    max-width: 100%;
+}
+.tile-image-editor .image-editor-item {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
