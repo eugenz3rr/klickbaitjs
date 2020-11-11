@@ -15,14 +15,25 @@ const Board = {
      * @param values
      * @returns {{}}
      */
-    "build": (Module) => {
+    build: (Module) => {
         let build = {};
 
-        build.headline = {
-            '#type': 'paragraph',
-            '#title': 'Tiles',
-            '#description': 'Tiles are usually located here.',
-        };
+
+        build.addTileButton = {
+            '#type': 'add-tile-button',
+            '#content': {
+                add_tile: {
+                    '#type': 'redirect_button',
+                    '#fab': true,
+                    '#outlined': true,
+                    '#color': 'green',
+                    '#centerIcon': 'add',
+                    '#to': {
+                        name: 'tile.templates'
+                    }
+                }
+            }
+        }
 
         return build;
     },

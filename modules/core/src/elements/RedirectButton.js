@@ -52,7 +52,8 @@ Module => {
             '   :x-large="xLarge"' +
             '   :x-small="xSmall">' +
             '       <v-icon left v-if="appendIcon">{{ appendIcon }}</v-icon>' +
-            '       {{ title }}' +
+            '       <v-icon v-if="centerIcon">{{ centerIcon }}</v-icon>' +
+            '       <div v-else>{{ title }}</div>' +
             '       <v-icon right v-if="prependIcon">{{ prependIcon }}</v-icon>' +
             '</v-btn>',
         props: {
@@ -110,6 +111,7 @@ Module => {
                 show: true,
                 appendIcon: false,
                 prependIcon: false,
+                centerIcon: false,
                 absolute: false,
                 activeClass: '',
                 append: false,

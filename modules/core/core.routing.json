@@ -41,7 +41,7 @@
       }
     ]
   },
-  "core.templates": {
+  "tile.templates": {
     "path": "/tile/templates",
     "title": "Templates",
     "description": "Here you choose your tiles before adding your final stuff.",

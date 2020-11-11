@@ -9,7 +9,8 @@ const Settings = {
         "description": "Configure your settings here.",
         "id": "example_form",
         "tab": "misc",
-        "location": "settings"
+        "location": "settings",
+        "save": false,
     },
 
     "build": (Module, values, data) => {
@@ -157,7 +158,9 @@ const Settings = {
         return true;
     },
 
-    submit: (Module, values) => {
+    submit: async (Module, values) => {
+
+        //Module.fileSystem.write(`${this.router.module.path}values/form.${this.info.id}.json`, JSON.stringify(values))
 
         // The submitted values of the user.
         return values;

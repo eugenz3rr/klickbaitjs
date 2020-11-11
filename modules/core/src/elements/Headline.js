@@ -2,9 +2,9 @@ Module => {
     const component = {
         name: 'S-Headline',
         template:
-            '<v-card class="ma-4">\n' +
-            '    <v-card-title v-html="title"/>\n' +
-            '    <v-card-subtitle v-html="description"/>\n' +
+            '<v-card flat>' +
+            '    <v-card-title v-if="title" v-html="title"/>' +
+            '    <v-card-subtitle v-if="description" v-html="description"/>' +
             '</v-card>',
         props: {
 

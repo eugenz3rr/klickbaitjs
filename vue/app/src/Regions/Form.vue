@@ -1,8 +1,8 @@
 <template>
   <v-form class="pa-4">
-    <br/>
-    <h2>{{ region.title }}</h2>
-    <h6>{{ region.description }}</h6>
+    <br v-if="region.title || region.description"/>
+    <h2 v-if="region.title">{{ region.title }}</h2>
+    <h6 v-if="region.description">{{ region.description }}</h6>
 
     <component v-for="(renderElement, element) in renderArray"
                :is="`as-${renderElement['#type']}`"
@@ -62,16 +62,6 @@ export default {
       snackbar: false,
       changed: 0,
       registered: 0,
-      redirect: undefined,
-      events: {
-        submit: {
-          receive: () => {},
-          redirect: () => {},
-        },
-        register: {
-          receive: () => {},
-        },
-      }
     }
   },
 
@@ -84,67 +74,22 @@ export default {
     await this.region.load();
     this.info = this.region.regionRaw.info;
 
-    const values = await this.loadValues();
+    const values = await this.build();
     this.renderArray = await this.region.regionRaw.build(this.region.module, values, this.$route.params);
-
-    let received = 0;
-
-    this.events.submit.receive = data => {
-      const {key, value} = data;
-
-      // Reset value to prevent errors.
-      if (received === 0) {
-        this.values = {};
-      }
-
-      // Set the new value.
-      this.values[key] = value;
-
-      // Update the received items.
-      received++;
-
-      // Check if we all
-      if (this.registered === received) {
-        this.submit(false, this.redirect);
-        received = 0;
-      }
-    };
-    this.events.submit.redirect = to => {
-      this.redirect = to;
-      this.submit();
-    };
-    this.events.register.receive = () => {
-      this.registered++;
-    };
-
-    EventBus.$on(`register.receive.${this.info.id}`, this.events.register.receive);
-    EventBus.$on(`submit.receive.${this.info.id}`, this.events.submit.receive);
-    EventBus.$on('submit.redirect', this.events.submit.redirect);
-  },
-
-  beforeDestroy: function () {
-    this.removeEvents();
   },
 
   methods: {
 
-    removeEvents: function () {
-      EventBus.$off(`register.receive.${this.info.id}`, this.events.register.receive);
-      EventBus.$off(`submit.receive.${this.info.id}`, this.events.submit.receive);
-      EventBus.$off('submit.redirect', this.events.submit.redirect);
-    },
-
     /**
      *
      */
-    loadValues: async function () {
+    build: async function () {
       let values = {};
 
       try {
         values = await this.region.fileSystem.readJSON(`${this.region.module.path}values/form.${this.info.id}.json`);
         console.log(`${this.region.module.path}values/form.${this.info.id}.json`)
-      }
-      catch (error) {
+      } catch (error) {
         await this.region.fileSystem.write(`${this.region.module.path}values/form.${this.info.id}.json`, JSON.stringify({}));
 
         /*
@@ -162,55 +107,10 @@ export default {
 
     },
 
-    submit: async function (collect = true) {
+    submit: async function () {
+      this.saving = true;
 
-      // First collect all information currently set in all elements.
-      if (collect) {
-
-        EventBus.$emit(`submit.event.${this.info.id}`);
-        this.saving = true;
-        return;
-      }
-
-      // TODO: Make this look nicer.
-      // Submit all values.
-      if (this.redirect === undefined) {
-        await this.save(this.values);
-      }
-      else {
-        console.debug(this.values)
-        const params_length = Object.keys(this.$route.params);
-        const values_length = Object.keys(this.values);
-
-        // We want to merge the current params with the default ones from the redirect button itself.
-        if ('params' in this.redirect && values_length) {
-          this.redirect.params = Object.assign(
-              this.redirect.params,
-              this.$route.params
-          );
-        }
-        else if ('params' in this.redirect && values_length) {
-
-          this.redirect.params = Object.assign(
-              this.redirect.params,
-              this.values
-          );
-        }
-        else if (params_length && values_length) {
-
-          this.redirect.params = Object.assign(
-              this.$route.params,
-              this.values
-          );
-        }
-        else {
-          this.redirect.params = this.values;
-        }
-
-        this.saving = false;
-        this.removeEvents();
-        await this.$router.push(this.redirect);
-      }
+      await this.save(this.$route.params);
 
       //console.log(this.values)
       this.saving = false;
@@ -222,9 +122,14 @@ export default {
      * @param values
      */
     save: async function (values) {
-      console.debug('values', values)
+
+      console.debug('values - 1', values);
       values = await this.region.regionRaw.submit(this.route.module, values);
-      await this.region.fileSystem.write(`${this.router.module.path}values/form.${this.info.id}.json`, JSON.stringify(values));
+      console.debug('values - 2', values);
+
+      if ('save' in this.info && this.info.save !== false) {
+        //await this.region.fileSystem.write(`${this.router.module.path}values/form.${this.info.id}.json`, JSON.stringify(values));
+      }
     }
   }
 }

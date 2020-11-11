@@ -26,8 +26,7 @@ const Settings = {
 
         build.title = {
             '#type': 'headline',
-            '#title': Module.fallback(data, 'tile_title', false) ? `Oi cunt u forgot to save ur tile ...` : 'Hi choose your tile ;)',
-            '#description': 'Core templates are templates which are defined by default.',
+            '#title': 'Tile Templates',
         };
 
         build.add_tile = {
