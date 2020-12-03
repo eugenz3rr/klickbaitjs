@@ -70,7 +70,7 @@ else {
                 }
 
                 // Continue if extension is detected.
-                if (optionString === 'd') {
+                if (optionString.includes('d')) {
                     let source = key.split('/');
 
                     // Filter array from empty entries.

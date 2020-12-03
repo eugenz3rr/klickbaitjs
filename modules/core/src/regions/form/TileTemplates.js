@@ -29,38 +29,36 @@ const Settings = {
             '#title': 'Tile Templates',
         };
 
-        build.add_tile = {
-            '#type': 'button',
-            '#title': 'Tile',
-            '#to': {
-                name: 'add.tile',
-                params: {
-                    tile_title: ""
+        build.tile_column = {
+            '#type': 'one_column',
+            '#content': {
+                add_tile: {
+                    '#type': 'tile_template',
+                    '#title': 'Tile',
+                    '#to': {
+                        name: 'add.tile',
+                        params: {
+                            tile_title: "",
+                            path: data.path,
+                        }
+                    },
+                    '#color': 'info'
                 }
             },
-            '#color': 'info'
+        };
+
+        build.board = {
+            '#type': 'headline',
+            '#title': 'Board Templates',
         };
 
         build.add_board = {
-            '#type': 'button',
+            '#type': 'tile_template',
             '#title': 'Board',
             '#to': {
                 name: 'add.tile'
             },
             '#color': 'info'
-        };
-
-        build.hardcore = {
-            '#type': 'button',
-            '#title': 'Hardcore',
-            '#to': {
-                name: 'add.tile',
-                params: {
-                    tile_title: "yo I'm hardcore hehe",
-                    tile_color: "#ff0000",
-                }
-            },
-            '#color': 'red'
         };
 
         return build;

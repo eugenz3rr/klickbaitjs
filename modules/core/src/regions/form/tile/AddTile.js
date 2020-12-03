@@ -159,8 +159,29 @@ const Settings = {
     },
 
     submit: async (Module, values) => {
+        const prefix = '/soundboard';
+        const path = `${prefix}${values.path}`;
+        const file_name = Date.now();
 
-        //Module.fileSystem.write(`${this.router.module.path}values/form.${this.info.id}.json`, JSON.stringify(values))
+        /** @var images {Array<File>} */
+        const images = Module.fallback(values, 'image_upload', false);
+        if (images !== false) {
+            for (let i = 0; i < images; i++) {
+
+                /** @var image {File} */
+                const image = images[i];
+
+                const blob = new Blob([image], {
+                    type: image.mimeType
+                });
+
+                console.log(image.filename)
+                await Module.fileSystem.write(`${path}files/${file_name}_${image.filename}`, blob);
+            }
+        }
+
+
+        await Module.fileSystem.write(`${path}${file_name}.json`, JSON.stringify(values))
 
         // The submitted values of the user.
         return values;

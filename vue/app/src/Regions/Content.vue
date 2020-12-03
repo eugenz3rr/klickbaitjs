@@ -37,7 +37,7 @@ export default {
 
     // Load the render array.
     await this.region.load();
-    this.renderArray = this.region.regionRaw.build(this.region.module);
+    this.renderArray = await this.region.regionRaw.build(this.region.module, this.$route);
   },
 
   methods: {}

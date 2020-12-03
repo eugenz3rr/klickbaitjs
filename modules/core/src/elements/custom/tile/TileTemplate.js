@@ -1,15 +1,16 @@
 Module => {
     const component = {
-        name: 'Tile',
+        name: 'TileTemplate',
         template:
             '<v-card ' +
             '       v-ripple' +
             '       v-touch:tap="click"' +
-            '       width="150px" ' +
-            '       height="150px" ' +
+            '       :width="size" ' +
+            '       :height="size" ' +
             '       :color="backgroundColor" ' +
             '       class="tile" ' +
-            '       :class="classes">' +
+            '       :class="classes"' +
+            '       :style="style">' +
             '   <v-card-text :style="{ color: textColor }">{{ title }}</v-card-text>' +
             '   <v-img v-if="src !== undefined" :src="src" width="150px" height="150px" :color="backgroundColor">' +
             '   </v-img>' +
@@ -18,14 +19,18 @@ Module => {
             return {
                 title: '',
                 backgroundColor: '',
+                size: `${window.innerWidth / 4}px`,
                 textColor: '#000000',
                 changed: 0,
                 src: undefined,
                 audio: [],
                 classes: ['default'],
+                style: {
+
+                },
                 images: [],
-                sounds: [],
                 update: [],
+                to: [],
             };
         },
         watch: {
@@ -43,20 +48,6 @@ Module => {
                 },
                 deep: true
             },
-            sounds: {
-                handler: function (value) {
-                    if (value.length === 0) {
-                        this.src = '';
-                        return;
-                    }
-                    const fileReader = new FileReader()
-                    fileReader.onload = () => {
-                        this.audio = new Audio(fileReader.result);
-                    }
-                    fileReader.readAsDataURL(value[0]);
-                },
-                deep: true
-            }
         },
         props: {
 
@@ -121,43 +112,35 @@ Module => {
                     continue;
                 }
 
-                if (value.includes('~')) {
-                    this.update.push({
-                        key: key.replace('#', ''),
-                        value: value.replace('~', '')
-                    });
-
-                    //continue;
-                    if (key.replace('#', '') in this && value.replace('~', '') in this.$route.params) {
-                        value = this.$route.params[value.replace('~', '')];
-                    }
-                    else {
-                        continue;
-                    }
-                }
-
                 // Set the new value.
                 this[key.replace('#', '')] = value;
             }
         },
+        updated: async function () {
+            const containers = document.querySelector('.one-column');
+            const computedWidth = containers.offsetWidth;
+
+            // todo: Look into this.
+            this.size = `${(window.innerWidth - 50)/ 4}px`
+            this.style.margin = '2px';
+
+            /*const sortable = new Draggable.Swappable(containers, {
+                draggable: '.tile',
+                mirror: {
+                    appendTo: '.one-column',
+                    constrainDimensions: true,
+                },
+                plugins: [Draggable.Plugins.SwapAnimation],
+                sortAnimation: {
+                    duration: 200,
+                },
+            });*/
+        },
         methods: {
             click: function () {
-                if (this.audio.constructor.name !== 'HTMLAudioElement') {
-                    return;
-                }
-
-                this.audio.pause();
-                this.audio.currentTime = 0;
-                this.audio.play();
+                this.$router.push(this.to)
             }
         },
-        destroyed: function () {
-            if (this.audio.constructor.name !== 'HTMLAudioElement') {
-                return;
-            }
-
-            this.audio.pause();
-        }
     };
 
     Module.appendStyle(`src/elements/css/Tile.css`, component.name);

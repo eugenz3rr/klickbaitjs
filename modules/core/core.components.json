@@ -32,6 +32,11 @@
       "description": "An element which enables to split content on the left and content on the right.",
       "path": "src/containers/layouts/TwoColumn.js"
     },
+    "one_column": {
+      "title": "One Column",
+      "description": "An element which enables to split content on the left and content on the right.",
+      "path": "src/containers/layouts/OneColumn.js"
+    },
     "add-tile-button": {
       "title": "Add Tile Button",
       "description": "An element which enables the user to upload files.",
@@ -103,6 +108,11 @@
       "title": "Image",
       "description": "An element which enables the user to upload files.",
       "path": "src/elements/Image.js"
+    },
+    "tile_template": {
+      "title": "TileTemplate",
+      "description": "An element which enables the user to upload files.",
+      "path": "src/elements/custom/tile/TileTemplate.js"
     }
   }
 }
