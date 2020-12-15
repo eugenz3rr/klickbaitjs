@@ -3,12 +3,12 @@
     "content": {
       "title": "Content",
       "description": "Is used to display data.",
-      "path": "src/regions/content/Content.js"
+      "path": "src/regions/Content.js"
     },
     "form": {
       "title": "Form",
       "description": "Is used to alter data.",
-      "path": "src/regions/form/Form.js"
+      "path": "src/regions/Form.js"
     }
   },
   "containers": {

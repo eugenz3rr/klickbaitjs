@@ -27,16 +27,15 @@ export default {
 * {
   font-family: "OpenLight", sans-serif;
 }
-//.best {
-//  z-index: 99999;
-//}
+
 #advanced-soundboard {
   position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-
-  @import "./vuetify.min.css";
 }
+
+@import "./vuetify.min.css";
+
 </style>

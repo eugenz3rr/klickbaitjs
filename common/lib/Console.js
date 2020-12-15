@@ -8,11 +8,11 @@ export default class Console extends Helper {
     }
     emit(event, detail) {
         // @ts-ignore
-        window.EventBus.$emit(event, detail);
+        //window.EventBus.$emit(event, detail);
     }
     off(event, detail) {
         // @ts-ignore
-        window.EventBus.$off(event, detail);
+        //window.EventBus.$off(event, detail);
     }
     alterEvent(event, detail) {
         dispatchEvent(new CustomEvent(`${event}.alter`, {
@@ -21,6 +21,6 @@ export default class Console extends Helper {
     }
     on(event, callback) {
         // @ts-ignore
-        window.EventBus.$on(event, callback);
+        //window.EventBus.$on(event, callback);
     }
 }

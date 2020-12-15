@@ -1,7 +1,6 @@
 import CordovaPromiseFS from 'cordova-promise-fs';
 import promiscuous from "promiscuous";
 import * as Common from "./../../common/lib/Library";
-import Vue from "vue";
 
 let cordovaExists = false;
 window.cordovaExists = cordovaExists;
@@ -99,8 +98,6 @@ else {
 
     window.localSystem = {};
 }
-
-window.EventBus = new Vue({});
 
 const Manager = new Common.Manager(fileSystem);
 window['Manager'] = Manager;

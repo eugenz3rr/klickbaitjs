@@ -51,18 +51,12 @@ export default class Module extends Console {
 
     this.id = id;
     this.path = path;
-
-    this.initialize().then(() => {
-      this.ready();
-    }).catch(err => {
-      console.log(err)
-    });
   }
 
   /**
    * 
    */
-  private async initialize(): Promise<any> {
+  public async initialize(): Promise<any> {
 
     this.log(`Reading > ${this.path}${this.id}.info.json`);
 
@@ -92,6 +86,7 @@ export default class Module extends Console {
 
       const types: string[] = ['elements', 'containers', 'regions'];
 
+      console.groupCollapsed("Component Loading");
       for (let i = 0; i < types.length; i++) {
         let type: any = this.fallback(components, types[i], {});
         const ids: string[] = Object.keys(type);
@@ -104,9 +99,18 @@ export default class Module extends Console {
           let component: any = type[id];
           type[id]['type'] = types[i];
 
-          new Component(this, id, component);
+          component = new Component(this, id, component);
+
+          // Start loading.
+          try {
+            await component.load();
+            console.log(component.title, "Component loaded.")
+          } catch (e) {
+            console.error(component.path, 'Could not be loaded as it does not exist.')
+          }
         }
       }
+      console.groupEnd();
     }
 
   }
@@ -124,12 +128,5 @@ export default class Module extends Console {
       document.head.append(style);
 
     }).catch(() => {})
-  }
-
-  /**
-   *
-   */
-  private ready(): void {
-    this.moduleManager.moduleReady(this);
   }
 } 

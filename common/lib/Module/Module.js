@@ -28,11 +28,6 @@ export default class Module extends Console {
         this.moduleManager.modules.push(this);
         this.id = id;
         this.path = path;
-        this.initialize().then(() => {
-            this.ready();
-        }).catch(err => {
-            console.log(err);
-        });
     }
     /**
      *
@@ -58,6 +53,7 @@ export default class Module extends Console {
         // Sanity check.
         if (components !== undefined) {
             const types = ['elements', 'containers', 'regions'];
+            console.groupCollapsed("Component Loading");
             for (let i = 0; i < types.length; i++) {
                 let type = this.fallback(components, types[i], {});
                 const ids = Object.keys(type);
@@ -66,9 +62,18 @@ export default class Module extends Console {
                     const id = ids[j];
                     let component = type[id];
                     type[id]['type'] = types[i];
-                    new Component(this, id, component);
+                    component = new Component(this, id, component);
+                    // Start loading.
+                    try {
+                        await component.load();
+                        console.log(component.title, "Component loaded.");
+                    }
+                    catch (e) {
+                        console.error(component.path, 'Could not be loaded as it does not exist.');
+                    }
                 }
             }
+            console.groupEnd();
         }
     }
     appendStyle(path, id) {
@@ -81,11 +86,5 @@ export default class Module extends Console {
             style.setAttribute('data-source-id', id);
             document.head.append(style);
         }).catch(() => { });
-    }
-    /**
-     *
-     */
-    ready() {
-        this.moduleManager.moduleReady(this);
     }
 }

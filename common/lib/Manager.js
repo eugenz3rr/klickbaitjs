@@ -10,9 +10,6 @@ export default class Manager extends Console {
         // Contains all routes.
         this.routeManager = new RouteManager(fileSystem);
         this.componentManager = new ComponentManager(fileSystem);
-        this.on('manager.module.ready', () => {
-            this.summary();
-        });
     }
     /**
      * Collect all data from the modules and sum them together.

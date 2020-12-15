@@ -69,8 +69,13 @@
 </template>
 
 <script>
-import Form from "./Regions/Form";
-import Content from "./Regions/Content";
+
+const data = window.Manager.componentManager.getAll();
+const components = {};
+for (let i = 0; i < data.length; i++) {
+  const component = data[i];
+  components[`as-${component.id}`] = component.getComponent();
+}
 
 export default {
   name: "Route",
@@ -86,10 +91,7 @@ export default {
   props: {
     route: Object,
   },
-  components: {
-    'as-content': Content,
-    'as-form': Form,
-  }
+  components
 };
 </script>
 

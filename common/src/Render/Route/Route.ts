@@ -1,5 +1,4 @@
 import Console from "../../Console";
-import FileSystem from "../../FileSystem";
 import RouteManager from "./Manager";
 import RegionManager from "../Region/Manager";
 import Module from "../../Module/Module";

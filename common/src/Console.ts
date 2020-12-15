@@ -13,12 +13,12 @@ export default class Console extends Helper {
 
     public emit(event: string, detail: any): void {
         // @ts-ignore
-        window.EventBus.$emit(event, detail);
+        //window.EventBus.$emit(event, detail);
     }
 
     public off(event: string, detail: any): void {
         // @ts-ignore
-        window.EventBus.$off(event, detail);
+        //window.EventBus.$off(event, detail);
     }
 
     public alterEvent(event: string, detail: any): void {
@@ -29,6 +29,6 @@ export default class Console extends Helper {
 
     public on(event: string, callback: Function): void {
         // @ts-ignore
-        window.EventBus.$on(event, callback);
+        //window.EventBus.$on(event, callback);
     }
 }

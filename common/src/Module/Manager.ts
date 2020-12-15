@@ -21,7 +21,7 @@ export default class ModuleManager extends Console {
 
     public async discover(): Promise<any> {
 
-        await new Installer(this.fileSystem).install()
+        await new Installer(this.fileSystem).install();
 
         // List all directories in the module directory.
         const directories: string[] = await this.fileSystem.list(this.path, 'd');
@@ -35,28 +35,9 @@ export default class ModuleManager extends Console {
             id = id.split('/');
             id = id[id.length - 2];
 
-            new Module(this, directory, id);
+            const module = new Module(this, directory, id);
+            await module.initialize();
+            this.manager.summary();
         }
     };
-
-    /**
-     *
-     * @param module
-     */
-    public async moduleReady(module: Module): Promise<any> {
-
-        // A specific module is ready.
-        this.emit(`manager.module.${module.id}.ready`, module);
-
-        // A module is ready.
-        this.emit('manager.module.module.ready', module);
-
-        // Check if all modules were discovered.
-        const directories: string[] = await this.fileSystem.list(this.path, 'd');
-        if (directories.length === this.modules.length) {
-
-            // Module manager is ready.
-            this.emit('manager.module.ready', module);
-        }
-    }
 }

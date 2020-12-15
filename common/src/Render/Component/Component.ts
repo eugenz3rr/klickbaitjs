@@ -29,26 +29,6 @@ export default class Component extends Console {
         this.description = this.fallback(component, 'description', 'No description set');
         this.path = this.fallback(component, 'path', 'No path set');
         this.type = this.fallback(component, 'type', 'elements');
-
-        // Start loading.
-        this.load().then(() => {
-            console.log(this.title, "Component loaded.")
-
-            switch (this.type) {
-                case 'regions':
-                    this.module.componentManager.regions.push(this);
-                    break;
-                case 'containers':
-                    this.module.componentManager.containers.push(this);
-                    break;
-                case 'elements':
-                    this.module.componentManager.elements.push(this);
-                    break;
-            }
-
-        }).catch((err) => {
-            console.error(this.path, 'Could not be loaded as it does not exist.')
-        })
     }
 
     /**
@@ -60,6 +40,18 @@ export default class Component extends Console {
         // Execute order 66.
         this.raw = eval(component);
         this.component = this.raw(this.module);
+
+        switch (this.type) {
+            case 'regions':
+                this.module.componentManager.regions.push(this);
+                break;
+            case 'containers':
+                this.module.componentManager.containers.push(this);
+                break;
+            case 'elements':
+                this.module.componentManager.elements.push(this);
+                break;
+        }
     }
 
     public getComponent(): any {
