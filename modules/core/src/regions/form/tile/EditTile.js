@@ -71,13 +71,6 @@ const Settings = {
             ]
         }
 
-        build.help_tile_style = {
-            '#type': 'information',
-            '#title': 'A style for my tile?',
-            '#description': '.',
-            '#value': 'What is a tile style?'
-        };
-
         build.alter_text = {
             '#type': 'redirect_button',
             '#title': 'Customize Text',
@@ -152,6 +145,21 @@ const Settings = {
             ],
         };
 
+        build.back = {
+            '#type': 'button',
+            '#title': 'Cancel',
+            '#outlined': true,
+            '#block': true,
+            '#classes': ['mb-2'],
+            '#color': '#FF0000',
+            '#to': {
+                name: 'core.board',
+                params: {
+                    values: Module.fallback(values, 'path', ''),
+                }
+            }
+        };
+
         return build;
     },
     validate: (Module, values) => {
@@ -166,14 +174,18 @@ const Settings = {
     },
 
     submit: async (Module, values, Router) => {
-        const path = values.pathMatch;
-        const file_name = Date.now();
+        const path = values.path;
+        let file_name = path.split('/')[path.split('/').length - 1];
         const path_directory = path.replace(file_name, "");
+        file_name = file_name.split('.')[0];
+
+        // @fixme Remove all images before setting new images.
 
         /** @var images {Array<File>} */
         const images = Module.fallback(values, 'image_upload', false);
+
         if (images !== false) {
-            for (let i = 0; i < images; i++) {
+            for (let i = 0; i < images.length; i++) {
 
                 /** @var image {File} */
                 const image = images[i];
@@ -189,8 +201,7 @@ const Settings = {
             }
         }
 
-        const file_path = `${path_directory}/${file_name}.json`.replaceAll('//', '/');
-        await Module.fileSystem.write(file_path, JSON.stringify(values));
+        await Module.fileSystem.write(path, JSON.stringify(values))
 
         Router.push({
             name: "core.board",

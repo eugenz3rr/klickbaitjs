@@ -1,9 +1,12 @@
 {
   "core.board": {
-    "path": "/core/board",
+    "path": "/core/board*",
     "title": "Board",
     "description": "Board where the tiles are located at.",
     "hide": false,
+    "params": {
+      "pathMatch": "/soundboard/"
+    },
     "regions": [
       {
         "type": "content",
@@ -18,7 +21,6 @@
     "path": "/core/settings",
     "title": "Settings",
     "description": "Default settings",
-    "hide": false,
     "regions": [
       {
         "type": "form",
@@ -47,7 +49,7 @@
     "description": "Here you choose your tiles before adding your final stuff.",
     "regions": [
       {
-        "type": "form",
+        "type": "content",
         "title": "",
         "description": "",
         "path": "src/regions/form/TileTemplates.js"
@@ -88,8 +90,73 @@
       {
         "type": "form",
         "title": "Tile form",
-        "description": "Edit / add current tile.",
+        "description": "Add a tile.",
         "path": "src/regions/form/tile/AddTile.js"
+      }
+    ]
+  },
+  "edit.tile": {
+    "path": "/edit/tile",
+    "title": "Edit Tile",
+    "description": "Default settings",
+    "regions": [
+      {
+        "type": "form",
+        "title": "Tile form",
+        "description": "Add a tile.",
+        "path": "src/regions/form/tile/EditTile.js"
+      }
+    ]
+  },
+  "delete.tile": {
+    "path": "/delete/tile",
+    "title": "Delete Tile",
+    "description": "Default settings",
+    "regions": [
+      {
+        "type": "form",
+        "title": "Tile form",
+        "description": "Add a tile.",
+        "path": "src/regions/form/tile/EditTile.js"
+      }
+    ]
+  },
+  "add.board": {
+    "path": "/add/board",
+    "title": "Add Board",
+    "description": "Default settings",
+    "regions": [
+      {
+        "type": "form",
+        "title": "Board form",
+        "description": "Add a board.",
+        "path": "src/regions/form/tile/AddBoard.js"
+      }
+    ]
+  },
+  "edit.board": {
+    "path": "/edit/board",
+    "title": "Edit Board",
+    "description": "Default settings",
+    "regions": [
+      {
+        "type": "form",
+        "title": "Board form",
+        "description": "Edit a board.",
+        "path": "src/regions/form/tile/EditBoard.js"
+      }
+    ]
+  },
+  "delete.board": {
+    "path": "/delete/board",
+    "title": "Delete Board",
+    "description": "Default settings",
+    "regions": [
+      {
+        "type": "form",
+        "title": "Tile form",
+        "description": "Add a tile.",
+        "path": "src/regions/form/tile/EditTile.js"
       }
     ]
   },

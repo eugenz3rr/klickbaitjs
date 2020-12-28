@@ -1,11 +1,13 @@
 Module => {
     const component = {
-        name: 'S-Headline',
+        name: 'Space-Holder',
         template:
-            '<v-card flat color="transparent">' +
-            '    <v-card-title v-if="title" v-html="title"/>' +
-            '    <v-card-subtitle v-if="description" v-html="description"/>' +
-            '</v-card>',
+            '<div :style="' +
+            '   {' +
+            '       width,' +
+            '       height' +
+            '   }">' +
+            '</div>',
         props: {
 
             /**
@@ -20,12 +22,10 @@ Module => {
         },
         data() {
             return {
-                title: "",
-                description: "",
-                size: 1,
+                width: "",
+                height: ""
             };
         },
-
         mounted: async function () {
 
             // Iterate trough all items and set them.
@@ -51,6 +51,8 @@ Module => {
             }
         },
     };
+    
+    Module.appendStyle(`src/elements/css/AdvancedSpaceHolder.css`, component.name);
 
     return component;
 };

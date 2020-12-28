@@ -1,6 +1,7 @@
 .one-column {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 .one-column .tile {

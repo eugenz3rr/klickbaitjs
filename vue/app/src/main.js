@@ -8,7 +8,7 @@ import App from './App.vue';
 import Vue from "vue";
 import Vuetify from "vuetify/dist/vuetify.min";
 //import VueI18n from 'vue-i18n';
-//import Vue2TouchEvents from 'vue2-touch-events';
+import Vue2TouchEvents from 'vue2-touch-events';
 import Cropper from "cropperjs";
 //import * as Draggable from "@shopify/draggable";
 
@@ -17,7 +17,7 @@ window.Cropper = Cropper;
 
 Vue.use(Vuetify);
 //Vue.use(VueI18n);
-//Vue.use(Vue2TouchEvents);
+Vue.use(Vue2TouchEvents);
 Vue.use(VueRouter);
 Vue.use(EventManager);
 

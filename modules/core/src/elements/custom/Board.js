@@ -6,10 +6,10 @@ Module => {
             '       v-ripple' +
             '       v-touch:tap="click"' +
             '       v-touch:longtap="edit"' +
-            '       :width="width" ' +
-            '       :height="height" ' +
-            '       :color="backgroundColor" ' +
-            '       class="tile" ' +
+            '       :width="width"' +
+            '       :height="height"' +
+            '       :color="backgroundColor"' +
+            '       class="tile"' +
             '       :class="classes">' +
             '   <v-card-text :style="{ color: textColor }">{{ title }}</v-card-text>' +
             '   <v-img v-if="src !== undefined" :src="src" width="150px" height="150px" :color="backgroundColor">' +
@@ -40,7 +40,6 @@ Module => {
                         this.src = '';
                         return;
                     }
-
                     const fileReader = new FileReader()
                     fileReader.onload = () => {
                         this.src = fileReader.result;
@@ -49,20 +48,6 @@ Module => {
                 },
                 deep: true
             },
-            sounds: {
-                handler: function (value) {
-                    if (value.length === 0) {
-                        this.src = '';
-                        return;
-                    }
-                    const fileReader = new FileReader()
-                    fileReader.onload = () => {
-                        this.audio = new Audio(fileReader.result);
-                    }
-                    fileReader.readAsDataURL(value[0]);
-                },
-                deep: true
-            }
         },
         props: {
 
@@ -148,13 +133,12 @@ Module => {
         },
         methods: {
             click: function () {
-                if (this.audio.constructor.name !== 'HTMLAudioElement') {
-                    return;
-                }
-
-                this.audio.pause();
-                this.audio.currentTime = 0;
-                this.audio.play();
+                this.$router.push({
+                    name: 'core.board',
+                    params: {
+                        pathMatch: this.path,
+                    }
+                })
             },
             edit: function () {
                 this.$router.push(this.to);

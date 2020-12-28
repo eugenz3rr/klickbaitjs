@@ -7,15 +7,7 @@
 <script>
 
 export default {
-  name: "AdvancedSoundboard",
-  data() {
-    return {
-      Helper,
-    };
-  },
-  mounted: function() {
-  },
-  components: {}
+  name: "AdvancedSoundboard"
 };
 </script>
 
@@ -34,6 +26,7 @@ export default {
   height: 100%;
   top: 0;
   left: 0;
+  background-color: white;
 }
 
 @import "./vuetify.min.css";

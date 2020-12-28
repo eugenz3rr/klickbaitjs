@@ -41,6 +41,11 @@
       "title": "Add Tile Button",
       "description": "An element which enables the user to upload files.",
       "path": "src/elements/custom/tile/AddTileButton.js"
+    },
+    "floating_buttons": {
+      "title": "A floating button container.",
+      "description": "An element which enables the user to upload files.",
+      "path": "src/elements/custom/tile/AddTileButton.js"
     }
   },
   "elements": {
@@ -48,6 +53,11 @@
       "title": "Tile",
       "description": "Displays the tile.",
       "path": "src/elements/custom/Tile.js"
+    },
+    "board": {
+      "title": "Board",
+      "description": "Displays a board tile. Similar to a tile but without sound.",
+      "path": "src/elements/custom/Board.js"
     },
     "textfield": {
       "title": "Textfield",
@@ -88,6 +98,16 @@
       "title": "Paragraph",
       "description": "An element which should resemble a paragraph.",
       "path": "src/elements/Paragraph.js"
+    },
+    "advanced-space-holder": {
+      "title": "Space-Holder",
+      "description": "An element which should resemble a paragraph.",
+      "path": "src/elements/AdvancedSpaceHolder.js"
+    },
+    "information": {
+      "title": "Information",
+      "description": "An element which should resemble a paragraph.",
+      "path": "src/elements/Information.js"
     },
     "dropdown": {
       "title": "Dropdown",

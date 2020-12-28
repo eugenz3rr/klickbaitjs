@@ -5,6 +5,7 @@ Module => {
             '<v-btn' +
             '   :absolute="absolute"' +
             '   :active-class="activeClass"' +
+            '   :class="classes"' +
             '   :append="append"' +
             '   :block="block"' +
             '   :bottom="bottom"' +
@@ -118,6 +119,7 @@ Module => {
                 width: undefined,
                 xLarge: false,
                 xSmall: false,
+                classes: []
             };
         },
 

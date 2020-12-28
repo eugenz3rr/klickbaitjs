@@ -5,8 +5,8 @@ Module => {
             '<v-card ' +
             '       v-ripple' +
             '       v-touch:tap="click"' +
-            '       :width="size" ' +
-            '       :height="size" ' +
+            '       :width="width" ' +
+            '       :height="height" ' +
             '       :color="backgroundColor" ' +
             '       class="tile" ' +
             '       :class="classes"' +
@@ -19,15 +19,14 @@ Module => {
             return {
                 title: '',
                 backgroundColor: '',
-                size: `${window.innerWidth / 4}px`,
                 textColor: '#000000',
                 changed: 0,
                 src: undefined,
                 audio: [],
                 classes: ['default'],
-                style: {
-
-                },
+                style: {},
+                height: '150px',
+                width: '150px',
                 images: [],
                 update: [],
                 to: [],

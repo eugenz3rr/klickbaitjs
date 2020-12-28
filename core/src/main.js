@@ -81,15 +81,30 @@ else {
                     target = target.filter(item => item);
 
                     if (source.length > target.length) {
-                        let isFile = source[target.length].split('.').length > 1;
+                        const isFile = source[target.length].split('.').length > 1;
                         source = '/' + source.splice(0, target.length + 1).join('/') + '/';
                         if (!isFile && !values.includes(source)) values.push(source);
                     }
-
-                    continue;
                 }
 
-                values.push(key);
+                // Continue if extension is detected.
+                if (optionString.includes('f')) {
+                    let source = key.split('/');
+
+                    // Filter array from empty entries.
+                    source = source.filter(item => item);
+
+                    let target = path.split('/');
+
+                    // Filter array from empty entries.
+                    target = target.filter(item => item);
+
+                    if (source.length === (target.length + 1)) {
+                        let isFile = source[target.length].split('.').length > 1;
+                        source = '/' + source.splice(0, target.length + 1).join('/');
+                        if (isFile && !values.includes(source)) values.push(source);
+                    }
+                }
             }
 
             return values;

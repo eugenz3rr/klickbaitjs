@@ -29,8 +29,8 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>Unknown</v-list-item-title>
-            <v-list-item-subtitle>Not logged in</v-list-item-subtitle>
+            <v-list-item-title>Development</v-list-item-title>
+            <v-list-item-subtitle>In development</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
 
@@ -44,7 +44,8 @@
             v-if="!route.hide"
             link
             :to="{
-              path: route.path
+              name: route.id,
+              params: route.params
             }">
           <v-list-item-icon v-if="route.fallback(route, 'icon', false)">
             <v-icon>{{ route.icon }}</v-icon>
@@ -61,7 +62,7 @@
                :is="`as-${region.type}`"
                :route="route"
                :region="region"
-               :key="`region-${index}-${region.type}-${route.path}`"
+               :key="`region-${index}-${region.type}-${route.path}-${changed}`"
                :style="{
                  order: index
                 }"/>
@@ -83,13 +84,19 @@ export default {
     return {
       Helper,
       drawer: false,
-      renderRegions: []
+      renderRegions: [],
+      changed: 0
     };
   },
   mounted: function () {
   },
   props: {
     route: Object,
+  },
+  watch: {
+    $route: async function (to, from) {
+      this.changed = Date.now();
+    }
   },
   components
 };

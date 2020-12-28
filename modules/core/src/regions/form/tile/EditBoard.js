@@ -5,10 +5,10 @@ const Settings = {
      * @description This holds information about the form.
      */
     "info": {
-        "title": "Tile Settings",
+        "title": "Board Settings",
         "description": "Configure your settings here.",
-        "id": "tile",
-        "tab": "tile.settings",
+        "id": "tile.settings",
+        "tab": "misc",
         "location": "settings",
         "save": false,
     },
@@ -71,13 +71,6 @@ const Settings = {
             ]
         }
 
-        build.help_tile_style = {
-            '#type': 'information',
-            '#title': 'A style for my tile?',
-            '#description': '.',
-            '#value': 'What is a tile style?'
-        };
-
         build.alter_text = {
             '#type': 'redirect_button',
             '#title': 'Customize Text',
@@ -93,36 +86,6 @@ const Settings = {
         build.advanced_settings = {
             '#type': 'accordion',
             '#panels': [
-                {
-                    '#title': 'Sound',
-                    '#content': {
-                        paragraph: {
-                            '#type': 'paragraph',
-                            '#flat': true,
-                            '#title': 'Description',
-                            '#description': 'This is very cool',
-                            '#value': 'Add your sound file, so we can start to edit :D'
-                        },
-                        sound_upload: {
-                            '#type': 'upload',
-                            '#title': 'Sound File',
-                            '#description': 'Select your sound file.',
-                            '#value': Module.fallback(values, 'sound_upload', Module.fallback(data, 'sound_upload', [])),
-                        },
-                        sound_upload_edit: {
-                            '#type': 'redirect_button',
-                            '#title': 'Edit audio file',
-                            '#appendIcon': 'audiotrack',
-                            '#vif': '~sound_upload',
-                            '#to': {
-                                name: 'core.sound'
-                            },
-                            '#block': true,
-                            '#color': 'info',
-                            '#outlined': true
-                        }
-                    }
-                },
                 {
                     '#title': 'Image',
                     '#content': {
@@ -152,6 +115,21 @@ const Settings = {
             ],
         };
 
+        build.back = {
+            '#type': 'button',
+            '#title': 'Cancel',
+            '#outlined': true,
+            '#block': true,
+            '#classes': ['mb-2'],
+            '#color': '#FF0000',
+            '#to': {
+                name: 'core.board',
+                params: {
+                    values: Module.fallback(values, 'pathMatch', ''),
+                }
+            }
+        };
+
         return build;
     },
     validate: (Module, values) => {
@@ -166,14 +144,16 @@ const Settings = {
     },
 
     submit: async (Module, values, Router) => {
-        const path = values.pathMatch;
-        const file_name = Date.now();
-        const path_directory = path.replace(file_name, "");
+        const path = values.path;
+        let file_name = path.split('/')[path.split('/').length - 1];
+        file_name = file_name.split('.')[0];
+
+        // @fixme Remove all images before setting new images.
 
         /** @var images {Array<File>} */
         const images = Module.fallback(values, 'image_upload', false);
         if (images !== false) {
-            for (let i = 0; i < images; i++) {
+            for (let i = 0; i < images.length; i++) {
 
                 /** @var image {File} */
                 const image = images[i];
@@ -184,17 +164,16 @@ const Settings = {
                     type: image.mimeType
                 });
 
-                await Module.fileSystem.write(`${path_directory}files/${file_name}_${image.name}`, blob);
+                await Module.fileSystem.write(`${path}files/${file_name}_${image.name}`, blob);
                 values.image_upload[i] = image.name;
             }
         }
 
-        const file_path = `${path_directory}/${file_name}.json`.replaceAll('//', '/');
-        await Module.fileSystem.write(file_path, JSON.stringify(values));
+        await Module.fileSystem.write(`${path}board.json`, JSON.stringify(values))
 
         Router.push({
             name: "core.board",
-            params: values,
+            params: values
         });
 
         // The submitted values of the user.

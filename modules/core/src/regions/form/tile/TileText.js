@@ -30,19 +30,20 @@ const Form = {
             '#value': Module.fallback(data, 'text_color', '#32a852'),
         }
 
+        const edit = Module.fallback(data, 'pathMatch', '') !== "" ? 'edit' : 'add';
+        const tile_type = Module.fallback(data, 'tile_type', 'tile');
+
         build.alter_text = {
             '#type': 'redirect_button',
             '#title': 'Confirm',
             '#prependIcon': 'exit_to_app',
             '#to': {
-                name: 'add.tile'
+                name: `${edit}.${tile_type}`
             },
             '#color': 'green',
             '#outlined': true,
             '#block': true
         };
-
-
 
         return build;
     },

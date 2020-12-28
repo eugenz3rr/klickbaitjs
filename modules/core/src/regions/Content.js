@@ -18,7 +18,7 @@ Module => {
             '             :is="`as-${renderElement[\'#type\']}`"' +
             '             :renderElement="renderElement"' +
             '             :element="element"' +
-            '             :key="`element-${renderElement[\'#type\']}-${element}`"/>' +
+            '             :key="`element-${renderElement[\'#type\']}-${element}-${changed}`"/>' +
             '</v-sheet>',
         props: {
             route: Object,
@@ -27,6 +27,7 @@ Module => {
         data() {
             return {
                 renderArray: {},
+                changed: 0,
             }
         },
         mounted: async function () {
