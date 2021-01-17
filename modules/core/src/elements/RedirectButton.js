@@ -5,6 +5,7 @@ Module => {
             '<v-btn' +
             '   v-if="show"' +
             '   @click="submit"' +
+            '   :class="classes"' +
             '   :absolute="absolute"' +
             '   :active-class="activeClass"' +
             '   :append="append"' +
@@ -70,13 +71,13 @@ Module => {
         },
         events: {
             input_change: function (event, value) {
-                const params = this.$route.params;
+                let params = this.$route.params;
 
                 if (!(value in params)) {
                     return;
                 }
 
-                const update_length = Object.keys(this.update).length;
+                let update_length = Object.keys(this.update).length;
                 let found = undefined;
                 for (let i = 0; i < update_length; i++) {
                     const update = this.update[i];
@@ -159,7 +160,8 @@ Module => {
                 width: undefined,
                 xLarge: false,
                 xSmall: false,
-                update: []
+                update: [],
+                classes: []
             };
         },
         mounted: async function () {
@@ -209,7 +211,7 @@ Module => {
                     this.to.params,
                     this.$route.params
                 );
-                this.$router.push(this.to)
+                this.$router.push(this.to);
             }
         }
     };

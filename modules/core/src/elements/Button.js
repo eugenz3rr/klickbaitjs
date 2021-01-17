@@ -44,15 +44,16 @@ Module => {
             '   :target="target"' +
             '   :text="text"' +
             '   :tile="tile"' +
-            '   :to="to"' +
             '   :top="top"' +
             '   :type="type"' +
             '   :value="value"' +
             '   :width="width"' +
             '   :x-large="xLarge"' +
-            '   :x-small="xSmall">' +
+            '   :x-small="xSmall"' +
+            '   @click="click">' +
             '       <v-icon left v-if="appendIcon">{{ appendIcon }}</v-icon>' +
-            '       {{ title }}' +
+            '       <v-icon v-if="centerIcon">{{ centerIcon }}</v-icon>' +
+            '       <div v-else>{{ title }}</div>' +
             '       <v-icon right v-if="prependIcon">{{ prependIcon }}</v-icon>' +
             '</v-btn>',
         props: {
@@ -71,6 +72,7 @@ Module => {
             return {
                 title: "",
                 appendIcon: false,
+                centerIcon: false,
                 prependIcon: false,
                 absolute: false,
                 activeClass: '',
@@ -147,6 +149,14 @@ Module => {
                 this[key.replace('#', '')] = value;
             }
         },
+        methods: {
+            click: function () {
+                if (!this.to) {
+                    return;
+                }
+                this.$router.push(this.to);
+            }
+        }
     };
     Module.appendStyle(`src/elements/css/Button.css`, component.name);
 

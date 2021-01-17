@@ -54,7 +54,8 @@ Module => {
             '   :success="success"' +
             '   :success-messages="successMessages"' +
             '   :suffix="suffix"' +
-            '   :truncate-length="truncateLength">' +
+            '   :truncate-length="truncateLength"' +
+            '   @click.prevent="click">' +
             ' <div>{{description}}</div>' +
             '</v-file-input>',
         data() {
@@ -110,6 +111,7 @@ Module => {
                 success: false,
                 successMessages: [],
                 suffix: undefined,
+                mime: '',
                 truncateLength: 22,
             };
         },
@@ -164,6 +166,27 @@ Module => {
             }
             this.$route.params[this.element] = this.value;
         },
+        methods: {
+            click: async function(event) {
+                let file = await window.chooser.getFile(this.mime);
+
+                if (!file) {
+                    return;
+                }
+
+                let response = await fetch(file.dataURI);
+                let data = await response.blob();
+
+                if (file.name.split('.').length === 1) {
+                    data.name = `${file.name}.${window.mime.extension(data.type)}`;
+                }
+                else {
+                    data.name = file.name;
+                }
+
+                this.value.push(data);
+            }
+        }
     };
 
     return component;

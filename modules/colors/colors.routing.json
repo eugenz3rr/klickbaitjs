@@ -1,0 +1,17 @@
+{
+  "colors.default": {
+    "path": "/colors/default",
+    "title": "Colors",
+    "description": "Change colors.",
+    "hide": false,
+    "regions": [
+      {
+        "type": "form",
+        "title": "Colors",
+        "description": "Edit the current set color variables.",
+        "path": "src/regions/content/Board.js",
+        "icon": "home"
+      }
+    ]
+  }
+}

@@ -12,7 +12,7 @@ const Form = {
         "submit": false,
     },
 
-    "build": (Module, values, data) => {
+    "build": (Module, data) => {
         let build = {};
 
         build.text = {
@@ -28,9 +28,9 @@ const Form = {
             '#hideModeSwitch': true,
             '#description': 'This color will be the default color of the tile.',
             '#value': Module.fallback(data, 'text_color', '#32a852'),
-        }
+        };
 
-        const edit = Module.fallback(data, 'pathMatch', '') !== "" ? 'edit' : 'add';
+        const edit = 'path' in data ? 'edit' : 'add';
         const tile_type = Module.fallback(data, 'tile_type', 'tile');
 
         build.alter_text = {

@@ -4,26 +4,38 @@ import RouteManager from "./Render/Route/Manager";
 import ComponentManager from "./Render/Component/Manager";
 
 export default class Manager extends Console {
-    public moduleManager: ModuleManager;
-    public routeManager: RouteManager;
-    public componentManager: ComponentManager;
+    public moduleManager: ModuleManager | undefined;
+    public routeManager: RouteManager | undefined;
+    public componentManager: ComponentManager | undefined;
 
     constructor(fileSystem: any) {
         super(fileSystem);
 
         this.fileSystem = fileSystem;
 
-        this.moduleManager = new ModuleManager(fileSystem, '/modules/', this);
-
         // Contains all routes.
-        this.routeManager = new RouteManager(fileSystem);
-        this.componentManager = new ComponentManager(fileSystem);
+        this.routeManager = new RouteManager(this.fileSystem);
+        this.componentManager = new ComponentManager(this.fileSystem);
+    }
+
+    public async initialize() {
+        this.moduleManager = new ModuleManager(this.fileSystem, '/modules/', this);
+        await this.moduleManager.discover();
     }
 
     /**
      * Collect all data from the modules and sum them together.
      */
     public summary(): void {
+        if (
+            this.moduleManager === undefined ||
+            this.routeManager === undefined ||
+            this.componentManager === undefined
+        ) {
+            console.error('Manager is down.', this.moduleManager, this.routeManager, this.componentManager);
+            return;
+        }
+
         for (let i = 0; i < this.moduleManager.modules.length; i++) {
             const module = this.moduleManager.modules[i];
 

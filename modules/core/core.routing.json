@@ -17,6 +17,21 @@
       }
     ]
   },
+  "core.help": {
+    "path": "/core/help",
+    "title": "Help",
+    "description": "Some information to actually help the developers..",
+    "hide": false,
+    "regions": [
+      {
+        "type": "content",
+        "title": "Help content",
+        "description": "This part displays the help section.",
+        "path": "src/regions/content/Board.js",
+        "icon": "home"
+      }
+    ]
+  },
   "core.settings": {
     "path": "/core/settings",
     "title": "Settings",
@@ -117,7 +132,7 @@
         "type": "form",
         "title": "Tile form",
         "description": "Add a tile.",
-        "path": "src/regions/form/tile/EditTile.js"
+        "path": "src/regions/form/tile/DeleteTile.js"
       }
     ]
   },
@@ -156,7 +171,7 @@
         "type": "form",
         "title": "Tile form",
         "description": "Add a tile.",
-        "path": "src/regions/form/tile/EditTile.js"
+        "path": "src/regions/form/tile/DeleteBoard.js"
       }
     ]
   },

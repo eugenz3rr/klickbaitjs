@@ -1,0 +1,8 @@
+{
+  "name": "Klickbait - Colors",
+  "description": "This module provides color functionality.",
+  "group": "klickbait",
+  "type": "module",
+  "version": "1.0.0",
+  "dependencies": []
+}

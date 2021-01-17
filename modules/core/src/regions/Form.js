@@ -13,10 +13,6 @@ Module => {
         name: 'Form',
         template: 
             '<v-form class="pa-4 mb-4">' +
-            '    <br v-if="region.title || region.description"/>' +
-            '    <h2 v-if="region.title">{{ region.title }}</h2>' +
-            '    <h6 v-if="region.description">{{ region.description }}</h6>' +
-            '' +
             '    <component v-for="(renderElement, element) in renderArray"' +
             '               :is="`as-${renderElement[\'#type\']}`"' +
             '               :renderElement="renderElement"' +
@@ -32,8 +28,8 @@ Module => {
             '        :loading="saving"' +
             '        color="success"' +
             '        @click="submit">' +
-            '      Save' +
-            '      {{ info.submit }}' +
+            '        <div v-if="info.submit_text">{{info.submit_text}}</div>' +
+            '        <div v-else>Save</div>' +
             '    </v-btn>' +
             '    <br/>' +
             '  </v-form>',
@@ -47,7 +43,7 @@ Module => {
                 snackbar: false,
                 changed: 0,
                 registered: 0,
-            }
+            };
         },
 
         props: {
@@ -60,7 +56,7 @@ Module => {
             this.info = this.region.regionRaw.info;
 
             const values = await this.build();
-            this.renderArray = await this.region.regionRaw.build(this.region.module, values, this.$route.params);
+            this.renderArray = await this.region.regionRaw.build(this.region.module, this.$route.params);
         },
 
         methods: {
@@ -72,10 +68,9 @@ Module => {
                 let values = {};
 
                 try {
-                    values = await this.region.fileSystem.readJSON(`${this.region.module.path}values/form.${this.info.id}.json`);
-                    console.log(`${this.region.module.path}values/form.${this.info.id}.json`)
+                    //values = await this.region.fileSystem.readJSON(`${this.region.module.path}values/form.${this.info.id}.json`);
                 } catch (error) {
-                    await this.region.fileSystem.write(`${this.region.module.path}values/form.${this.info.id}.json`, JSON.stringify({}));
+                    //await this.region.fileSystem.write(`${this.region.module.path}values/form.${this.info.id}.json`, JSON.stringify({}));
 
                     /*
                      * At this point we know that there is nothing in the fileSystem about this file.

@@ -205,8 +205,6 @@ Module => {
                 ]
             });
 
-            window.Playlist = this.Playlist;
-
             await this.Playlist.load([]);
 
             this.Playlist.initExporter();
@@ -241,8 +239,7 @@ Module => {
                 this.EventEmitter.emit("newtrack", file);
             }
 
-            this.EventEmitter.on("audiosourcesloaded", () => {
-            });
+            this.EventEmitter.on("audiosourcesloaded", () => {});
 
             this.EventEmitter.on("audiosourcesrendered", () => {
 
@@ -257,14 +254,11 @@ Module => {
             });
 
             this.EventEmitter.on("audiorenderingfinished", (type, blob) => {
-                this.value = [
-                    new File(
-                        [blob],
-                        `edited_sound.${Date.now()}`, {
-                            type: `audio/${type}`
-                        })
-                ];
-                this.$route.params[this.element] = this.value;
+
+                blob.name = `edited_sound${Date.now()}.${type}`;
+                blob.lastModifiedDate = new Date();
+
+                this.$route.params[this.element] = [blob];
                 this.submit();
             });
 

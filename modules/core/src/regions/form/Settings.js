@@ -12,7 +12,7 @@ const Settings = {
         "location": "settings"
     },
 
-    "build": (Module, values, data) => {
+    "build": (Module, data) => {
         let build = {};
         build.two_column = {
             '#type': 'two_column',

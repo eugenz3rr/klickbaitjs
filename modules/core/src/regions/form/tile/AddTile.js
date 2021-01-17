@@ -13,8 +13,9 @@ const Settings = {
         "save": false,
     },
 
-    "build": (Module, values, data) => {
+    "build": (Module, data) => {
         let build = {};
+
         build.two_column = {
             '#type': 'two_column',
             '#first': {
@@ -50,7 +51,7 @@ const Settings = {
             '#type': 'dropdown',
             '#title': 'Tile Style',
             '#description': 'The style is used to make your tile look nice.',
-            '#value': Module.fallback(values, 'tile_style', Module.fallback(data, 'tile_style', ['default'])),
+            '#value': Module.fallback(data, 'tile_style', ['default']),
             '#items': [
                 {
                     'text': 'Default',
@@ -69,12 +70,12 @@ const Settings = {
                     'value': ['vertical-50-50']
                 },
             ]
-        }
+        };
 
         build.help_tile_style = {
             '#type': 'information',
             '#title': 'A style for my tile?',
-            '#description': '.',
+            '#description': 'A style defines how your tile will look. The default one displays no image. The image background only shows the image.',
             '#value': 'What is a tile style?'
         };
 
@@ -96,18 +97,18 @@ const Settings = {
                 {
                     '#title': 'Sound',
                     '#content': {
-                        paragraph: {
-                            '#type': 'paragraph',
-                            '#flat': true,
-                            '#title': 'Description',
-                            '#description': 'This is very cool',
-                            '#value': 'Add your sound file, so we can start to edit :D'
+                        help_sound_upload: {
+                            '#type': 'information',
+                            '#title': 'Why do I need to append a sound?',
+                            '#description': 'Well this is a soundboard overall. Why not wtf?! \nLoad a sound and crop it! (Only if it\'s not perfect)',
+                            '#value': 'Why sound?'
                         },
                         sound_upload: {
                             '#type': 'upload',
                             '#title': 'Sound File',
+                            '#mime': 'audio/*',
                             '#description': 'Select your sound file.',
-                            '#value': Module.fallback(values, 'sound_upload', Module.fallback(data, 'sound_upload', [])),
+                            '#value': Module.fallback(data, 'sound_upload', []),
                         },
                         sound_upload_edit: {
                             '#type': 'redirect_button',
@@ -126,14 +127,20 @@ const Settings = {
                 {
                     '#title': 'Image',
                     '#content': {
+                        help_image_upload: {
+                            '#type': 'information',
+                            '#title': 'Why do I need to append an image?',
+                            '#description': 'Well some people just want to show how cool their board looks. \n You can go with the flow or live like a caveman. What do you choose? \nLoad a sound and crop it! (Only if it\'s not perfect)',
+                            '#value': 'An image?'
+                        },
                         image_upload: {
                             '#type': 'upload',
                             '#title': 'Image File',
                             '#description': 'Select your sound file.',
                             '#persistentHint': true,
-                            '#value': Module.fallback(values, 'image_upload', Module.fallback(data, 'image_upload', [])),
+                            '#mime': 'image/*',
+                            '#value': Module.fallback(data, 'image_upload', []),
                         },
-
                         image_upload_edit: {
                             '#type': 'redirect_button',
                             '#title': 'Edit image file',
@@ -150,6 +157,21 @@ const Settings = {
                     }
                 },
             ],
+        };
+
+        build.back = {
+            '#type': 'button',
+            '#title': 'Cancel',
+            '#outlined': true,
+            '#block': true,
+            '#classes': ['mb-2'],
+            '#color': '#FF0000',
+            '#to': {
+                name: 'core.board',
+                params: {
+                    pathMatch: data.pathMatch,
+                }
+            }
         };
 
         return build;
@@ -171,22 +193,29 @@ const Settings = {
         const path_directory = path.replace(file_name, "");
 
         /** @var images {Array<File>} */
-        const images = Module.fallback(values, 'image_upload', false);
-        if (images !== false) {
-            for (let i = 0; i < images; i++) {
+        const images = Module.fallback(values, 'image_upload', []);
+        values.image_upload = [];
 
-                /** @var image {File} */
-                const image = images[i];
+        for (let i = 0; i < images.length; i++) {
 
-                if (!image) continue;
+            /** @var image {File} */
+            let image = images[i];
+            if (!image) continue;
+            await Module.fileSystem.write(`${path_directory}files/${file_name}_${image.name}`, image);
+            values.image_upload[i] = image.name;
+        }
 
-                const blob = new Blob([image], {
-                    type: image.mimeType
-                });
+        /** @var images {Array<File>} */
+        const sounds = Module.fallback(values, 'sound_upload', []);
+        values.sound_upload = [];
 
-                await Module.fileSystem.write(`${path_directory}files/${file_name}_${image.name}`, blob);
-                values.image_upload[i] = image.name;
-            }
+        for (let i = 0; i < sounds.length; i++) {
+
+            /** @var image {File} */
+            let sound = sounds[i];
+            if (!sound) continue;
+            await Module.fileSystem.write(`${path_directory}files/${file_name}_${sound.name}`, sound);
+            values.sound_upload[i] = sound.name;
         }
 
         const file_path = `${path_directory}/${file_name}.json`.replaceAll('//', '/');
@@ -194,7 +223,9 @@ const Settings = {
 
         Router.push({
             name: "core.board",
-            params: values,
+            params: {
+                pathMatch: values.pathMatch
+            },
         });
 
         // The submitted values of the user.

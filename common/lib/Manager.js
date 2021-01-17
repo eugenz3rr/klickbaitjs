@@ -6,15 +6,24 @@ export default class Manager extends Console {
     constructor(fileSystem) {
         super(fileSystem);
         this.fileSystem = fileSystem;
-        this.moduleManager = new ModuleManager(fileSystem, '/modules/', this);
         // Contains all routes.
-        this.routeManager = new RouteManager(fileSystem);
-        this.componentManager = new ComponentManager(fileSystem);
+        this.routeManager = new RouteManager(this.fileSystem);
+        this.componentManager = new ComponentManager(this.fileSystem);
+    }
+    async initialize() {
+        this.moduleManager = new ModuleManager(this.fileSystem, '/modules/', this);
+        await this.moduleManager.discover();
     }
     /**
      * Collect all data from the modules and sum them together.
      */
     summary() {
+        if (this.moduleManager === undefined ||
+            this.routeManager === undefined ||
+            this.componentManager === undefined) {
+            console.error('Manager is down.', this.moduleManager, this.routeManager, this.componentManager);
+            return;
+        }
         for (let i = 0; i < this.moduleManager.modules.length; i++) {
             const module = this.moduleManager.modules[i];
             // Merge routes.
