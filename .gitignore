@@ -108,3 +108,5 @@ dist
 package-lock.json
 configuration.json
 Installer.ts
+.idea/
+index.html

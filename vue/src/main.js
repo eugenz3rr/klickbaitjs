@@ -151,8 +151,6 @@ let start = async () => {
     for (let i = 0; i < Manager.routeManager.routes.length; i++) {
         const route = Manager.routeManager.routes[i];
 
-
-
         router.addRoutes([{
             name: route.id,
             path: route.path,
@@ -166,7 +164,7 @@ let start = async () => {
     }
 
     new Vue({
-        el: '#advanced-soundboard',
+        el: '#klickbait-js',
         vuetify: new Vuetify({
             icons: {
                 iconfont: 'md',

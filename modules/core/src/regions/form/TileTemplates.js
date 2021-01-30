@@ -10,7 +10,7 @@ const Settings = {
 
         const params = Route.params;
         const tiles_per_row = 4;
-        const window_width = document.querySelector('#advanced-soundboard').offsetWidth - 20;
+        const window_width = document.querySelector('#klickbait-js').offsetWidth - 20;
         const tile_width = window_width / tiles_per_row;
 
         build.title = {

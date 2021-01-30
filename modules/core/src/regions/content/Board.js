@@ -73,7 +73,7 @@
                 let path_directory = path.replace(file_name, "");
                 file_name = file_name.split('.')[0];
 
-                let window_width = document.querySelector('#advanced-soundboard').offsetWidth - 20;
+                let window_width = document.querySelector('#klickbait-js').offsetWidth - 20;
                 let tile_width = window_width / tiles_per_row;
 
                 let content_images = Module.fallback(content, 'image_upload', []);
@@ -174,7 +174,7 @@
             }
 
             for (let i = 0; i < tiles_per_row; i++) {
-                const window_width = document.querySelector('#advanced-soundboard').offsetWidth - 20;
+                const window_width = document.querySelector('#klickbait-js').offsetWidth - 20;
                 const tile_width = window_width / tiles_per_row;
 
                 build.tile_column['#content'][`space_holder_${i}`] = {

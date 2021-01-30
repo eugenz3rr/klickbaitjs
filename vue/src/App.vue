@@ -1,5 +1,5 @@
 <template>
-  <v-app id="advanced-soundboard">
+  <v-app id="klickbait-js">
     <router-view></router-view>
   </v-app>
 </template>
@@ -41,7 +41,7 @@ $color-pack: false;
   font-family: "OpenLight", sans-serif;
 }
 
-#advanced-soundboard {
+#klickbait-js {
   position: absolute;
   width: 100%;
   height: 100%;
