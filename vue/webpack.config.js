@@ -47,7 +47,7 @@ module.exports = {
                         loader: 'url-loader',
                         options: {
                             //outputPath: 'vue/fonts',
-                            publicPath: 'vue/app/dist',
+                            publicPath: 'vue/dist',
                             limit: 8192,
                         },
                     },

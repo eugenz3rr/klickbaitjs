@@ -9,10 +9,10 @@ let dirs = [];
 const compile_installer = async () => {
 
     let code = "";
-    code += `import Console from "./../../common/src/Console";\n`;
-    code += `import FileSystem from "./../../common/src/FileSystem";\n\n`;
-    code += `export default class Installer extends Console {\n\n`;
-    code += `     constructor(fileSystem: FileSystem) {\n        super(fileSystem);\n     }\n`;
+    code += `import DefaultFileSystem from "./DefaultFileSystem";\n`;
+    code += `export default class Installer {\n\n`;
+    code += `     public fileSystem: DefaultFileSystem;\n`;
+    code += `     constructor(fileSystem: DefaultFileSystem) {\n        this.fileSystem = fileSystem;\n     }\n`;
     code += `     // @ts-ignore\n`;
     code += `     public async install(): Promise<any> {\n`;
 
@@ -24,7 +24,7 @@ const compile_installer = async () => {
         }
         const file = dir;
 
-        const file_name = file.replaceAll(__dirname.split("\\").join('/'), '');
+        const file_name = file.replaceAll(__dirname.split("\\").join('/'), '').replaceAll('/..', '');
         let isFile = file_name.replaceAll('..', '').split('.');
 
         if (isFile.length <= 1) {
@@ -36,7 +36,7 @@ const compile_installer = async () => {
     }
     code += '\n     }\n}';
 
-    await write(`${__dirname}/Installer.ts`, code);
+    await write(`${__dirname}/../../core/source-files/Installer.ts`, code);
 };
 
 const getDirectories = (src, callback) => {
@@ -78,7 +78,8 @@ getDirectories(`${__dirname}/../../modules`, async (err, res) => {
         console.log('Installer disabled.');
         console.log('Removing Installer.ts file.');
         try {
-            await fs.remove(`${__dirname}/Installer.ts`);
+            await fs.remove(`${__dirname}/../../core/source-files/Installer.ts`);
+            await fs.remove(`${__dirname}/../../core/src/Installer.js`);
             console.log('Installer removed. Bye');
 
         } catch (e) {}

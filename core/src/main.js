@@ -13,9 +13,9 @@ import Configuration from 'config';
 // });
 //
 // admob.createBannerView();
-
-Configuration.initialize().then(() => {
-    //dispatchEvent(new CustomEvent('klickbait-ready'));
+window.Configuration = new Configuration();
+window.Configuration.initialize().then(() => {
+    dispatchEvent(new CustomEvent('klickbait-ready'));
 }).catch(e => {
     console.error('Cordova core could not be defined.', e);
 });

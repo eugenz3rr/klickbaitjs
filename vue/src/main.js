@@ -9,7 +9,7 @@ import Vuetify from "vuetify/dist/vuetify.min";
 //import VueI18n from 'vue-i18n';
 import Vue2TouchEvents from 'vue2-touch-events';
 import Cropper from "cropperjs";
-import * as Common from "../../../common/lib/Library";
+import * as Common from "../../common/lib/Library";
 //import * as Draggable from "@shopify/draggable";
 
 window.Cropper = Cropper;
@@ -151,7 +151,7 @@ let start = async () => {
     for (let i = 0; i < Manager.routeManager.routes.length; i++) {
         const route = Manager.routeManager.routes[i];
 
-        router.addRoutes([{
+        router.addRoute({
             name: route.id,
             path: route.path,
             component: Route,
@@ -160,7 +160,7 @@ let start = async () => {
                 route,
             },
             params: {}
-        }]);
+        });
     }
 
     new Vue({
@@ -197,9 +197,9 @@ window.addEventListener('klickbait-ready', async () => {
     }, false );
 
     window.Manager = new Common.Manager({
-        fileSystem: window.fileSystem,
-        privateSystem: window.privateSystem,
-        applicationSystem: window.applicationSystem,
+        fileSystem: window.Configuration.publicFileSystem,
+        privateSystem: window.Configuration.privateFileSystem,
+        applicationSystem: window.Configuration.applicationFileSystem,
     });
     await window.Manager.initialize();
     window.deviceready = true;

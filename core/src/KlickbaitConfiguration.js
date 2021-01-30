@@ -1,8 +1,8 @@
 import DefaultFileSystem from "./DefaultFileSystem";
+import Installer from "./Installer";
 export default class KlickbaitConfiguration {
-    constructor(name) {
+    constructor() {
         this.name = 'Klickbait';
-        this.name = name;
     }
     /**
      * A function that sets all values with custom code.
@@ -11,5 +11,7 @@ export default class KlickbaitConfiguration {
         this.publicFileSystem = new DefaultFileSystem();
         this.privateFileSystem = new DefaultFileSystem();
         this.applicationFileSystem = new DefaultFileSystem();
+        let installer = new Installer(this.publicFileSystem);
+        await installer.install();
     }
 }

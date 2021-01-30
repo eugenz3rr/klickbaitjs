@@ -1,4 +1,5 @@
 import DefaultFileSystem from "./DefaultFileSystem";
+import Installer from "./Installer";
 
 interface FileSystems {
     publicFileSystem: Object;
@@ -9,13 +10,9 @@ interface FileSystems {
 export default class KlickbaitConfiguration {
     public name: string = 'Klickbait';
 
-    public publicFileSystem: Object | undefined;
-    public privateFileSystem: Object | undefined;
-    public applicationFileSystem: Object | undefined;
-
-    constructor(name: string) {
-        this.name = name;
-    }
+    public publicFileSystem: DefaultFileSystem | undefined;
+    public privateFileSystem: DefaultFileSystem | undefined;
+    public applicationFileSystem: DefaultFileSystem | undefined;
 
     /**
      * A function that sets all values with custom code.
@@ -24,5 +21,8 @@ export default class KlickbaitConfiguration {
         this.publicFileSystem = new DefaultFileSystem();
         this.privateFileSystem = new DefaultFileSystem();
         this.applicationFileSystem = new DefaultFileSystem();
+
+        let installer = new Installer(this.publicFileSystem);
+        await installer.install();
     }
 }

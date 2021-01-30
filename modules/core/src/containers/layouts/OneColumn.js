@@ -67,8 +67,6 @@ Module => {
             const containers = document.querySelector('.one-column');
             const computedWidth = containers.offsetWidth;
 
-            console.log(computedWidth)
-
             /*const sortable = new Draggable.Swappable(containers, {
                 draggable: '.tile',
                 mirror: {

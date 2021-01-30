@@ -50,6 +50,5 @@ $color-pack: false;
   background-color: white;
 }
 
-@import "./vuetify.min.css";
-
+@import "~vuetify/dist/vuetify.min.css";
 </style>
