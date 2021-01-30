@@ -1,4 +1,4 @@
-# KlickbaitJS - Documentation (Based on cordova)
+# KlickbaitJS - Documentn not ready
 
 In short. KlickbaitJS was created to create a module based frontent CMS for AndroidApps (Created on top of cordova).
 This CMS is currently under heavy development. So it'll most likely experience no backwards compatible versions.
@@ -49,7 +49,6 @@ Tasks before the first release of the klickbait cms.
     - [Containers](#containers)
     - [Regions](#regions)
   - [Routing](#routing)
-  - [Events](#events)
 - [Features](#features)
 - [Contributing](#contributing)
 

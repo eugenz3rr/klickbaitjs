@@ -2,7 +2,10 @@ import Module from "./Module";
 import Console from "../Console";
 import FileSystem from "../FileSystem";
 import Manager from "../Manager";
-import Installer from "../Installer";
+
+interface Installed {
+    version: string,
+}
 
 export default class ModuleManager extends Console {
     public manager: Manager;
@@ -15,16 +18,18 @@ export default class ModuleManager extends Console {
         this.manager = manager;
         this.fileSystem = fileSystem;
         this.path = root;
-
-        this.discover().then();
     }
 
     public async discover(): Promise<any> {
 
-        await new Installer(this.fileSystem).install();
-
         // List all directories in the module directory.
-        const directories: string[] = await this.fileSystem.list(this.path, 'd');
+        let directories: string[] = [];
+        try {
+            directories = await this.manager.configuration.applicationSystem.list(this.path, 'd');
+
+        } catch (e) {
+            console.error('Could not list directories.', this.path, e);
+        }
 
         for (let i = 0; i < directories.length; i++) {
             const directory = directories[i];
@@ -35,9 +40,17 @@ export default class ModuleManager extends Console {
             id = id.split('/');
             id = id[id.length - 2];
 
-            const module = new Module(this, directory, id);
-            await module.initialize();
-            this.manager.summary();
+            try {
+                const module = new Module(this, directory, id);
+                await module.initialize();
+                await this.manager.summary(module);
+            } catch (e) {
+                console.error('Could not initialize or summarize module.', directory, id, e);
+            }
         }
-    };
+    }
+
+    private cordovaExists(): boolean {
+        return this.fallback(window, 'cordovaExists', false);
+    }
 }

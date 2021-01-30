@@ -36,14 +36,20 @@ Module => {
         watch: {
             images: {
                 handler: function (value) {
+                    if (value.constructor.name === "String") {
+                        this.src = value;
+                        return;
+                    }
+
                     if (!value || value.length === 0 || !value[0]) {
                         this.src = '';
                         return;
                     }
-                    const fileReader = new FileReader()
+
+                    const fileReader = new FileReader();
                     fileReader.onload = () => {
                         this.src = fileReader.result;
-                    }
+                    };
                     fileReader.readAsDataURL(value[0]);
                 },
                 deep: true

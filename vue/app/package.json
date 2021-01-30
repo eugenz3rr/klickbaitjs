@@ -2,7 +2,7 @@
   "name": "",
   "description": "",
   "version": "0.0.0",
-    "author": "Eugen Zerr <eugen.zerr@hotmail.com>",
+  "author": "Eugen Zerr <eugen.zerr@hotmail.com>",
   "license": "MIT",
   "private": true,
   "scripts": {

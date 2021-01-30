@@ -21,14 +21,22 @@ const Settings = {
      *
      * @returns {{}}
      */
-    "build": (Module, values, data) => {
+    "build": async (Module, data) => {
         let build = {};
+
+        let return_to = 'path' in data ? 'edit.' : 'add.';
+        if ('tile_type' in data) {
+            return_to += data.tile_type;
+        }
+        else {
+            return_to += 'tile';
+        }
 
         build.image_upload = {
             '#type': 'image',
             '#files': Module.fallback(data, 'image_upload', []),
             '#to': {
-                name: 'add.tile'
+                name: return_to
             },
         };
 
@@ -37,7 +45,7 @@ const Settings = {
             '#title': 'cancel',
             '#appendIcon': 'clear',
             '#to': {
-                name: 'add.tile'
+                name: return_to
             },
             '#block': true,
             '#color': 'red',

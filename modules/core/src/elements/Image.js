@@ -79,7 +79,7 @@ Module => {
                     this.$route.params
                 );
                 this.loading = false;
-                this.$router.push(this.to)
+                this.$router.push(this.to);
             },
             apply: function () {
                 if (!this.cropper) {
@@ -96,11 +96,15 @@ Module => {
                 });
 
                 this.cropper.getCroppedCanvas().toBlob(blob => {
-                    this.value = [
-                        new File([blob], `edited_image.${Date.now()}`)
-                    ];
 
-                    this.$route.params[this.element] = this.value;
+                    blob.name = `edited_image_${Date.now()}.png`;
+                    blob.lastModifiedDate = new Date();
+
+                    this.value = blob;
+
+                    this.$route.params[this.element] = [
+                        this.value
+                    ];
                     this.submit();
                 }, 'image/png', 100);
             },

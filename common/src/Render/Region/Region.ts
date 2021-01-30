@@ -2,7 +2,6 @@ import Console from "../../Console";
 import FileSystem from "../../FileSystem";
 import RegionManager from "./Manager";
 import Route from "../Route/Route";
-import RouteManager from "../Route/Manager";
 import Module from "../../Module/Module";
 
 interface RegionRaw {
@@ -19,7 +18,7 @@ export default class Region extends Console {
     public description: string = "";
     public path: string = "";
 
-    public regionRaw: RegionRaw = {};
+    public regionRaw: RegionRaw | Object = {};
     public renderArray: Object[] = [];
 
     constructor(route: Route, data: any) {
@@ -39,14 +38,27 @@ export default class Region extends Console {
         this.regionManager.regions.push(this);
     }
 
-    public async load(force: boolean = false): Promise<any> {
+    public async load(force: boolean = false, fileSystem: FileSystem | undefined = undefined): Promise<any> {
         if (Object.keys(this.regionRaw).length !== 0 && !force) {
             return;
         }
 
-        let region = await this.fileSystem.read(`${this.module.path}${this.path}`);
-        console.debug(`${this.module.path}${this.path}`)
-        if (typeof region !== 'undefined') {
+        let region = undefined;
+        try {
+            region = await this.fileSystem.read(`${this.module.path}${this.path}`);
+        } catch (e) {
+            console.warn(`${this.module.path}${this.path} - Was not found in the public fs. Defaulting to private.`);
+        }
+
+        if (region === undefined) {
+            try {
+                region = await this.module.moduleManager.manager.configuration.applicationSystem.read(`${this.module.path}${this.path}`);
+            } catch (e) {
+                console.error(`${this.module.path}${this.path} - Was not found in the private fs. Which is a problem now...`);
+            }
+        }
+
+        if (region !== undefined) {
 
             // Interpret code and execute it.
             this.regionRaw = eval(region);
@@ -63,6 +75,9 @@ export default class Region extends Console {
 
         await this.load();
 
-        this.renderArray = this.regionRaw.build(this.module);
+
+        if ("build" in this.regionRaw) {
+            this.renderArray = this.regionRaw.build(this.module);
+        }
     }
 }

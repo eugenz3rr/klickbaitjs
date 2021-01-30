@@ -13,8 +13,99 @@ const Settings = {
         "save": false,
     },
 
-    "build": (Module, values, data) => {
+    "build": async (Module, data) => {
         let build = {};
+
+        let path = window.router.currentRoute.params.path;
+        let file_name = path.split('/')[path.split('/').length - 1];
+        const path_directory = path.replace(file_name, "");
+        file_name = file_name.split('.')[0];
+        let content_images = Module.fallback(data, 'image_upload', []);
+        let images = [];
+
+        for (let j = 0; j < content_images.length; j++) {
+            let image_name = content_images[j];
+            let image;
+            let url;
+            let error = false;
+
+            if (
+                image_name instanceof Blob ||
+                image_name instanceof File
+            ) {
+                images.push(image_name);
+                continue;
+            }
+            try {
+                url = await Module.fileSystem.toDataURL(`${path_directory}files/${file_name}_${image_name}`);
+                let response = await fetch(url);
+                let data = await response.blob();
+
+                data.name = image_name;
+                data.lastModifiedDate = new Date();
+                image = data;
+            } catch (e) {
+                console.log("Could not read image.", image_name);
+                error = true;
+            }
+
+            if (error) {
+                try {
+                    url = await Module.fileSystem.toDataURL(`${path_directory}files/${file_name}_${image_name}`);
+                } catch (e) {
+                    console.log("Could not read image.", image_name);
+                    continue;
+                }
+            }
+
+            images.push(image);
+        }
+
+        let content_sounds = Module.fallback(data, 'sound_upload', []);
+        let sounds = [];
+
+        for (let j = 0; j < content_sounds.length; j++) {
+            let sound_name = content_sounds[j];
+            let sound;
+            let url;
+            let error = false;
+
+            if (
+                sound_name instanceof Blob ||
+                sound_name instanceof File
+            ) {
+                sounds.push(sound_name);
+                continue;
+            }
+
+            try {
+                url = await Module.fileSystem.toDataURL(`${path_directory}files/${file_name}_${sound_name}`);
+                let response = await fetch(url);
+                let data = await response.blob();
+
+                data.name = sound_name;
+                data.lastModifiedDate = new Date();
+                sound = data;
+            } catch (e) {
+                console.log("Could not read sound.", sound_name);
+                error = true;
+            }
+
+            if (error) {
+                try {
+                    url = await Module.fileSystem.toDataURL(`${path_directory}files/${file_name}_${sound_name}`);
+                } catch (e) {
+                    console.log("Could not read sound.", sound_name);
+                    continue;
+                }
+            }
+
+            sounds.push(sound);
+        }
+
+        window.router.currentRoute.params.image_upload = images;
+        window.router.currentRoute.params.sound_upload = sounds;
+
         build.two_column = {
             '#type': 'two_column',
             '#first': {
@@ -50,7 +141,7 @@ const Settings = {
             '#type': 'dropdown',
             '#title': 'Tile Style',
             '#description': 'The style is used to make your tile look nice.',
-            '#value': Module.fallback(values, 'tile_style', Module.fallback(data, 'tile_style', ['default'])),
+            '#value': Module.fallback(data, 'tile_style', ['default']),
             '#items': [
                 {
                     'text': 'Default',
@@ -69,7 +160,7 @@ const Settings = {
                     'value': ['vertical-50-50']
                 },
             ]
-        }
+        };
 
         build.alter_text = {
             '#type': 'redirect_button',
@@ -89,18 +180,12 @@ const Settings = {
                 {
                     '#title': 'Sound',
                     '#content': {
-                        paragraph: {
-                            '#type': 'paragraph',
-                            '#flat': true,
-                            '#title': 'Description',
-                            '#description': 'This is very cool',
-                            '#value': 'Add your sound file, so we can start to edit :D'
-                        },
                         sound_upload: {
                             '#type': 'upload',
                             '#title': 'Sound File',
+                            '#mime': 'audio/*',
                             '#description': 'Select your sound file.',
-                            '#value': Module.fallback(values, 'sound_upload', Module.fallback(data, 'sound_upload', [])),
+                            '#value': Module.fallback(data, 'sound_upload', []),
                         },
                         sound_upload_edit: {
                             '#type': 'redirect_button',
@@ -124,7 +209,8 @@ const Settings = {
                             '#title': 'Image File',
                             '#description': 'Select your sound file.',
                             '#persistentHint': true,
-                            '#value': Module.fallback(values, 'image_upload', Module.fallback(data, 'image_upload', [])),
+                            '#mime': 'image/*',
+                            '#value': Module.fallback(data, 'image_upload', []),
                         },
 
                         image_upload_edit: {
@@ -145,17 +231,32 @@ const Settings = {
             ],
         };
 
+        build.delete = {
+            '#type': 'button',
+            '#title': 'Delete',
+            '#outlined': true,
+            '#block': true,
+            '#classes': ['mb-2'],
+            '#color': '#FF0000',
+            '#to': {
+                name: 'delete.tile',
+                params: {
+                    ...data
+                }
+            }
+        };
+
         build.back = {
             '#type': 'button',
             '#title': 'Cancel',
             '#outlined': true,
             '#block': true,
             '#classes': ['mb-2'],
-            '#color': '#FF0000',
+            '#color': '#ff7f00',
             '#to': {
                 name: 'core.board',
                 params: {
-                    values: Module.fallback(values, 'path', ''),
+                    pathMatch: data.pathMatch,
                 }
             }
         };
@@ -179,33 +280,69 @@ const Settings = {
         const path_directory = path.replace(file_name, "");
         file_name = file_name.split('.')[0];
 
-        // @fixme Remove all images before setting new images.
+        // Remove old content start.
+        let old_content;
+        try {
+            old_content = await Module.fileSystem.readJSON(path);
+        }
+        catch (e) {
+            console.error("Could not read tile.", path);
+        }
 
-        /** @var images {Array<File>} */
-        const images = Module.fallback(values, 'image_upload', false);
-
-        if (images !== false) {
-            for (let i = 0; i < images.length; i++) {
-
-                /** @var image {File} */
-                const image = images[i];
-
-                if (!image) continue;
-
-                const blob = new Blob([image], {
-                    type: image.mimeType
-                });
-
-                await Module.fileSystem.write(`${path_directory}files/${file_name}_${image.name}`, blob);
-                values.image_upload[i] = image.name;
+        let old_images = Module.fallback(old_content, 'image_upload', []);
+        for (let j = 0; j < old_images.length; j++) {
+            let image_name = old_images[j];
+            try {
+                await Module.fileSystem.remove(`${path_directory}files/${file_name}_${image_name}`);
+            } catch (e) {
+                console.warn("Could not delete image.", `${path_directory}files/${file_name}_${image_name}`, e);
             }
         }
 
-        await Module.fileSystem.write(path, JSON.stringify(values))
+        let old_sounds = Module.fallback(old_content, 'sound_upload', []);
+        for (let j = 0; j < old_sounds.length; j++) {
+            let sound_name = old_sounds[j];
+            try {
+                await Module.fileSystem.remove(`${path_directory}files/${file_name}_${sound_name}`);
+            } catch (e) {
+                console.warn("Could not delete sound.", `${path_directory}files/${file_name}_${sound_name}`, e);
+            }
+        }
+        // Remove old content end.
+
+        /** @var images {Array<File>} */
+        const images = Module.fallback(values, 'image_upload', []);
+        values.image_upload = [];
+
+        for (let i = 0; i < images.length; i++) {
+
+            /** @var image {File} */
+            let image = images[i];
+            if (!image) continue;
+            await Module.fileSystem.write(`${path_directory}files/${file_name}_${image.name}`, image);
+            values.image_upload[i] = image.name;
+        }
+
+        /** @var images {Array<File>} */
+        const sounds = Module.fallback(values, 'sound_upload', []);
+        values.sound_upload = [];
+
+        for (let i = 0; i < sounds.length; i++) {
+
+            /** @var image {File} */
+            let sound = sounds[i];
+            if (!sound) continue;
+            await Module.fileSystem.write(`${path_directory}files/${file_name}_${sound.name}`, sound);
+            values.sound_upload[i] = sound.name;
+        }
+
+        await Module.fileSystem.write(path, JSON.stringify(values));
 
         Router.push({
             name: "core.board",
-            params: values,
+            params: {
+                pathMatch: values.pathMatch
+            },
         });
 
         // The submitted values of the user.

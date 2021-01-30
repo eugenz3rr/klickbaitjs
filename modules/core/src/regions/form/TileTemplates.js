@@ -2,14 +2,13 @@ const Settings = {
     /**
      *
      * @param {Module} Module
-     * @param {Object} values
-     * @param {Object} data
-     *
+     * @param Route
      * @returns {{}}
      */
-    "build": (Module, values, data) => {
+    build(Module, Route) {
         let build = {};
 
+        const params = Route.params;
         const tiles_per_row = 4;
         const window_width = document.querySelector('#advanced-soundboard').offsetWidth - 20;
         const tile_width = window_width / tiles_per_row;
@@ -42,7 +41,7 @@ const Settings = {
                             tile_title: "Create a tile",
                             tile_type: "tile",
                             tile_color: '#32a852',
-                            ...data,
+                            ...params,
                         }
                     }
                 }
@@ -88,12 +87,12 @@ const Settings = {
                             tile_title: "Create a board",
                             tile_type: "board",
                             tile_color: '#32a852',
-                            ...data,
+                            ...params,
                         }
                     }
                 }
             }
-        }
+        };
 
         for (let i = 0; i < tiles_per_row; i++) {
             build.board_column['#content'][`space_holder_${i}`] = {
@@ -111,35 +110,19 @@ const Settings = {
                     '#fab': true,
                     '#outlined': true,
                     '#color': '#ff7600',
-                    '#centerIcon': 'return',
+                    '#centerIcon': 'arrow_back',
                     '#to': {
                         name: 'core.board',
                         params: {
-                            pathMatch: values.pathMatch,
+                            pathMatch: params.pathMatch,
                         }
                     }
                 }
             }
-        }
+        };
 
         return build;
-    },
-    validate: (Module, values) => {
-
-        /**
-         * Return key: value for error messages.
-         *
-         * key => Resembling the field id.
-         * value => Resembling the the error message.
-         */
-        return true;
-    },
-
-    submit: (Module, values) => {
-
-        // The submitted values of the user.
-        return values;
-    },
+    }
 };
 
 (() => {

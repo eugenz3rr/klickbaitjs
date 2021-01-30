@@ -19,13 +19,26 @@ export default class Region extends Console {
         this.path = this.fallback(data, 'path', '404');
         this.regionManager.regions.push(this);
     }
-    async load(force = false) {
+    async load(force = false, fileSystem = undefined) {
         if (Object.keys(this.regionRaw).length !== 0 && !force) {
             return;
         }
-        let region = await this.fileSystem.read(`${this.module.path}${this.path}`);
-        console.debug(`${this.module.path}${this.path}`);
-        if (typeof region !== 'undefined') {
+        let region = undefined;
+        try {
+            region = await this.fileSystem.read(`${this.module.path}${this.path}`);
+        }
+        catch (e) {
+            console.warn(`${this.module.path}${this.path} - Was not found in the public fs. Defaulting to private.`);
+        }
+        if (region === undefined) {
+            try {
+                region = await this.module.moduleManager.manager.configuration.applicationSystem.read(`${this.module.path}${this.path}`);
+            }
+            catch (e) {
+                console.error(`${this.module.path}${this.path} - Was not found in the private fs. Which is a problem now...`);
+            }
+        }
+        if (region !== undefined) {
             // Interpret code and execute it.
             this.regionRaw = eval(region);
         }
@@ -38,6 +51,8 @@ export default class Region extends Console {
             return {};
         }
         await this.load();
-        this.renderArray = this.regionRaw.build(this.module);
+        if ("build" in this.regionRaw) {
+            this.renderArray = this.regionRaw.build(this.module);
+        }
     }
 }

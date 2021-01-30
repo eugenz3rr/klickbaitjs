@@ -28,7 +28,7 @@ Module => {
             return {
                 renderArray: {},
                 changed: 0,
-            }
+            };
         },
         mounted: async function () {
 

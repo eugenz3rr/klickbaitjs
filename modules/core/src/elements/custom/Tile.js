@@ -22,7 +22,7 @@ Module => {
                 textColor: '#000000',
                 changed: 0,
                 src: undefined,
-                audio: [],
+                audio: undefined,
                 classes: ['default'],
                 images: [],
                 sounds: [],
@@ -36,29 +36,40 @@ Module => {
         watch: {
             images: {
                 handler: function (value) {
+                    if (value.constructor.name === "String") {
+                        this.src = value;
+                        return;
+                    }
+
                     if (!value || value.length === 0 || !value[0]) {
                         this.src = '';
                         return;
                     }
 
-                    const fileReader = new FileReader()
+                    const fileReader = new FileReader();
                     fileReader.onload = () => {
                         this.src = fileReader.result;
-                    }
+                    };
                     fileReader.readAsDataURL(value[0]);
                 },
                 deep: true
             },
             sounds: {
                 handler: function (value) {
-                    if (value.length === 0) {
-                        this.src = '';
+                    if (value.constructor.name === "String") {
+                        this.audio = new Audio(value);
                         return;
                     }
-                    const fileReader = new FileReader()
+
+                    if (value.length === 0) {
+                        this.audio = undefined;
+                        return;
+                    }
+
+                    const fileReader = new FileReader();
                     fileReader.onload = () => {
                         this.audio = new Audio(fileReader.result);
-                    }
+                    };
                     fileReader.readAsDataURL(value[0]);
                 },
                 deep: true
@@ -148,7 +159,10 @@ Module => {
         },
         methods: {
             click: function () {
-                if (this.audio.constructor.name !== 'HTMLAudioElement') {
+                if (
+                    !this.audio ||
+                    this.audio.constructor.name !== 'HTMLAudioElement'
+                ) {
                     return;
                 }
 
@@ -161,7 +175,10 @@ Module => {
             }
         },
         destroyed: function () {
-            if (this.audio.constructor.name !== 'HTMLAudioElement') {
+            if (
+                !this.audio ||
+                this.audio.constructor.name !== 'HTMLAudioElement'
+            ) {
                 return;
             }
 

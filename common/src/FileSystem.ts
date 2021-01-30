@@ -5,26 +5,26 @@ export default interface FileSystem {
    * @param {string} filename 
    * @returns Returns fileEntry or false.
    */
-  exists(filename: string): Boolean | FileEntry,
+  exists(filename: string): Promise<boolean> | Promise<FileEntry>,
 
   /**
    * @param {string} filename 
    * @returns Returns fileEntry.
    */
-  file(filename: string): FileEntry,
+  file(filename: string): Promise<FileEntry>,
 
   /**
    * @param {string} path
    * @returns Returns dirEntry.
    */
-  dir(path: string): DirectoryEntry,
+  dir(path: string): Promise<DirectoryEntry>,
 
   /**
    * @param {string} path
    * @param {string} optionString
    * @returns Return array with filenames (including path).
    */
-  list(path: string, optionString: string): string[],
+  list(path: string, optionString: string): Promise<string[]>,
 
   /**
    * @param {string} filename
@@ -36,84 +36,82 @@ export default interface FileSystem {
    * @param {string} filename
    * @returns Returns JSON-parsed contents of a file.
    */
-  readJSON(filename: string): any,
+  readJSON(filename: string): Promise<any>,
 
   /**
    * @param {string} filename
    * @returns Returns URL to be used in js/html/css (file://....).
    */
-  toUrl(filename: string): string,
+  toUrl(filename: string): Promise<string>,
 
   /**
    * @param {string} filename
    * @returns Returns cordova internal URL (cdvfile://....).
    */
-  toInternalURL(filename: string): string,
+  toInternalURL(filename: string): Promise<string>,
 
   /**
    * @param {string} filename
    * @returns Returns Base64 encoded Data URI.
    */
-  toDataURL(filename: string): string,
+  toDataURL(filename: string): Promise<string>,
 
   /**
    * @description Writes a Blob, a String, or data (as JSON). Ensures directory exists.
    * @param {string} filename 
    * @param {Blob | string | JSON} data 
    */
-  write(filename: string, data: Blob | string | JSON): void,
+  write(filename: string, data: Blob | string | JSON): Promise<void>,
 
   /**
    * @description Creates a file.
    * @param {string} filename
    */
-  create(filename: string): void,
+  create(filename: string): Promise<void>,
 
   /**
    * @description Ensures directory exists.
    * @param {string} path
    */
-  ensure(path: string): void,
+  ensure(path: string): Promise<void>,
 
   /**
    * @description Move from source to destination. Ensures dest directory exists.
    * @param {string} source 
    * @param {string} destination 
    */
-  move(source: string, destination: string): void,
+  move(source: string, destination: string): Promise<void>,
 
   /**
    * @description Move from source to destination. Ensures destination directory exists.
    * @param {string} source 
    * @param {string} destination 
    */
-  moveDir(source: string, destination: string): void,
+  moveDir(source: string, destination: string): Promise<void>,
 
   /**
    * @description Copy from source to destination. Ensures destination directory exists.
    * @param {string} source 
    * @param {string} destination 
    */
-  copy(source: string, destination: string): void,
+  copy(source: string, destination: string): Promise<void>,
 
   /**
    * @description Removes file. Resolves even if file was already removed.
-   * @param {string} source 
-   * @param {string} destination 
+   * @param {string} source
    */
-  remove(source: string): void,
+  remove(source: string): Promise<void>,
 
   /**
    * @description Removes file. Rejects when file does not exist.
-   * @param {string} source 
-   * @param {string} destination 
+   * @param {string} source
+   * @param {boolean} resolve
    */
-  remove(source: string, resolve: boolean): void,
+  remove(source: string, resolve: boolean): Promise<void>,
 
   /**
    * @description Removes directory. Resolves even if directory was already removed.
-   * @param {string} source 
-   * @param {string} destination 
+   * @param {string} path
    */
-  removeDir(path: string): void,
+  removeDir(path: string): Promise<void>,
 }

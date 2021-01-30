@@ -13,7 +13,7 @@ const Settings = {
         "save": false,
     },
 
-    "build": (Module, values, data) => {
+    "build": (Module, data) => {
         let build = {};
         build.two_column = {
             '#type': 'two_column',
@@ -50,7 +50,7 @@ const Settings = {
             '#type': 'dropdown',
             '#title': 'Tile Style',
             '#description': 'The style is used to make your tile look nice.',
-            '#value': Module.fallback(values, 'tile_style', Module.fallback(data, 'tile_style', ['default'])),
+            '#value': Module.fallback(data, 'tile_style', ['default']),
             '#items': [
                 {
                     'text': 'Default',
@@ -94,7 +94,7 @@ const Settings = {
                             '#title': 'Image File',
                             '#description': 'Select your sound file.',
                             '#persistentHint': true,
-                            '#value': Module.fallback(values, 'image_upload', Module.fallback(data, 'image_upload', [])),
+                            '#value': Module.fallback(data, 'image_upload', []),
                         },
 
                         image_upload_edit: {
@@ -113,6 +113,21 @@ const Settings = {
                     }
                 },
             ],
+        };
+
+        build.back = {
+            '#type': 'button',
+            '#title': 'Cancel',
+            '#outlined': true,
+            '#block': true,
+            '#classes': ['mb-2'],
+            '#color': '#FF0000',
+            '#to': {
+                name: 'core.board',
+                params: {
+                    pathMatch: data.pathMatch,
+                }
+            }
         };
 
         return build;
@@ -134,30 +149,26 @@ const Settings = {
         const path_directory = path.replace(file_name, "");
 
         /** @var images {Array<File>} */
-        const images = Module.fallback(values, 'image_upload', false);
-        if (images !== false) {
-            for (let i = 0; i < images.length; i++) {
+        const images = Module.fallback(values, 'image_upload', []);
+        values.image_upload = [];
 
-                /** @var image {File} */
-                const image = images[i];
+        for (let i = 0; i < images.length; i++) {
 
-                if (!image) continue;
-
-                const blob = new Blob([image], {
-                    type: image.mimeType
-                });
-
-                await Module.fileSystem.write(`${path_directory}files/${file_name}_${image.name}`, blob);
-                values.image_upload[i] = image.name;
-            }
+            /** @var image {File} */
+            let image = images[i];
+            if (!image) continue;
+            await Module.fileSystem.write(`${path_directory}files/${file_name}_${image.name}`, image);
+            values.image_upload[i] = image.name;
         }
 
         const file_path = `${path}/${file_name}/board.json`.replaceAll('//', '/');
-        await Module.fileSystem.write(file_path, JSON.stringify(values))
+        await Module.fileSystem.write(file_path, JSON.stringify(values));
 
         Router.push({
             name: "core.board",
-            params: values
+            params: {
+                pathMatch: values.pathMatch
+            },
         });
 
         // The submitted values of the user.
