@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "cordova-promise-fs": "^1",
+    "fs-extra": "^9.1.0",
     "vue": "^2"
   },
   "browserslist": [
@@ -19,8 +20,7 @@
     "not ie <= 8"
   ],
   "devDependencies": {
-    "promiscuous": "^0.7.2",
-    "mime-types": "^2.1.28",
+    "@types/cordova": "0.0.34",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
@@ -30,7 +30,9 @@
     "css-loader": "^3.2.1",
     "file-loader": "^1.1.4",
     "material-design-icons-iconfont": "^5.0.1",
+    "mime-types": "^2.1.28",
     "node-sass": "^4.13.0",
+    "promiscuous": "^0.7.2",
     "sass-loader": "^8.0.0",
     "url-loader": "^4.1.0",
     "vue-loader": "^15.7.2",

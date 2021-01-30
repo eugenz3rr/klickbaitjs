@@ -1,8 +1,23 @@
+const configuration = require('./../configuration/configuration.json');
+const fs = require("fs-extra");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 //const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpack = require('webpack');
 const path = require('path');
 const CompressionPlugin = require('compression-webpack-plugin');
+
+// We need to map the keys to the file names.
+const config_mapping = {
+  'cordova': 'CordovaConfiguration',
+  'installer': 'KlickbaitConfiguration',
+};
+
+let alias = {};
+
+// We want to load another config conditionally.
+if (configuration.installer.type in config_mapping) {
+    alias.config = path.resolve(__dirname, `./src/${config_mapping[configuration.installer.type]}.js`);
+}
 
 module.exports = {
     entry: './src/main.js',
@@ -65,9 +80,11 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.esm.js'
+            'vue$': 'vue/dist/vue.esm.js',
+            '../../configuration/configuration.json' : path.resolve(__dirname, '../configuration/example.configuration.json'),
+            ...alias
         },
-        extensions: ['*', '.js', '.vue', '.json']
+        extensions: ['*', '.js', '.vue', '.json'],
     },
     devServer: {
         historyApiFallback: true,
