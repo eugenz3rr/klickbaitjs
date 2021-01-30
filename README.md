@@ -1,4 +1,4 @@
-# KlickbaitJS - Documentn not ready
+# KlickbaitJS - Documentation (Based on cordova)
 
 In short. KlickbaitJS was created to create a module based frontent CMS for AndroidApps (Created on top of cordova).
 This CMS is currently under heavy development. So it'll most likely experience no backwards compatible versions.
@@ -15,13 +15,28 @@ Current tasks:
 - [ ] Document the shit out of this repo.
     - [ ] Add inline comments.
     - [ ] Add documentation of how to use the CMS and how to extend it.
-- [ ] Create more content and form elements.
-- [ ] Move regions into core from vue app (content, form). 
-- [ ] Create a simple way of injecting css into the page.
+- [x] Create more content and form elements.
+- [x] Move regions into core from vue app (content, form). 
+- [x] Create a simple way of injecting css into the page.
 - [ ] Add Vue i18n for translation.
 
+- [x] Create events on render elements.
+  
+---
 
-- [ ] Create events on render elements.
+Tasks before the first release of the klickbait cms.
+
+- [ ] Standardize all elements in core.
+- [ ] Documentation
+  - [ ] Document the core code.
+  - [ ] Document the common code.
+  - []
+- [ ] Add more events to the event manager.
+- [ ] Merge core and vue/app
+- [ ] Rename the merged 
+- []
+
+
 
 
 ## Table of Contents (Optional)
@@ -34,6 +49,7 @@ Current tasks:
     - [Containers](#containers)
     - [Regions](#regions)
   - [Routing](#routing)
+  - [Events](#events)
 - [Features](#features)
 - [Contributing](#contributing)
 
@@ -87,6 +103,10 @@ Here the basic information about the module is placed and defined so the user do
 > Where do I place it?
 - `[ROOT]/modules/[YOURMODULE]/[YOURMODULE].info.json`
 
+> Additional information
+- Currently dependencies are not working. 
+  This means they are not loading depending on their dependency.
+
 ### Components
 
 Components in this CMS are more or less [elements](#elements) which have a specified purpose.
@@ -137,7 +157,50 @@ Module => {
 
 
 
-### Routing
+## Routing
+
+The routing defines pages which should be reachable.
+Like for example a login form, or a video chat page.
+
+````json5
+{
+  "some_id_for_my_page": {
+
+    // Some url.
+    "path": "/mypath",
+
+    // Set a path title.
+    "title": "Add Tile",
+
+    // Describe what the path contains.
+    "description": "Adds a tile to the current board.",
+    
+    // This parameter hides the page in a list.
+    "hide": true,
+
+    // Those will be the default parameters when visiting the route.
+    params: {
+      
+    },
+    
+    // Not yet documented.
+    "regions": [
+      {
+        "type": "form",
+        "title": "Tile form",
+        "description": "Edit / add current tile.",
+        "path": "src/regions/form/AddTile.js"
+      }
+    ]
+  }
+}
+````
+
+> Where do I place it?
+- `[ROOT]/modules/[YOURMODULE]/[YOURMODULE].routing.json`
+
+## Events
+
 
 The routing defines pages which should be reachable.
 Like for example a login form, or a video chat page.
@@ -170,4 +233,3 @@ Like for example a login form, or a video chat page.
 
 > Where do I place it?
 - `[ROOT]/modules/[YOURMODULE]/[YOURMODULE].routing.json`
-

@@ -2,11 +2,15 @@
   "name": "installation",
   "version": "1.0.0",
   "scripts": {
-    "init": "npm install && cd vue/app && npm install && cd ../../common && npm install && cd ../core && npm install",
-    "dev": "concurrently --kill-others \"node installer.js\" \"http-server\" \"npm run dev --prefix vue/app\" \"npm run dev --prefix core\" \"npm run dev --prefix common\"",
-    "build": "concurrently \"npm run build --prefix core\" \"npm run build --prefix vue/app\""
+    "klickbait:init": "npm install && cd vue/app && npm install && cd ../../common && npm install && cd ../core && npm install",
+    "klickbait:dev": "concurrently --kill-others \"node installer.js\" \"http-server\" \"npm run dev --prefix vue/app\" \"npm run dev --prefix core\" \"npm run dev --prefix common\"",
+    "klickbait:build": "concurrently \"npm run build --prefix core\" \"npm run build --prefix vue/app\"",
+    "klickbait:install": "copy ./installer/example.configuration.json ./installer/configuration.json",
+    "klickbait:show": ""
   },
-  "dependencies": {},
+  "dependencies": {
+    "copy": "^0.3.2"
+  },
   "devDependencies": {
     "concurrently": "5.3.0",
     "fs-extra": "^9.0.1",

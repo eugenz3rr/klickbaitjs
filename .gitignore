@@ -106,3 +106,4 @@ dist
 # Custom
 .idea
 package-lock.json
+configuration.json

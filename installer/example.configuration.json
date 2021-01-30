@@ -1,0 +1,13 @@
+{
+  "type": "browser",
+  "fileSystem": {
+    "public": "localStorage",
+    "private": "localStorage",
+    "application": "localStorage"
+  },
+  "installer": {
+    "type": "installer",
+    "source": "",
+    "target": "public"
+  }
+}
