@@ -21,7 +21,7 @@
     "path": "/core/help",
     "title": "Help",
     "description": "Some information to actually help the developers..",
-    "hide": false,
+    "hide": true,
     "regions": [
       {
         "type": "content",

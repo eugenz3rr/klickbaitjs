@@ -4,7 +4,8 @@ Module => {
         template:
             '<v-color-picker' +
             '      :style="style" ' +
-            '      :class="classCSS" ' +
+            '      :class="classes" ' +
+            '      dot-size="30" ' +
             '      v-model="value"' +
             '      :canvas-height="canvasHeight"' +
             '      :hide-canvas="hideCanvas"' +
@@ -40,14 +41,14 @@ Module => {
                 hideCanvas: false,
                 hideModeSwitch: false,
                 hideInputs: false,
-                mode: 'rgba',
+                mode: 'hexa',
                 showSwatches: false,
                 swatches: undefined,
                 swatchesMaxHeight: 150,
                 width: 300,
                 info: {},
                 style: {},
-                classCSS: {},
+                classes: [],
             };
         },
         watch: {

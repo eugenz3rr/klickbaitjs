@@ -35,7 +35,7 @@ export default class Component extends Console {
      * A function to load the component.
      */
     public load = async () => {
-        const component = await this.fileSystem.read(this.module.path + this.path);
+        const component = await this.module.moduleManager.manager.configuration.applicationSystem.read(this.module.path + this.path);
 
         // Execute order 66.
         this.raw = eval(component);

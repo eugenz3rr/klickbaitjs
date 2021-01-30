@@ -9,14 +9,14 @@ window.mime = mime;
 document.addEventListener('deviceready', async () => {
 
     // ca-app-pub-4637983949499079~2000555188
-    admob.setOptions({
-        publisherId:           "ca-app-pub-3940256099942544/6300978111",  // Required
-        autoShowBanner:        true,                                      // Optional
-        autoShowRInterstitial: false,                                     // Optional
-        autoShowRewarded:      false,                                     // Optional
-    });
-
-    admob.createBannerView();
+    // admob.setOptions({
+    //     publisherId:           "ca-app-pub-3940256099942544/6300978111",  // Required
+    //     autoShowBanner:        true,                                      // Optional
+    //     autoShowRInterstitial: false,                                     // Optional
+    //     autoShowRewarded:      false,                                     // Optional
+    // });
+    //
+    // admob.createBannerView();
 
     try {
         if (typeof cordova !== 'undefined' && cordova.file.cacheDirectory) {
@@ -31,9 +31,27 @@ document.addEventListener('deviceready', async () => {
     }
 
     let fileSystem;
+    let privateSystem;
+    let applicationSystem;
     if (window.cordovaExists) {
         console.debug("Cordova was appended and fileSystem initialized.");
         fileSystem = CordovaPromiseFS({
+            persistent: false, // or false
+            storageSize: 20 * 1024 * 1024, // storage size in bytes, default 20MB
+            concurrency: 3, // how many concurrent uploads/downloads?
+            Promise: promiscuous,
+            fileSystem: cordova.file.cacheDirectory
+        });
+
+        applicationSystem = CordovaPromiseFS({
+            persistent: true, // or false
+            storageSize: 20 * 1024 * 1024, // storage size in bytes, default 20MB
+            concurrency: 3, // how many concurrent uploads/downloads?
+            Promise: promiscuous,
+            fileSystem: cordova.file.applicationDirectory
+        });
+
+        privateSystem = CordovaPromiseFS({
             persistent: true, // or false
             storageSize: 20 * 1024 * 1024, // storage size in bytes, default 20MB
             concurrency: 3, // how many concurrent uploads/downloads?
@@ -131,5 +149,7 @@ document.addEventListener('deviceready', async () => {
     }
 
     window.fileSystem = fileSystem;
+    window.privateSystem = privateSystem;
+    window.applicationSystem = applicationSystem;
     dispatchEvent(new CustomEvent('klickbait-ready'));
 });

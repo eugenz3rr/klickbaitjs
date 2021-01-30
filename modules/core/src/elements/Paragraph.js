@@ -3,7 +3,7 @@ Module => {
         name: 'S-Paragraph',
         template:
             '  <v-card' +
-            '   :flat="flat">' +
+            '   :flat="flat" :class="classes">' +
             '    <v-card-title v-html="title"/>' +
             '    <v-card-subtitle v-html="description"/>' +
             '    <v-card-text :style="{ color: textColor }" v-html="value"/>' +
@@ -26,6 +26,7 @@ Module => {
                 description: "",
                 value: "",
                 flat: false,
+                classes: [],
                 textColor: "",
                 update: [],
             };

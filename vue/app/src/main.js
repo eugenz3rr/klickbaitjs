@@ -151,6 +151,8 @@ let start = async () => {
     for (let i = 0; i < Manager.routeManager.routes.length; i++) {
         const route = Manager.routeManager.routes[i];
 
+
+
         router.addRoutes([{
             name: route.id,
             path: route.path,
@@ -192,7 +194,15 @@ const cordovaExists = window.cordovaExists;
 window.deviceready = false;
 
 window.addEventListener('klickbait-ready', async () => {
-    window.Manager = new Common.Manager(window.fileSystem);
+    document.addEventListener('backbutton', function (e) {
+        e.preventDefault();
+    }, false );
+
+    window.Manager = new Common.Manager({
+        fileSystem: window.fileSystem,
+        privateSystem: window.privateSystem,
+        applicationSystem: window.applicationSystem,
+    });
     await window.Manager.initialize();
     window.deviceready = true;
     await start();
