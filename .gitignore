@@ -107,3 +107,4 @@ dist
 .idea
 package-lock.json
 configuration.json
+Installer.ts
