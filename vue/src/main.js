@@ -53,75 +53,16 @@ let start = async () => {
         let component = {
             name: "Route",
             template:
-                '<v-sheet>\n' +
-                '\n' +
-                '  <!--  Global element.  -->\n' +
-                '  <v-toolbar>\n' +
-                '    <v-btn icon @click="drawer = !drawer">\n' +
-                '      <v-icon>menu</v-icon>\n' +
-                '    </v-btn>\n' +
-                '\n' +
-                '    <v-spacer></v-spacer>\n' +
-                '  </v-toolbar>\n' +
-                '\n' +
-                '  <!--\n' +
-                '    TODO: Make this generic or at least add the possibility to alter the display.\n' +
-                '\n' +
-                '    I want this part only to have pages and the logged in google user.\n' +
-                '   -->\n' +
-                '  <v-navigation-drawer\n' +
-                '      v-model="drawer"\n' +
-                '      absolute>\n' +
-                '    <v-list dense nav>\n' +
-                '\n' +
-                '      <!--\n' +
-                '        FIXME: This item should be in another module.\n' +
-                '        google_login module?\n' +
-                '      -->\n' +
-                '      <v-list-item>\n' +
-                '        <v-list-item-avatar>\n' +
-                '        </v-list-item-avatar>\n' +
-                '\n' +
-                '        <v-list-item-content>\n' +
-                '          <v-list-item-title>Development</v-list-item-title>\n' +
-                '          <v-list-item-subtitle>In development</v-list-item-subtitle>\n' +
-                '        </v-list-item-content>\n' +
-                '      </v-list-item>\n' +
-                '\n' +
-                '      <v-divider></v-divider>\n' +
-                '\n' +
-                '      <!-- Lists items. -->\n' +
-                '      <v-subheader>PAGES</v-subheader>\n' +
-                '      <v-list-item\n' +
-                '          v-for="route in route.module.moduleManager.manager.routeManager.routes"\n' +
-                '          :key="route.title"\n' +
-                '          v-if="!route.hide"\n' +
-                '          link\n' +
-                '          :to="{\n' +
-                '            name: route.id,\n' +
-                '            params: route.params\n' +
-                '          }">\n' +
-                '        <v-list-item-icon v-if="route.fallback(route, \'icon\', false)">\n' +
-                '          <v-icon>{{ route.icon }}</v-icon>\n' +
-                '        </v-list-item-icon>\n' +
-                '\n' +
-                '        <v-list-item-content>\n' +
-                '          <v-list-item-title>{{ route.title }}</v-list-item-title>\n' +
-                '          <v-list-item-subtitle>{{ route.description }}</v-list-item-subtitle>\n' +
-                '        </v-list-item-content>\n' +
-                '      </v-list-item>\n' +
-                '    </v-list>\n' +
-                '  </v-navigation-drawer>\n' +
-                '  <component v-for="(region, index) in route.regionManager.regions"\n' +
-                '             :is="`as-${region.type}`"\n' +
-                '             :route="route"\n' +
-                '             :region="region"\n' +
-                '             :key="`region-${index}-${region.type}-${route.path}-${changed}`"\n' +
-                '             :style="{\n' +
-                '               order: index\n' +
-                '              }"/>\n' +
-                '</v-sheet>\n' +
-                '</template>',
+                '<v-sheet>' +
+                '  <component v-for="(region, index) in route.regionManager.regions"' +
+                '             :is="`as-${region.type}`"' +
+                '             :route="route"' +
+                '             :region="region"' +
+                '             :key="`region-${index}-${region.type}-${route.path}-${changed}`"' +
+                '             :style="{' +
+                '               order: index' +
+                '              }"/>' +
+                '</v-sheet>',
             data() {
                 return {
                     drawer: false,
@@ -178,14 +119,6 @@ let start = async () => {
         router,
         render: h => h(App),
     });
-
-    // Default page.
-    await router.push({
-        name: 'core.board',
-        params: {
-            pathMatch: '/soundboard/',
-        }
-    });
 };
 
 const cordovaExists = window.cordovaExists;
@@ -205,10 +138,3 @@ window.addEventListener('klickbait-ready', async () => {
     window.deviceready = true;
     await start();
 }, false);
-
-// if (!cordovaExists) {
-//     window.Manager.initialize().then(async () => {
-//         window.deviceready = true;
-//         await start();
-//     });
-// }

@@ -24,8 +24,8 @@ const compile_installer = async () => {
         }
         const file = dir;
 
-        const file_name = file.replaceAll(__dirname.split("\\").join('/'), '').replaceAll('/..', '');
-        let isFile = file_name.replaceAll('..', '').split('.');
+        const file_name = file.split(__dirname.split("\\").join('/')).join('').split('/..').join('');
+        let isFile = file_name.split('..').join('').split('.');
 
         if (isFile.length <= 1) {
             continue;

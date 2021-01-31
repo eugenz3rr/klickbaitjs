@@ -12,6 +12,11 @@
     }
   },
   "containers": {
+    "v-app-bar": {
+      "title": "Top Navigation",
+      "description": "An element that holds the navigation.",
+      "path": "src/containers/v-app-bar.js"
+    },
     "accordion": {
       "title": "Accordion",
       "description": "An element which contains elements in a specific arrangement.",

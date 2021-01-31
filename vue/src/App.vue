@@ -7,7 +7,7 @@
 <script>
 
 export default {
-  name: "AdvancedSoundboard"
+  name: "Klickbait"
 };
 </script>
 
