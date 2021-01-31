@@ -54,6 +54,11 @@
     }
   },
   "elements": {
+    "v-img": {
+      "title": "Image",
+      "description": "Displays an image.",
+      "path": "src/elements/v-img.js"
+    },
     "tile": {
       "title": "Tile",
       "description": "Displays the tile.",

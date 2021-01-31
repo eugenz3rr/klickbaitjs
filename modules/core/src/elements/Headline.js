@@ -2,7 +2,7 @@ Module => {
     const component = {
         name: 'S-Headline',
         template:
-            '<v-card flat color="transparent">' +
+            '<v-card flat :class="classes" color="transparent">' +
             '    <v-card-title v-if="title" v-html="title"/>' +
             '    <v-card-subtitle v-if="description" v-html="description"/>' +
             '</v-card>',
@@ -20,6 +20,7 @@ Module => {
         },
         data() {
             return {
+                classes: [],
                 title: "",
                 description: "",
                 size: 1,

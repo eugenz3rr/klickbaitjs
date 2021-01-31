@@ -53,7 +53,7 @@ Module => {
             '       :value="value"' +
             '       :width="width"' +
             '    >' +
-            '    <component v-for="(renderElement, element) in content[\'#content\']"' +
+            '    <component v-for="(renderElement, element) in content"' +
             '               :is="`as-${renderElement[\'#type\']}`"' +
             '               :renderElement="renderElement"' +
             '               :element="element"' +
@@ -116,7 +116,8 @@ Module => {
                 tile: false,
                 value: true,
                 width: undefined,
-                content: {}
+                content: {},
+                changed: 0,
             };
         },
 
