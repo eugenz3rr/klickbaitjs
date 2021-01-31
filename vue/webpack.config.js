@@ -17,14 +17,14 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                    'vue-style-loader',
+                    'style-loader',
                     'css-loader',
                     'sass-loader'
                 ]
             }, {
                 test: /\.css$/,
                 use: [
-                    'vue-style-loader',
+                    'style-loader',
                     'css-loader'
                 ],
             },
@@ -77,14 +77,12 @@ module.exports = {
     performance: {
         hints: false
     },
-    devtool: '#eval-source-map',
     plugins: [
         new VueLoaderPlugin(),
         //new BundleAnalyzerPlugin()
     ]
 };
 if (process.env.NODE_ENV === 'production') {
-    module.exports.devtool = '#source-map';
 
     // http://vue-loader.vuejs.org/en/workflow/production.html
     module.exports.plugins = (module.exports.plugins || []).concat([
@@ -97,7 +95,5 @@ if (process.env.NODE_ENV === 'production') {
                 minimize: true
             }),
         ],
-        new CompressionPlugin());
-
-    module.exports.module
+        new CompressionPlugin())
 }

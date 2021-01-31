@@ -6,10 +6,12 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack --watch --mode=development",
+    "dev": "concurrently \"npm run _dev\" \"tsc -w\"",
+    "_dev": "cross-env NODE_ENV=development webpack --watch --mode=development",
     "build": "cross-env NODE_ENV=production webpack --mode=production --progress"
   },
   "dependencies": {
+    "concurrently": "5.3.0",
     "cordova-promise-fs": "^1",
     "fs-extra": "^9.1.0",
     "vue": "^2"

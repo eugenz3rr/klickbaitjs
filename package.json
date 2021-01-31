@@ -2,9 +2,9 @@
   "name": "installation",
   "version": "1.0.0",
   "scripts": {
-    "klickbait:install": "npm install && cd vue/app && npm install && cd ../../common && npm install && cd ../core && npm install",
-    "klickbait:dev": "concurrently --kill-others \"node configuration/installer.js\" \"http-server\" \"npm run dev --prefix vue/app\" \"npm run dev --prefix core\" \"npm run dev --prefix common\"",
-    "klickbait:build": "concurrently \"npm run build --prefix core\" \"npm run build --prefix vue/app\"",
+    "klickbait:install": "npm install && cd vue && npm install && cd ../common && npm install && cd ../core && npm install",
+    "klickbait:dev": "concurrently --kill-others \"node configuration/installer/Installer.js\" \"http-server\" \"npm run dev --prefix vue\" \"npm run dev --prefix core\" \"npm run dev --prefix common\"",
+    "klickbait:build": "concurrently \"npm run build --prefix core\" \"npm run build --prefix vue\"",
     "klickbait:show": ""
   },
   "devDependencies": {

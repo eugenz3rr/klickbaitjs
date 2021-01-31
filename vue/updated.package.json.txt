@@ -1,3 +1,6 @@
+Does not compile the css.
+css-loaded is somehow broken on version 5
+
 {
   "author": "Eugen Zerr <eugen.zerr@hotmail.com>",
   "license": "MIT",
@@ -39,7 +42,6 @@
     "vue-loader": "15.9.6",
     "vue-style-loader": "4.1.2",
     "vue-template-compiler": "2.6.12",
-    "webpack": "^5.19.0",
-    "webpack-cli": "^4.4.0"
+    "webpack": "5.19.0"
   }
 }
