@@ -11,14 +11,14 @@ Module => {
         name: 'TileContainer',
         components,
         template:
-            '<div class="one-column">' +
+            '<v-sheet>' +
             '   <component v-for="(renderElement, element) in content"' +
             '              :is="`as-${renderElement[\'#type\']}`"' +
             '              :renderElement="renderElement"' +
             '              :element="element"' +
             '              :key="`${element}.${changed}`"' +
             '              :region="region"/>' +
-            '</div>',
+            '</v-sheet>',
         props: {
 
             /**

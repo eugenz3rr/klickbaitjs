@@ -51,6 +51,16 @@
       "title": "A floating button container.",
       "description": "An element which enables the user to upload files.",
       "path": "src/elements/custom/tile/AddTileButton.js"
+    },
+    "v-list": {
+      "title": "A floating button container.",
+      "description": "An element which enables the user to upload files.",
+      "path": "src/containers/v-list.js"
+    },
+    "v-list-group": {
+      "title": "A floating button container.",
+      "description": "An element which enables the user to upload files.",
+      "path": "src/containers/v-list-group.js"
     }
   },
   "elements": {

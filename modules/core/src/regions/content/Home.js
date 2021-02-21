@@ -6,8 +6,8 @@
          * @description This holds information about the form.
          */
         info: {
-            title: "Tile Board",
-            description: "Configure your settings here.",
+            title: "",
+            description: "",
         },
 
         /**
@@ -39,7 +39,7 @@
                         '#text': true,
                         '#color': '#FFF',
                         '#to': {
-                            name: 'core.home'
+                            name: 'core.documentation.overview'
                         }
                     },
                     about: {
@@ -58,7 +58,7 @@
                 '#type': 'headline',
                 '#title': '<h2>Welcome on klickbait!</h2>',
                 '#description': 'This page should be a little example what klickbait can actually do.',
-                '#classes': ['mt-3', 'mb-2'],
+                '#classes': ['mt-3', 'mb-2', 'justify-center', 'text-center', 'h2'],
             };
 
             build.two_column = {

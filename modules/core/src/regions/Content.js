@@ -1,7 +1,5 @@
 Module => {
-    const elements = window.Manager.componentManager.getComponentsByType('elements');
-    const containers = window.Manager.componentManager.getComponentsByType('containers');
-    const data = [...elements, ...containers];
+    const data = Manager.componentManager.getAll(['content', 'form']);
     const components = {};
 
     for (let i = 0; i < data.length; i++) {

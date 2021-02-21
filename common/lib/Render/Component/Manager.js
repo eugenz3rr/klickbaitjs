@@ -6,8 +6,10 @@ export default class ComponentManager extends Console {
         this.containers = [];
         this.elements = [];
     }
-    getAll() {
-        return [...this.regions, ...this.containers, ...this.elements];
+    getAll(exclude = []) {
+        let components = [...this.regions, ...this.containers, ...this.elements];
+        components = components.filter(component => !exclude.includes(component.id));
+        return components;
     }
     /**
      * A function to fetch a component by id.

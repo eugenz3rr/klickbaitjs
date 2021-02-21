@@ -11,8 +11,11 @@ export default class ComponentManager extends Console {
         super(fileSystem);
     }
 
-    public getAll(): Component[] {
-        return [...this.regions, ...this.containers, ...this.elements];
+    public getAll(exclude: string[] = []): Component[] {
+        let components = [...this.regions, ...this.containers, ...this.elements];
+        components = components.filter(component => !exclude.includes(component.id));
+
+        return components;
     }
 
     /**

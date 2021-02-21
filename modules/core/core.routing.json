@@ -8,9 +8,25 @@
     "regions": [
       {
         "type": "content",
-        "title": "Homepage",
+        "title": "Home",
         "description": "This part displays the currently edited / added tile.",
         "path": "src/regions/content/Home.js",
+        "icon": "home"
+      }
+    ]
+  },
+  "core.documentation.overview": {
+    "path": "/documentation/overview",
+    "title": "Documentation",
+    "description": "Documentation for KlickbaitJS",
+    "hide": false,
+    "params": {},
+    "regions": [
+      {
+        "type": "content",
+        "title": "Homepage",
+        "description": "This part displays the currently edited / added tile.",
+        "path": "src/regions/content/DocumentationOverview.js",
         "icon": "home"
       }
     ]

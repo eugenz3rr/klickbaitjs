@@ -3,8 +3,8 @@ Module => {
         name: 'S-Headline',
         template:
             '<v-card flat :class="classes" color="transparent">' +
-            '    <v-card-title v-if="title" v-html="title"/>' +
-            '    <v-card-subtitle v-if="description" v-html="description"/>' +
+            '    <v-card-title :class="classes" v-if="title" v-html="title"/>' +
+            '    <v-card-subtitle :class="classes" v-if="description" v-html="description"/>' +
             '</v-card>',
         props: {
 
@@ -52,6 +52,7 @@ Module => {
             }
         },
     };
+    Module.appendStyle(`src/libraries/highlight/highlight.pack.js`, component.name);
 
     return component;
 };
