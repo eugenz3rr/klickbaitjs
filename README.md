@@ -30,11 +30,11 @@ Tasks before the first release of the klickbait cms.
 - [ ] Documentation
   - [ ] Document the core code.
   - [ ] Document the common code.
-  - []
+  - [ ]
 - [ ] Add more events to the event manager.
 - [ ] Merge core and vue/app
 - [ ] Rename the merged 
-- []
+- [ ]
 
 
 
@@ -56,9 +56,20 @@ Tasks before the first release of the klickbait cms.
 
 First of all install the latest (stable) nodeJS [Here](https://nodejs.org/en/).
 
-Run those scripts in the root directory. To install all dependencies.
+To install all dependencies run this command in the root of the project.
 ```
-npm run init
+npm run klickbait:install
+```
+
+After installation we need to recreate all files listed below.
+
+First find the example.index.html and save it as index.html with your own setup (The "example." files are always working).
+The second part is to create the default configuration. It's located in the /configuration/ it's called
+example.configuration.json and needs to be copied and renamed to configuration.json. 
+
+With all those settings set we can start the dev server with:
+```
+npm run klickbait:dev
 ```
 
 ## Modules
@@ -155,7 +166,6 @@ Module => {
 ````
 
 
-
 ## Routing
 
 The routing defines pages which should be reachable.
@@ -179,7 +189,7 @@ Like for example a login form, or a video chat page.
 
     // Those will be the default parameters when visiting the route.
     params: {
-      
+      "my_defaut_param": "" 
     },
     
     // Not yet documented.
@@ -200,35 +210,19 @@ Like for example a login form, or a video chat page.
 
 ## Events
 
-
-The routing defines pages which should be reachable.
-Like for example a login form, or a video chat page.
+The events in klickbait are similar to the .module folder in Drupal.
+Currently there is only one event that is triggered after registering the modules.
+But there'll be more.
 
 ````json5
-{
-  "some_id_for_my_page": {
-
-    // Some url.
-    "path": "/mypath",
-
-    // Set a path title.
-    "title": "Add Tile",
-
-    // Describe what the path contains.
-    "description": "Adds a tile to the current board.",
-
-    // Not yet documented.
-    "regions": [
-      {
-        "type": "form",
-        "title": "Tile form",
-        "description": "Edit / add current tile.",
-        "path": "src/regions/form/AddTile.js"
-      }
-    ]
+(() => {
+  return {
+    "event.name": async () => {
+      // Your custom code here.
+    }
   }
-}
+})()
 ````
 
 > Where do I place it?
-- `[ROOT]/modules/[YOURMODULE]/[YOURMODULE].routing.json`
+- `[ROOT]/modules/[YOURMODULE]/[YOURMODULE].events.js`
