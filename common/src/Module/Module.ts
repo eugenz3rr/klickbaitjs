@@ -61,17 +61,17 @@ export default class Module extends Console {
    */
   public async initialize(): Promise<void> {
 
-    this.log(`Reading > ${this.path}${this.id}.info.json`);
-    let info: Object | undefined = undefined;
-    try {
-      info = await this.moduleManager.manager.configuration.applicationSystem.readJSON(`${this.path}${this.id}.info.json`);
-    } catch (e) {
-      console.warn(`${this.path}${this.id}.info.json - Could not be found. Using default.`, e);
-    }
-
-    if (info !== undefined) {
-      this.info = new Info(this, info);
-    }
+    // this.log(`Reading > ${this.path}${this.id}.info.json`);
+    // let info: Object | undefined = undefined;
+    // try {
+    //   info = await this.moduleManager.manager.configuration.applicationSystem.readJSON(`${this.path}${this.id}.info.json`);
+    // } catch (e) {
+    //   console.warn(`${this.path}${this.id}.info.json - Could not be found. Using default.`, e);
+    // }
+    //
+    // if (info !== undefined) {
+    //   this.info = new Info(this, info);
+    // }
 
     this.log(`Reading > ${this.path}${this.id}.routing.json`);
     let routes: any = undefined;

@@ -1,5 +1,7 @@
 import mime from 'mime-types';
+import topSort from 'toposort';
 window.mime = mime;
+window.topSort = topSort;
 
 // This import is managed via webpack.
 import Configuration from 'config';
