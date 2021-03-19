@@ -1,8 +1,10 @@
-# KlickbaitJS - Documentn not ready
+# KlickbaitJS - Document not ready
 
 In short. KlickbaitJS was created to create a module based frontent CMS for AndroidApps (Created on top of cordova).
 This CMS is currently under heavy development. So it'll most likely experience no backwards compatible versions.
 Oriented on the module structure of Drupal.
+
+(Most likely a video tutroial will be necessary on how to create a module.)
 
 This CMS is build using:
 
