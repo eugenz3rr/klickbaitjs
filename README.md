@@ -17,29 +17,9 @@ Current tasks:
 - [ ] Document the shit out of this repo.
     - [ ] Add inline comments.
     - [ ] Add documentation of how to use the CMS and how to extend it.
-- [x] Create more content and form elements.
-- [x] Move regions into core from vue app (content, form). 
-- [x] Create a simple way of injecting css into the page.
-- [ ] Add Vue i18n for translation.
-
-- [x] Create events on render elements.
+- [ ] Add Vue i18n for translation
   
 ---
-
-Tasks before the first release of the klickbait cms.
-
-- [ ] Standardize all elements in core.
-- [ ] Documentation
-  - [ ] Document the core code.
-  - [ ] Document the common code.
-  - [ ]
-- [ ] Add more events to the event manager.
-- [ ] Merge core and vue/app
-- [ ] Rename the merged 
-- [ ]
-
-
-
 
 ## Table of Contents (Optional)
 
