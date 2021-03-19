@@ -52,7 +52,7 @@ Module => {
             }
         },
     };
-    Module.appendStyle(`src/libraries/highlight/highlight.pack.js`, component.name);
+    Module.appendStyle(`src/elements/css/headline.css`, component.name);
 
     return component;
 };

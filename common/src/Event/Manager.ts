@@ -3,38 +3,62 @@ import FileSystem from "../FileSystem";
 import Console from "../Console";
 
 export default class EventManager extends Console {
-    public events: Event[] = [];
-    public path: string = '';
 
-    constructor(fileSystem: FileSystem) {
-        super(fileSystem);
-        this.fileSystem = fileSystem;
+  /**
+   *
+   */
+  public events: Event[] = [];
+
+  /**
+   *
+   * @param fileSystem
+   */
+  constructor(fileSystem: FileSystem) {
+    super(fileSystem);
+    this.fileSystem = fileSystem;
+  }
+
+  /**
+   *
+   * @param id
+   * @param context
+   */
+  public async fire(id: string, context: object = {}): Promise<any> {
+    let events: Event[] | false = this.find(id);
+
+    if (events === false) {
+      return;
     }
 
-    public fire(id: string): void {
-        let event: Event | false = this.find(id);
-
-        if (event === false) {
-            return;
-        }
-
-        event.execute().then(() => {}).catch(e => {
-            console.error(`There was an error executing the event "${id}". \n Please review.`, e);
-        });
+    let result;
+    for (let i = 0; i < events.length; i++) {
+      try {
+        result = await events[i].execute(context);
+      } catch (e) {
+        console.error(`There was an error executing the event "${id}". \n Please review.`, e);
+      }
     }
 
-    private find(id: string): Event | false  {
-        let event: Event | boolean = false;
+    return result;
+  }
 
-        // Find the id that matches the parameter id.
-        for (let i = 0; i < this.events.length; i++) {
-            let current_event = this.events[i];
-            if (current_event.id === id) {
-                event = current_event;
-                break;
-            }
-        }
+  /**
+   *
+   * @param id
+   * @private
+   */
+  private find(id: string): Event[] | false {
+    let events: Event[] = [];
 
-        return event;
+    // Find the id that matches the parameter id.
+    for (let i = 0; i < this.events.length; i++) {
+      let current_event = this.events[i];
+      if (current_event.id === id) {
+        events.push(current_event);
+        break;
+      }
     }
+
+    return events;
+  }
 }

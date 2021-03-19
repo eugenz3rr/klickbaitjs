@@ -1,14 +1,30 @@
 import Module from "./Module";
 import Console from "../Console";
 export default class ModuleManager extends Console {
+    /**
+     *
+     * @param fileSystem
+     * @param root
+     * @param manager
+     */
     constructor(fileSystem, root, manager) {
         super(fileSystem);
+        /**
+         *
+         */
         this.modules = [];
+        /**
+         *
+         */
         this.path = '';
         this.manager = manager;
         this.fileSystem = fileSystem;
         this.path = root;
     }
+    /**
+     *
+     * @param directories
+     */
     async sortByDependencies(directories) {
         let sort = {};
         let sorted_keys = [];
@@ -22,7 +38,8 @@ export default class ModuleManager extends Console {
             try {
                 info = await this.manager.configuration.applicationSystem.readJSON(`${directory}${id}.info.json`);
             }
-            catch (e) { }
+            catch (e) {
+            }
             if (info === undefined) {
                 continue;
             }
@@ -36,7 +53,9 @@ export default class ModuleManager extends Console {
             }
             sort[id] = directory;
         }
+        // @ts-ignore-start
         sorted_keys = window.topSort(sorted_keys).reverse();
+        // @ts-ignore-end
         let sorted = [];
         for (let i = 0; i < sorted_keys.length; i++) {
             const sorted_key = sorted_keys[i];
@@ -47,6 +66,9 @@ export default class ModuleManager extends Console {
         }
         return sorted;
     }
+    /**
+     *
+     */
     async discover() {
         let directories = [];
         try {
@@ -69,8 +91,8 @@ export default class ModuleManager extends Console {
                 console.error('Could not initialize or summarize module.', module_data.directory, module_data.id, e);
             }
         }
-    }
-    cordovaExists() {
-        return this.fallback(window, 'cordovaExists', false);
+        this.manager.eventManager.fire('modules.init', {
+            modules: this.modules,
+        }).then();
     }
 }

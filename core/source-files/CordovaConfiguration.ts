@@ -3,8 +3,13 @@ import KlickbaitConfiguration from "./KlickbaitConfiguration";
 import CordovaPromiseFS from 'cordova-promise-fs';
 // @ts-ignore
 import promiscuous from "promiscuous";
+import DefaultFileSystem from "./DefaultFileSystem";
 
-export default class CordovaConfiguration extends KlickbaitConfiguration {
+export default class CordovaConfiguration {
+
+    public publicFileSystem: DefaultFileSystem | undefined;
+    public privateFileSystem: DefaultFileSystem | undefined;
+    public applicationFileSystem: DefaultFileSystem | undefined;
 
     /**
      * @inheritDoc

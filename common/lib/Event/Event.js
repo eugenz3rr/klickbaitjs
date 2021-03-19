@@ -8,7 +8,7 @@ export default class Event extends Console {
         this.id = id;
         this.event_code = event_code;
     }
-    async execute() {
-        await this.event_code();
+    async execute(context) {
+        return await this.event_code(context);
     }
 }

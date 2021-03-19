@@ -15,6 +15,14 @@ export default class DefaultFileSystem {
         return false;
     }
 
+    async remove(path: string) {
+        if (!window.localStorage.hasOwnProperty(path)) {
+            return;
+        }
+
+        window.localStorage.removeItem(path);
+    }
+
     async read(path: string) {
         if (!window.localStorage.hasOwnProperty(path)) {
             return undefined;

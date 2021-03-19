@@ -12,43 +12,54 @@ import Event from "../Event/Event";
 export default class Module extends Console {
 
   /**
-   * 
+   *
    */
   public moduleManager: ModuleManager;
 
+  /**
+   *
+   */
   public routeManager: RouteManager = new RouteManager(this.fileSystem);
+
+  /**
+   *
+   */
   public componentManager: ComponentManager = new ComponentManager(this.fileSystem);
+
+  /**
+   *
+   */
   public eventManager: EventManager = new EventManager(this.fileSystem);
 
   /**
-   * 
+   *
    */
   public components: Components = new Components(this, {});
 
   /**
-   * 
+   *
    */
   public info: Info = new Info(this, {});
 
   /**
-   * 
+   *
    */
   public path: string;
 
   /**
-   * 
+   *
    */
   public id: string;
 
   /**
-   * 
-   * @param moduleManager 
-   * @param path 
-   * @param id 
+   *
+   * @param moduleManager
+   * @param path
+   * @param id
    */
   constructor(moduleManager: ModuleManager, path: string, id: string) {
     super(moduleManager.fileSystem);
-    
+
     this.moduleManager = moduleManager;
     this.moduleManager.modules.push(this);
 
@@ -57,30 +68,42 @@ export default class Module extends Console {
   }
 
   /**
-   * 
+   * A helper to fetch config files.
+   *
+   * @param path
+   * @param file
+   * @private
    */
-  public async initialize(): Promise<void> {
+  private async readConfigFile(file: string, path: string = this.path): Promise<any> {
+    this.log(`Reading > ${path}${file}`);
+    let file_contents: any = undefined;
 
-    // this.log(`Reading > ${this.path}${this.id}.info.json`);
-    // let info: Object | undefined = undefined;
-    // try {
-    //   info = await this.moduleManager.manager.configuration.applicationSystem.readJSON(`${this.path}${this.id}.info.json`);
-    // } catch (e) {
-    //   console.warn(`${this.path}${this.id}.info.json - Could not be found. Using default.`, e);
-    // }
-    //
-    // if (info !== undefined) {
-    //   this.info = new Info(this, info);
-    // }
-
-    this.log(`Reading > ${this.path}${this.id}.routing.json`);
-    let routes: any = undefined;
     try {
-      routes = await this.moduleManager.manager.configuration.applicationSystem.readJSON(`${this.path}${this.id}.routing.json`);
+      file_contents = await this.moduleManager.manager.configuration.applicationSystem.readJSON(`${path}${file}`);
     } catch (e) {
-      console.warn(`${this.path}${this.id}.routing.json - Could not be found. Using default.`, e);
+      console.warn(`${this.path}${file} - Could not be found.`, e);
     }
 
+    return file_contents;
+  }
+
+  /**
+   *
+   * @private
+   */
+  private async loadInfo(): Promise<void> {
+    let info: any = await this.readConfigFile(`${this.id}.info.json`);
+    if (info !== undefined) {
+      this.info = new Info(this, info);
+    }
+  }
+
+  /**
+   *
+   * @private
+   */
+  private async loadRoutes(): Promise<void> {
+    let routes: any = await this.readConfigFile(`${this.id}.routing.json`);
     if (routes !== undefined) {
       const ids: string[] = Object.keys(routes);
 
@@ -91,14 +114,14 @@ export default class Module extends Console {
         new Route(this, id, route);
       }
     }
+  }
 
-    this.log(`Reading > ${this.path}${this.id}.components.json`);
-    let components: any = undefined;
-    try {
-      components = await this.moduleManager.manager.configuration.applicationSystem.readJSON(`${this.path}${this.id}.components.json`);
-    } catch (e) {
-      console.warn(`${this.path}${this.id}.components.json - Could not be found. Using default.`, e);
-    }
+  /**
+   *
+   * @private
+   */
+  private async loadComponents(): Promise<void> {
+    let components: any = await this.readConfigFile(`${this.id}.components.json`);
 
     // Sanity check.
     if (components !== undefined) {
@@ -131,7 +154,13 @@ export default class Module extends Console {
       }
       console.groupEnd();
     }
+  }
 
+  /**
+   *
+   * @private
+   */
+  private async loadEvents(): Promise<void> {
     this.log(`Reading > ${this.path}${this.id}.events.js`);
     let events: string | any = undefined;
     try {
@@ -152,10 +181,28 @@ export default class Module extends Console {
         new Event(this, id, event);
       }
     }
-
-    this.eventManager.fire('module.post.init');
   }
 
+  /**
+   * The initialize part is loading all needed config files.
+   */
+  public async initialize(): Promise<void> {
+
+    await this.loadInfo();
+    await this.loadRoutes();
+    await this.loadComponents();
+    await this.loadEvents();
+
+    this.eventManager.fire('module.init', {
+      module: this
+    }).then();
+  }
+
+  /**
+   *
+   * @param path
+   * @param id
+   */
   public appendStyle(path: string, id: string) {
 
     // If the source was already appended just ignore the rest.
@@ -168,6 +215,7 @@ export default class Module extends Console {
       style.setAttribute('data-source-id', id);
       document.head.append(style);
 
-    }).catch(() => {})
+    }).catch(() => {
+    })
   }
 } 

@@ -1,4 +1,5 @@
 import DefaultFileSystem from "./DefaultFileSystem";
+// @ts-ignore
 import Installer from "./Installer";
 
 interface FileSystems {

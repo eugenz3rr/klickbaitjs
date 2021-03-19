@@ -13,8 +13,11 @@ export default {
 
 <style lang="scss">
 
-:root {
+@import "~vuetify/dist/vuetify.min.css";
+@import "scss/cropper";
+@import "scss/custom";
 
+:root {
   --background-primary: #2c3e50;
   --background-secondary: #34495e;
   --background-tertiary: #7f8c8d;
@@ -29,11 +32,6 @@ export default {
   --status-error: #d35400;
 }
 
-$color-pack: false;
-
-@import "scss/cropper";
-@import "scss/custom";
-
 * {
   font-family: "OpenLight", sans-serif;
 }
@@ -44,8 +42,48 @@ $color-pack: false;
   height: 100%;
   top: 0;
   left: 0;
-  background-color: white;
 }
 
-@import "~vuetify/dist/vuetify.min.css";
+.v-icon.material-icons {
+  color: var(--icon) !important;
+}
+
+.theme--light {
+  &.v-card .v-card__subtitle,
+  &.v-card > .v-card__text,
+  &.v-btn,
+  &.v-input,
+  &.v-input input,
+  &.v-input textarea,
+  &.v-list-item,
+  .v-btn__content,
+  .v-select .v-select__selection--comma,
+  .v-list-item .v-list-item__subtitle,
+  .v-list-item .v-list-item__title {
+    color: var(--string);
+  }
+
+  &.v-expansion-panels .v-expansion-panel {
+    background-color: var(--background-primary);
+    color: var(--string);
+  }
+
+  &.v-application,
+  &.v-sheet {
+    background-color: var(--background-primary);
+    border-color: var(--accent);
+    color: var(--string);
+  }
+
+  &.v-color-picker {
+    span {
+      color: var(--string);
+    }
+
+    .v-color-picker__input input {
+      color: var(--string);
+      border-color: var(--string);
+    }
+  }
+}
 </style>

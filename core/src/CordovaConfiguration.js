@@ -1,11 +1,9 @@
-import KlickbaitConfiguration from "./KlickbaitConfiguration";
 // @ts-ignore
 import CordovaPromiseFS from 'cordova-promise-fs';
 // @ts-ignore
 import promiscuous from "promiscuous";
-export default class CordovaConfiguration extends KlickbaitConfiguration {
+export default class CordovaConfiguration {
     constructor() {
-        super(...arguments);
         /**
          * @inheritDoc
          */

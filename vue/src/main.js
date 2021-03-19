@@ -40,68 +40,50 @@ let start = async () => {
     const router = new VueRouter({});
     window.router = router;
 
-    const Route = (() => {
-        const components = {};
-        if (window.deviceready) {
-            const data = window.Manager.componentManager.getAll();
-            for (let i = 0; i < data.length; i++) {
-                const component = data[i];
-                components[`as-${component.id}`] = component.getComponent();
-            }
-        }
-
-        let component = {
-            name: "Route",
-            template:
-                '<v-sheet>' +
-                '  <component v-for="(region, index) in route.regionManager.regions"' +
-                '             :is="`as-${region.type}`"' +
-                '             :route="route"' +
-                '             :region="region"' +
-                '             :key="`region-${index}-${region.type}-${route.path}-${changed}`"' +
-                '             :style="{' +
-                '               order: index' +
-                '              }"/>' +
-                '</v-sheet>',
-            data() {
-                return {
-                    drawer: false,
-                    renderRegions: [],
-                    changed: 0
-                };
-            },
-            mounted: function () {
-            },
-            props: {
-                route: Object,
-            },
-            watch: {
-                $route: async function (to, from) {
-                    this.changed = Date.now();
-                }
-            },
-            components
-        };
-
-        return component;
-    })();
+    let Route = await Manager.eventManager.fire('core.route', {
+        Manager,
+    });
 
     Vue.component('route', Route);
 
     // Register routes in the vue-router.
     for (let i = 0; i < Manager.routeManager.routes.length; i++) {
-        const route = Manager.routeManager.routes[i];
+        const route_object = Manager.routeManager.routes[i];
 
-        router.addRoute({
-            name: route.id,
-            path: route.path,
+        let route = {
+            name: route_object.id,
+            path: route_object.path,
             component: Route,
             props: {
                 default: true,
-                route,
+                route: route_object,
             },
             params: {}
+        };
+
+        // Provide a solution to remove unwanted routes.
+        let altered_route;
+
+        // First all because that's less specific.
+        altered_route = await Manager.eventManager.fire(`core.route.alter`, {
+            Manager,
+            Route: route
         });
+
+        // The specific form is more important it overrides the less specific one.
+        altered_route = await Manager.eventManager.fire(`core.route.${route.id}.alter`, {
+            Manager,
+            Route: route
+        });
+
+        if (
+          altered_route !== undefined ||
+          altered_route
+        ) {
+          route = altered_route;
+        }
+
+        router.addRoute(route);
     }
 
     new Vue({
@@ -110,22 +92,17 @@ let start = async () => {
             icons: {
                 iconfont: 'md',
             },
-            theme: {
-                themes: {
-                    light: {},
-                }
-            },
+            theme: { disable: true },
         }),
         router,
         render: h => h(App),
     });
 };
 
-const cordovaExists = window.cordovaExists;
 window.deviceready = false;
 
 window.addEventListener('klickbait-ready', async () => {
-    document.addEventListener('backbutton', function (e) {
+    document.addEventListener('backbutton', e => {
         e.preventDefault();
     }, false );
 
@@ -137,4 +114,8 @@ window.addEventListener('klickbait-ready', async () => {
     await window.Manager.initialize();
     window.deviceready = true;
     await start();
+    await Manager.eventManager.fire(`core.route.init`, {
+        Manager,
+        Router: router
+    });
 }, false);
