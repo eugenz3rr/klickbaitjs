@@ -2,6 +2,9 @@ import Console from "./Console";
 import Form from "./Form";
 import Module from "./Module/Module";
 
+/**
+ * A class for components.
+ */
 export default class Components extends Console {
   public module: Module;
   public forms: Form[] = [];
@@ -19,7 +22,6 @@ export default class Components extends Console {
   }
 
   public async load(forms: string[]) {
-
     for (let i = 0; i < forms.length; i++) {
 
       const location: string = forms[i];
