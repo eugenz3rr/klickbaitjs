@@ -7,7 +7,7 @@
   },
   "installer": {
     "type": "installer",
-    "source": "",
+    "source": "/modules/",
     "target": "public"
   }
 }

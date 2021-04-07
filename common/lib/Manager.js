@@ -10,6 +10,7 @@ export default class Manager extends Console {
      */
     constructor(configuration) {
         super(configuration.fileSystem);
+        this.root = '/modules/';
         this.configuration = configuration;
         // Contains all routes.
         this.routeManager = new RouteManager(this.fileSystem);
@@ -20,7 +21,7 @@ export default class Manager extends Console {
      *
      */
     async initialize() {
-        this.moduleManager = new ModuleManager(this.fileSystem, '/modules/', this);
+        this.moduleManager = new ModuleManager(this.fileSystem, this.root, this);
         try {
             await this.moduleManager.discover();
         }

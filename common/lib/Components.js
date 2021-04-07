@@ -1,5 +1,8 @@
 import Console from "./Console";
 import Form from "./Form";
+/**
+ * A class for components.
+ */
 export default class Components extends Console {
     constructor(module, components) {
         super(module.fileSystem);

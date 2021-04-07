@@ -39,6 +39,8 @@ export default class Manager extends Console {
    */
   public configuration: Configuration;
 
+  public root: string = '/modules/';
+
   /**
    *
    * @param configuration
@@ -58,7 +60,7 @@ export default class Manager extends Console {
    *
    */
   public async initialize() {
-    this.moduleManager = new ModuleManager(this.fileSystem, '/modules/', this);
+    this.moduleManager = new ModuleManager(this.fileSystem, this.root, this);
 
     try {
       await this.moduleManager.discover();
@@ -106,7 +108,6 @@ export default class Manager extends Console {
       ...this.eventManager.events,
       ...module.eventManager.events
     ];
-
   }
 
 }

@@ -55,7 +55,6 @@ export default class EventManager extends Console {
       let current_event = this.events[i];
       if (current_event.id === id) {
         events.push(current_event);
-        break;
       }
     }
 
