@@ -1,7 +1,7 @@
 import Console from "../../Console";
 export default class ComponentManager extends Console {
-    constructor(fileSystem) {
-        super(fileSystem);
+    constructor(fileSystemManager) {
+        super(fileSystemManager);
         this.regions = [];
         this.containers = [];
         this.elements = [];

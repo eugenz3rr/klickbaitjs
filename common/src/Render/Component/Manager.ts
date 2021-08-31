@@ -1,5 +1,6 @@
 import Console from "../../Console";
 import Component from "./Component";
+import FileSystemManager from "../../FileSystem/Manager";
 
 export default class ComponentManager extends Console {
 
@@ -7,8 +8,8 @@ export default class ComponentManager extends Console {
     public containers: Component[] = [];
     public elements: Component[] = [];
 
-    constructor(fileSystem: any) {
-        super(fileSystem);
+    constructor(fileSystemManager: FileSystemManager) {
+        super(fileSystemManager);
     }
 
     public getAll(exclude: string[] = []): Component[] {

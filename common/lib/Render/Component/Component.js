@@ -1,5 +1,15 @@
 import Console from "../../Console";
 export default class Component extends Console {
+    /**
+     * Constructor.
+     *
+     * @param module
+     *   Expects the module this component belongs to.
+     * @param id
+     *   Expects the id of the component.
+     * @param component
+     *   Expects the component JSON data.
+     */
     constructor(module, id, component) {
         super(module.fileSystemManager);
         /**
@@ -26,6 +36,9 @@ export default class Component extends Console {
          * Component code.
          */
         this.raw = () => { };
+        /**
+         * Expects the raw vue component.
+         */
         this.component = {};
         /**
          * A function to load the component.

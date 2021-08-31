@@ -38,8 +38,21 @@ export default class Component extends Console {
      */
     public raw: Function = () => {};
 
+    /**
+     * Expects the raw vue component.
+     */
     public component: any = {};
 
+    /**
+     * Constructor.
+     *
+     * @param module
+     *   Expects the module this component belongs to.
+     * @param id
+     *   Expects the id of the component.
+     * @param component
+     *   Expects the component JSON data.
+     */
     constructor(module: Module, id: string, component: any) {
         super(module.fileSystemManager);
 
