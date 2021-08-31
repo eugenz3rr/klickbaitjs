@@ -7,11 +7,11 @@ export default class Helper {
     /**
      * Helper constructor.
      *
-     * @param fileSystem
+     * @param fileSystemManager
      *   Expects the current file system.
      */
-    constructor(fileSystem) {
-        this.fileSystem = fileSystem;
+    constructor(fileSystemManager) {
+        this.fileSystemManager = fileSystemManager;
     }
     /**
      * A function to get an value or fallback without errors.

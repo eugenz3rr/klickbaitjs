@@ -19,17 +19,17 @@ export default class Module extends Console {
   /**
    *
    */
-  public routeManager: RouteManager = new RouteManager(this.fileSystem);
+  public routeManager: RouteManager = new RouteManager(this.fileSystemManager);
 
   /**
    *
    */
-  public componentManager: ComponentManager = new ComponentManager(this.fileSystem);
+  public componentManager: ComponentManager = new ComponentManager(this.fileSystemManager);
 
   /**
    *
    */
-  public eventManager: EventManager = new EventManager(this.fileSystem);
+  public eventManager: EventManager = new EventManager(this.fileSystemManager);
 
   /**
    *
@@ -52,13 +52,14 @@ export default class Module extends Console {
   public id: string;
 
   /**
+   * Constructor.
    *
    * @param moduleManager
    * @param path
    * @param id
    */
   constructor(moduleManager: ModuleManager, path: string, id: string) {
-    super(moduleManager.fileSystem);
+    super(moduleManager.fileSystemManager);
 
     this.moduleManager = moduleManager;
     this.moduleManager.modules.push(this);
@@ -79,7 +80,7 @@ export default class Module extends Console {
     let file_contents: any = undefined;
 
     try {
-      file_contents = await this.moduleManager.manager.configuration.applicationSystem.readJSON(`${path}${file}`);
+      file_contents = await this.fileSystemManager.readJSON(`${path}${file}`);
     } catch (e) {
       console.warn(`${this.path}${file} - Could not be found.`, e);
     }
@@ -164,7 +165,7 @@ export default class Module extends Console {
     this.log(`Reading > ${this.path}${this.id}.events.js`);
     let events: string | any = undefined;
     try {
-      events = await this.moduleManager.manager.configuration.applicationSystem.read(`${this.path}${this.id}.events.js`);
+      events = await this.fileSystemManager.read(`${this.path}${this.id}.events.js`);
     } catch (e) {
       console.warn(`${this.path}${this.id}.events.js - Could not be found. Using default.`, e);
     }
@@ -208,7 +209,7 @@ export default class Module extends Console {
     // If the source was already appended just ignore the rest.
     if (document.querySelector(`style[data-source-id="${id}"]`)) return;
 
-    this.moduleManager.manager.configuration.applicationSystem.read(`${this.path}${path}`).then(value => {
+    this.fileSystemManager.read(`${this.path}${path}`).then(value => {
 
       const style: HTMLElement = document.createElement('style');
       style.textContent = value;

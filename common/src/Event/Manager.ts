@@ -1,40 +1,52 @@
 import Event from "./Event";
-import FileSystem from "../FileSystem";
 import Console from "../Console";
+import FileSystemManager from "../FileSystem/Manager";
 
 export default class EventManager extends Console {
 
   /**
-   *
+   * A list of registered events.
    */
   public events: Event[] = [];
 
   /**
+   * Constructor.
    *
-   * @param fileSystem
+   * @param fileSystemManager
+   *   Expects the file system manager.
    */
-  constructor(fileSystem: FileSystem) {
-    super(fileSystem);
-    this.fileSystem = fileSystem;
+  constructor(fileSystemManager: FileSystemManager) {
+    super(fileSystemManager);
+    this.fileSystemManager = fileSystemManager;
   }
 
   /**
+   * Executes the events.
    *
    * @param id
+   *   Expects the id of the event.
    * @param context
+   *   Expects the context of the event.
+   *   This context is defined by the module that fires that event.
    */
   public async fire(id: string, context: object = {}): Promise<any> {
     let events: Event[] | false = this.find(id);
 
+    // Check if any events exist.
     if (events === false) {
       return;
     }
 
     let result;
+
+    // Execute each event that was registered.
     for (let i = 0; i < events.length; i++) {
       try {
         result = await events[i].execute(context);
       } catch (e) {
+
+        // Throw error.
+        // @todo: Add a debug option to hide errors.
         console.error(`There was an error executing the event "${id}". \n Please review.`, e);
       }
     }
@@ -43,20 +55,23 @@ export default class EventManager extends Console {
   }
 
   /**
+   * Filter events by id.
    *
    * @param id
+   *   Expects the id of the event.
+   *
+   * @returns
+   *   Returns an array of events or false if nothing found.
+   *
    * @private
    */
   private find(id: string): Event[] | false {
     let events: Event[] = [];
 
     // Find the id that matches the parameter id.
-    for (let i = 0; i < this.events.length; i++) {
-      let current_event = this.events[i];
-      if (current_event.id === id) {
-        events.push(current_event);
-      }
-    }
+    events = this.events.filter(event => {
+      return event.id === id;
+    });
 
     return events;
   }

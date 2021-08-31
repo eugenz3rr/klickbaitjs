@@ -1,19 +1,37 @@
 import Console from "../../Console";
 export default class Component extends Console {
     constructor(module, id, component) {
-        super(module.fileSystem);
+        super(module.fileSystemManager);
+        /**
+         * Component id.
+         */
         this.id = '';
+        /**
+         * Component title.
+         */
         this.title = '';
+        /**
+         * Component description.
+         */
         this.description = '';
+        /**
+         * Component path.
+         */
         this.path = '';
+        /**
+         * Component type.
+         */
         this.type = '';
+        /**
+         * Component code.
+         */
         this.raw = () => { };
         this.component = {};
         /**
          * A function to load the component.
          */
         this.load = async () => {
-            const component = await this.module.moduleManager.manager.configuration.applicationSystem.read(this.module.path + this.path);
+            const component = await this.fileSystemManager.read(this.module.path + this.path);
             // Execute order 66.
             this.raw = eval(component);
             this.component = this.raw(this.module);

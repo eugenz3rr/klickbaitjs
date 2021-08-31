@@ -1,5 +1,6 @@
 import Helper from "./Helper";
 import FileSystem from "./FileSystem";
+import FileSystemManager from "./FileSystem/Manager";
 
 /**
  * A class for console stuff.
@@ -12,8 +13,8 @@ export default class Console extends Helper {
      * @param fileSystem
      *   Expects the current file system.
      */
-    constructor(fileSystem: FileSystem) {
-        super(fileSystem);
+    constructor(fileSystemManager: FileSystemManager) {
+        super(fileSystemManager);
     }
 
     /**

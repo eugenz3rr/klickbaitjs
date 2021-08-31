@@ -1,22 +1,14 @@
 const configuration = require('./../configuration/configuration.json');
-const fs = require("fs-extra");
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-//const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const webpack = require('webpack');
+const file_systems = require('./src/FileSystems/FileSystems.json');
 const path = require('path');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-
-// We need to map the keys to the file names.
-const config_mapping = {
-  'cordova': 'CordovaConfiguration',
-  'installer': 'KlickbaitConfiguration',
-};
-
+const webpack = require('webpack');
 let alias = {};
 
 // We want to load another config conditionally.
-if (configuration.installer.type in config_mapping) {
-    alias.config = path.resolve(__dirname, `./src/${config_mapping[configuration.installer.type]}.js`);
+if (configuration.fileSystem.type in file_systems) {
+    alias.config = path.resolve(__dirname, `./src/FileSystem/${file_systems[configuration.fileSystem.type]}`);
 }
 
 module.exports = {
@@ -100,21 +92,20 @@ module.exports = {
         //new BundleAnalyzerPlugin()
     ]
 };
+
 if (process.env.NODE_ENV === 'production') {
     module.exports.devtool = '#source-map';
 
     // http://vue-loader.vuejs.org/en/workflow/production.html
     module.exports.plugins = (module.exports.plugins || []).concat([
-            new webpack.DefinePlugin({
-                'process.env': {
-                    NODE_ENV: '"production"'
-                }
-            }),
-            new webpack.LoaderOptionsPlugin({
-                minimize: true
-            }),
-        ],
-        new CompressionPlugin());
-
-    module.exports.module
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"production"'
+            }
+        }),
+        new webpack.LoaderOptionsPlugin({
+            minimize: true
+        }),
+    ],
+    new CompressionPlugin());
 }

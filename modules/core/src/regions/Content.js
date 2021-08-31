@@ -32,6 +32,7 @@ Module => {
 
             // Load the render array.
             await this.region.load();
+            console.log(this.region)
             this.renderArray = await this.region.regionRaw.build(this.region.module, this.$route);
         },
     };

@@ -2,6 +2,7 @@ import Module from "./Module";
 import Console from "../Console";
 import FileSystem from "../FileSystem";
 import Manager from "../Manager";
+import FileSystemManager from "../FileSystem/Manager";
 
 interface Installed {
   version: string,
@@ -26,15 +27,14 @@ export default class ModuleManager extends Console {
 
   /**
    *
-   * @param fileSystem
+   * @param fileSystemManager
    * @param root
    * @param manager
    */
-  constructor(fileSystem: FileSystem, root: string, manager: Manager) {
-    super(fileSystem);
+  constructor(fileSystemManager: FileSystemManager, root: string, manager: Manager) {
+    super(fileSystemManager);
 
     this.manager = manager;
-    this.fileSystem = fileSystem;
     this.path = root;
   }
 
@@ -47,6 +47,20 @@ export default class ModuleManager extends Console {
     let sort: any = {};
     let sorted_keys: any = [];
 
+    // If there is only one module, no need to sort.
+    if (directories.length === 1) {
+      let directory = directories[0];
+
+      let id: string = directory;
+      let id_length: number = id.split('/').length;
+      id = id.split('/')[id_length - 2];
+
+      return [{
+        id,
+        directory,
+      }];
+    }
+
     // Load every module by id.
     for (let i = 0; i < directories.length; i++) {
       let directory = directories[i];
@@ -58,8 +72,9 @@ export default class ModuleManager extends Console {
       let info: any = undefined;
 
       try {
-        info = await this.manager.configuration.applicationSystem.readJSON(`${directory}${id}.info.json`);
+        info = await this.fileSystemManager.readJSON(`${directory}${id}.info.json`);
       } catch (e) {
+        console.error(info, e)
       }
 
       if (info === undefined) {
@@ -102,8 +117,7 @@ export default class ModuleManager extends Console {
 
     let directories: any = [];
     try {
-      directories = await this.manager.configuration.applicationSystem.list(this.path, 'd');
-
+      directories = await this.fileSystemManager.list(this.path, 'd');
     } catch (e) {
       console.error('Could not list directories.', this.path, e);
     }

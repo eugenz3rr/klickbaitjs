@@ -1,7 +1,7 @@
 import Console from "../../Console";
 export default class Region extends Console {
     constructor(route, data) {
-        super(route.fileSystem);
+        super(route.fileSystemManager);
         this.type = "";
         this.title = "";
         this.description = "";
@@ -10,7 +10,6 @@ export default class Region extends Console {
         this.renderArray = [];
         this.regionManager = route.regionManager;
         this.module = route.module;
-        this.fileSystem = route.module.fileSystem;
         this.regionManager = route.regionManager;
         // Map values.
         this.type = this.fallback(data, 'type', 'content');
@@ -25,18 +24,10 @@ export default class Region extends Console {
         }
         let region = undefined;
         try {
-            region = await this.fileSystem.read(`${this.module.path}${this.path}`);
+            region = await this.fileSystemManager.read(`${this.module.path}${this.path}`);
         }
         catch (e) {
             console.warn(`${this.module.path}${this.path} - Was not found in the public fs. Defaulting to private.`);
-        }
-        if (region === undefined) {
-            try {
-                region = await this.module.moduleManager.manager.configuration.applicationSystem.read(`${this.module.path}${this.path}`);
-            }
-            catch (e) {
-                console.error(`${this.module.path}${this.path} - Was not found in the private fs. Which is a problem now...`);
-            }
         }
         if (region !== undefined) {
             // Interpret code and execute it.

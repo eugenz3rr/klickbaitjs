@@ -9,10 +9,10 @@ let dirs = [];
 const compile_installer = async () => {
 
     let code = "";
-    code += `import DefaultFileSystem from "./DefaultFileSystem";\n`;
+    code += `import CacheFileSystem from "./FileSystems/CacheFileSystem";\n`;
     code += `export default class Installer {\n\n`;
-    code += `     public fileSystem: DefaultFileSystem;\n`;
-    code += `     constructor(fileSystem: DefaultFileSystem) {\n        this.fileSystem = fileSystem;\n     }\n`;
+    code += `     public fileSystem: CacheFileSystem;\n`;
+    code += `     constructor(fileSystem: CacheFileSystem) {\n        this.fileSystem = fileSystem;\n     }\n`;
     code += `     // @ts-ignore\n`;
     code += `     public async install(): Promise<any> {\n`;
 
@@ -32,7 +32,7 @@ const compile_installer = async () => {
         }
 
         const file_contents = await fs.readFile(file, 'utf8');
-        code += `\n         await this.fileSystem.write('${file_name}', ${stringify(file_contents)})`;
+        code += `\n         await this.fileSystem.write({ filename:'${file_name}', data:${stringify(file_contents)}})`;
     }
     code += '\n     }\n}';
 

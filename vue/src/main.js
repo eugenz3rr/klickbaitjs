@@ -36,6 +36,9 @@ let start = async () => {
   window.Helper = Helper;
   const Manager = window.Manager;
 
+
+
+
   const router = new VueRouter({});
   window.router = router;
 
@@ -103,7 +106,9 @@ let start = async () => {
       icons: {
         iconfont: 'md',
       },
-      theme: {disable: true},
+      theme: {
+        disable: true
+      },
     }),
     router,
     render: h => h(App),
@@ -114,13 +119,8 @@ window.addEventListener('klickbait-ready', async () => {
   document.addEventListener('backbutton', e => {
     e.preventDefault();
   }, false);
+  console.log("yes")
 
-  window.Manager = new Common.Manager({
-    fileSystem: window.Configuration.publicFileSystem,
-    privateSystem: window.Configuration.privateFileSystem,
-    applicationSystem: window.Configuration.applicationFileSystem,
-  });
-  window.Manager.root = configuration.installer.source;
   await window.Manager.initialize();
   await start();
   await window.Manager.eventManager.fire(`core.route.init`, {

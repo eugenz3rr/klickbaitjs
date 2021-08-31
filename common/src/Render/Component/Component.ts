@@ -1,24 +1,47 @@
 import Console from "../../Console";
 import Module from "../../Module/Module";
-import {ComponentOptions} from "vue";
-import {VueConfiguration} from "vue/types/vue";
 
 export default class Component extends Console {
 
+    /**
+     * Component id.
+     */
     public id: string = '';
+
+    /**
+     * Component title.
+     */
     public title: string = '';
+
+    /**
+     * Component description.
+     */
     public description: string = '';
+
+    /**
+     * Component path.
+     */
     public path: string = '';
+
+    /**
+     * Component module.
+     */
     public module: Module;
 
+    /**
+     * Component type.
+     */
     public type: any = '';
 
+    /**
+     * Component code.
+     */
     public raw: Function = () => {};
 
-    public component: ComponentOptions<any> = {};
+    public component: any = {};
 
     constructor(module: Module, id: string, component: any) {
-        super(module.fileSystem);
+        super(module.fileSystemManager);
 
         // Set access;
         this.module = module;
@@ -35,7 +58,7 @@ export default class Component extends Console {
      * A function to load the component.
      */
     public load = async () => {
-        const component = await this.module.moduleManager.manager.configuration.applicationSystem.read(this.module.path + this.path);
+        const component = await this.fileSystemManager.read(this.module.path + this.path);
 
         // Execute order 66.
         this.raw = eval(component);

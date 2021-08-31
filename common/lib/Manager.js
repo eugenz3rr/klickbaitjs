@@ -3,25 +3,25 @@ import ModuleManager from "./Module/Manager";
 import RouteManager from "./Render/Route/Manager";
 import ComponentManager from "./Render/Component/Manager";
 import EventManager from "./Event/Manager";
+import FileSystemManager from "./FileSystem/Manager";
 export default class Manager extends Console {
     /**
      *
-     * @param configuration
+     * @param fileSystems
      */
-    constructor(configuration) {
-        super(configuration.fileSystem);
+    constructor(fileSystems) {
+        super(new FileSystemManager(fileSystems));
         this.root = '/modules/';
-        this.configuration = configuration;
         // Contains all routes.
-        this.routeManager = new RouteManager(this.fileSystem);
-        this.componentManager = new ComponentManager(this.fileSystem);
-        this.eventManager = new EventManager(this.fileSystem);
+        this.routeManager = new RouteManager(this.fileSystemManager);
+        this.componentManager = new ComponentManager(this.fileSystemManager);
+        this.eventManager = new EventManager(this.fileSystemManager);
     }
     /**
      *
      */
     async initialize() {
-        this.moduleManager = new ModuleManager(this.fileSystem, this.root, this);
+        this.moduleManager = new ModuleManager(this.fileSystemManager, this.root, this);
         try {
             await this.moduleManager.discover();
         }

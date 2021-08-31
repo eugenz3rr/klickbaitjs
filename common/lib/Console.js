@@ -9,8 +9,8 @@ export default class Console extends Helper {
      * @param fileSystem
      *   Expects the current file system.
      */
-    constructor(fileSystem) {
-        super(fileSystem);
+    constructor(fileSystemManager) {
+        super(fileSystemManager);
     }
     /**
      * Console debug wrapper.

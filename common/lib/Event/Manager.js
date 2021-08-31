@@ -4,13 +4,13 @@ export default class EventManager extends Console {
      *
      * @param fileSystem
      */
-    constructor(fileSystem) {
-        super(fileSystem);
+    constructor(fileSystemManager) {
+        super(fileSystemManager);
         /**
          *
          */
         this.events = [];
-        this.fileSystem = fileSystem;
+        this.fileSystemManager = fileSystemManager;
     }
     /**
      *

@@ -1,4 +1,5 @@
 import FileSystem from "./FileSystem";
+import FileSystemManager from "./FileSystem/Manager";
 
 /**
  * A class that is used by all classes.
@@ -10,16 +11,16 @@ export default class Helper {
   /**
    * Current file system.
    */
-  public fileSystem: FileSystem;
+  public fileSystemManager: FileSystemManager;
 
   /**
    * Helper constructor.
    *
-   * @param fileSystem
+   * @param fileSystemManager
    *   Expects the current file system.
    */
-  constructor (fileSystem: FileSystem) {
-    this.fileSystem = fileSystem;
+  constructor (fileSystemManager: FileSystemManager) {
+    this.fileSystemManager = fileSystemManager;
   }
 
   /**
