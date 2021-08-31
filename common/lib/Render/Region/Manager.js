@@ -1,8 +1,7 @@
 import Console from "../../Console";
 export default class RegionManager extends Console {
-    constructor(fileSystem) {
-        super(fileSystem);
+    constructor(fileSystemManager) {
+        super(fileSystemManager);
         this.regions = [];
-        this.fileSystem = fileSystem;
     }
 }

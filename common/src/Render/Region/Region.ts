@@ -45,7 +45,7 @@ export default class Region extends Console {
         try {
             region = await this.fileSystemManager.read(`${this.module.path}${this.path}`);
         } catch (e) {
-            console.warn(`${this.module.path}${this.path} - Was not found in the public fs. Defaulting to private.`);
+            console.warn(`${this.module.path}${this.path} - Was not found in the public fs. Defaulting to private.`, e);
         }
 
         if (region !== undefined) {

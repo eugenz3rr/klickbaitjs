@@ -3,7 +3,7 @@ import RegionManager from "../Region/Manager";
 import Region from "../Region/Region";
 export default class Route extends Console {
     constructor(module, id, data) {
-        super(module.fileSystem);
+        super(module.fileSystemManager);
         this.id = '';
         this.path = '';
         this.title = '';
@@ -14,7 +14,7 @@ export default class Route extends Console {
         this.module = module;
         this.routeManager = module.routeManager;
         this.routeManager.routes.push(this);
-        this.regionManager = new RegionManager(this.fileSystem);
+        this.regionManager = new RegionManager(this.fileSystemManager);
         const regions = this.fallback(data, 'regions', []);
         for (let i = 0; i < regions.length; i++) {
             const region = regions[i];

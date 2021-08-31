@@ -1,5 +1,13 @@
 export default class FileSystemManager {
+    /**
+     * Constructor.
+     *
+     * @param fileSystems
+     */
     constructor(fileSystems) {
+        /**
+         *
+         */
         this.fileSystems = [];
         this.fileSystems = fileSystems;
         // Sort elements by weight.
@@ -7,15 +15,27 @@ export default class FileSystemManager {
             return a.weight - b.weight;
         });
     }
+    /**
+     * Calls the appropriate function of the file systems.
+     *
+     * @param method
+     *   Expects the method name to call.
+     * @param write
+     *   Expects a decision whether the information should be written.
+     * @param options
+     *   Expects the options to redirect to the function.
+     */
     async redirectMethod(method = '', write = false, options = {}) {
+        let file_systems = this.fileSystems;
         if (write) {
-            this.fileSystems.reverse();
+            file_systems.reverse();
         }
         let result = undefined;
-        for (let i = 0; i < this.fileSystems.length; i++) {
-            let file_system = this.fileSystems[i];
+        for (let i = 0; i < file_systems.length; i++) {
+            let file_system = file_systems[i];
             try {
-                if (i === 0) {
+                // We only want to set the result if we need to read data.
+                if (!write) {
                     result = await file_system[method](options);
                 }
                 else {
@@ -23,6 +43,7 @@ export default class FileSystemManager {
                 }
             }
             catch (e) {
+                // @todo: Add debug option.
                 console.debug(`Could not ${write ? 'write into' : 'read from'} ${file_system.id}`);
             }
             // If we read stuff we want the first entry. (Cache)

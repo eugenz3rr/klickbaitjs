@@ -20,13 +20,13 @@ export default class Route extends Console {
     public regionManager: RegionManager;
 
     constructor(module: Module, id: string, data: Object) {
-        super(module.fileSystem);
+        super(module.fileSystemManager);
 
         this.module = module;
         this.routeManager = module.routeManager;
         this.routeManager.routes.push(this);
 
-        this.regionManager = new RegionManager(this.fileSystem);
+        this.regionManager = new RegionManager(this.fileSystemManager);
         const regions = this.fallback(data, 'regions', []);
 
         for (let i = 0; i < regions.length; i++) {

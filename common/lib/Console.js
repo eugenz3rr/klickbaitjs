@@ -6,7 +6,7 @@ export default class Console extends Helper {
     /**
      * Console constructor.
      *
-     * @param fileSystem
+     * @param fileSystemManager
      *   Expects the current file system.
      */
     constructor(fileSystemManager) {
