@@ -2,14 +2,45 @@ import Console from "../../Console";
 import RegionManager from "../Region/Manager";
 import Region from "../Region/Region";
 export default class Route extends Console {
+    /**
+     * Constructor.
+     *
+     * @param module
+     *   Expects the module the route belongs to.
+     * @param id
+     *   Expects the route unique id.
+     * @param data
+     *   Expects the data that is mapped to the class.
+     */
     constructor(module, id, data) {
         super(module.fileSystemManager);
+        /**
+         * Unique route id.
+         */
         this.id = '';
+        /**
+         * Unique path of the route.
+         */
         this.path = '';
+        /**
+         * Route title.
+         */
         this.title = '';
+        /**
+         * Route description.
+         */
         this.description = '';
+        /**
+         * Route icon (google).
+         */
         this.icon = '';
+        /**
+         * Hide route on public lists.
+         */
         this.hide = true;
+        /**
+         * Extra route parameters that will be set as default when the user visits the page.
+         */
         this.params = {};
         this.module = module;
         this.routeManager = module.routeManager;
@@ -20,6 +51,7 @@ export default class Route extends Console {
             const region = regions[i];
             new Region(this, region);
         }
+        // Map all to the class.
         this.id = id;
         this.path = this.fallback(data, 'path', `/${id}/${Date.now()}`);
         this.title = this.fallback(data, 'title', 'No title');
