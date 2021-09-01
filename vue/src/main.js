@@ -8,36 +8,18 @@ import EventManager from "vue-event-manager";
 import App from './App.vue';
 import Vue from "vue";
 import Vuetify from "vuetify/dist/vuetify.min";
-//import VueI18n from 'vue-i18n';
-import Vue2TouchEvents from 'vue2-touch-events';
-import Cropper from "cropperjs";
-import * as Common from "../../common/lib/Library";
-//import * as Draggable from "@shopify/draggable";
-
-window.Cropper = Cropper;
-//window.Draggable = Draggable;
+import Vue2TouchEvents from 'vue2-touch-events';;
 
 Vue.use(Vuetify);
-//Vue.use(VueI18n);
 Vue.use(Vue2TouchEvents);
 Vue.use(VueRouter);
 Vue.use(EventManager);
 
-export let Helper;
-
 let start = async () => {
-  Helper = new Vue({
-    data() {
-      return {};
-    }
-  });
 
   window.configuration = configuration;
   window.Helper = Helper;
   const Manager = window.Manager;
-
-
-
 
   const router = new VueRouter({});
   window.router = router;

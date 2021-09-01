@@ -14,8 +14,6 @@ export default {
 <style lang="scss">
 
 @import "~vuetify/dist/vuetify.min.css";
-@import "scss/cropper";
-@import "scss/custom";
 
 * {
   font-family: "OpenLight", sans-serif;
