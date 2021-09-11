@@ -1,9 +1,7 @@
 {
   "type": "browser",
   "fileSystem": {
-    "public": "localStorage",
-    "private": "localStorage",
-    "application": "localStorage"
+    "source" : "/Modules/"
   },
   "installer": {
     "type": "installer",

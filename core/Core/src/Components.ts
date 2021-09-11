@@ -10,7 +10,7 @@ export default class Components extends Console {
   public forms: Form[] = [];
 
   constructor(module: Module, components: any) {
-    super(module.fileSystem);
+    super(module.fileSystemManager);
 
     this.module = module;
     
@@ -26,7 +26,7 @@ export default class Components extends Console {
 
       const location: string = forms[i];
       this.log(`Reading > ${this.module.path}${location}`);
-      const contents: string = await this.fileSystem.read(`${this.module.path}${location}`);
+      const contents: string = await this.fileSystemManager.read(`${this.module.path}${location}`);
 
       if (contents !== undefined) {
         this.forms.push(new Form(this.module, this.module.id, eval(contents)));

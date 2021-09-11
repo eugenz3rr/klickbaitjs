@@ -81,23 +81,27 @@ getDirectories(`${__dirname}/../../Modules`, async (err, res) => {
             await fs.remove(`${__dirname}/../../Core/src/Installer.js`);
             console.log('Installer removed. Bye');
 
-        } catch (e) {}
+        } catch (e) {
+        }
         console.log('Installer uninstalled if installed.');
 
         return;
     }
 
     await compile_installer().then().catch(console.log);
-    watch.createMonitor(`${__dirname}/../../Modules`, function (monitor) {
-        monitor.on("created", function (f, stat) {
+
+    const watch_directories = monitor => {
+        monitor.on("created",  (f, stat) => {
             compile_installer().then(console.log).catch(console.log);
         });
-        monitor.on("changed", function (f, curr, prev) {
+        monitor.on("changed", (f, curr, prev) => {
             compile_installer().then(console.log).catch(console.log);
         });
-        monitor.on("removed", function (f, stat) {
+        monitor.on("removed", (f, stat) => {
             compile_installer().then(console.log).catch(console.log);
         });
-        // monitor.stop(); // Stop watching
-    });
+    };
+
+    watch.createMonitor(`${__dirname}/../../Modules`, watch_directories);
+    watch.createMonitor(`${__dirname}/../../../Custom`, watch_directories);
 });

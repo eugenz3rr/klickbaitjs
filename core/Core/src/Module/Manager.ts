@@ -1,6 +1,5 @@
 import Module from "./Module";
 import Console from "../Console";
-import FileSystem from "../FileSystem";
 import Manager from "../Manager";
 import FileSystemManager from "../FileSystem/Manager";
 

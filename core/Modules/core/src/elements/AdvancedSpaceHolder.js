@@ -52,7 +52,7 @@ Module => {
         },
     };
     
-    Module.appendStyle(`src/elements/css/AdvancedSpaceHolder.css`, component.name);
+    //Module.appendStyle(`src/elements/css/AdvancedSpaceHolder.css`, component.name);
 
     return component;
 };

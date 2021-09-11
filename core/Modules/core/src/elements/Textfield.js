@@ -79,7 +79,7 @@ Module => {
         },
     };
 
-    Module.appendStyle(`src/elements/Textfield.css`, component.name);
+    Module.appendStyle(`src/elements/css/Textfield.css`, component.name);
 
     return component;
 };

@@ -58,7 +58,7 @@ export default class Form extends Console {
    *   Expects the raw form file data.
    */
   constructor(module: Module, id: string, formFile: any) {
-    super(module.fileSystem);
+    super(module.fileSystemManager);
 
     // Execute the form to get the 
     this.form = formFile(module, id);
@@ -75,9 +75,9 @@ export default class Form extends Console {
     let values: Object = {};
 
     try {
-      values = await this.fileSystem.readJSON(`${this.module.path}values/form.${this.id}.json`);
+      values = await this.fileSystemManager.readJSON(`${this.module.path}values/form.${this.id}.json`);
     } catch (error) {
-      await this.fileSystem.write(`${this.module.path}values/form.${this.id}.json`, JSON.stringify({}));
+      await this.fileSystemManager.write(`${this.module.path}values/form.${this.id}.json`, JSON.stringify({}));
 
       /*
        * At this point we know that there is nothing in the fileSystem about this file.
@@ -120,6 +120,6 @@ export default class Form extends Console {
    */
   public async submit(values: any) {
     values = this.form.submit(values);
-    await this.fileSystem.write(`${this.module.path}values/form.${this.id}.json`, JSON.stringify(values));
+    await this.fileSystemManager.write(`${this.module.path}values/form.${this.id}.json`, JSON.stringify(values));
   };
 }

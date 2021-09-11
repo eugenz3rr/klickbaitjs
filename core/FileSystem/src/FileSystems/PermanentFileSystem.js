@@ -55,7 +55,12 @@ export default class PermanentFileSystem {
         return await this.fileSystem.moveDir(options.source, options.destination);
     }
     async read(options = {}) {
-        return await this.fileSystem.read(options.filename);
+        console.log("yea reading from this cause not found", options);
+        //return await this.fileSystem.read(options.filename);
+        await new Promise(resolve => {
+            setTimeout(resolve, 3000);
+        });
+        //return await fetch('https://api.ipify.org?format=json');
     }
     async readJSON(options = {}) {
         return await this.fileSystem.readJSON(options.filename);

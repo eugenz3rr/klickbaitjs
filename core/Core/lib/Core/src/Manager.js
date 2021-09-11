@@ -9,7 +9,6 @@ export default class Manager extends Console {
      * Constructor.
      *
      * @param {Array} fileSystems
-     * @param options
      */
     constructor(fileSystems, options = {}) {
         super(new FileSystemManager(fileSystems));

@@ -3,6 +3,7 @@ import PermanentFileSystem from "./FileSystems/PermanentFileSystem";
 import CacheFileSystem from "./FileSystems/CacheFileSystem";
 import Installer from "./Installer";
 import Manager from "../../Core/lib/Manager";
+import Configuration from "../../Configuration/configuration.json";
 
 import topSort from 'toposort';
 import mime from 'mime-types';
@@ -39,7 +40,7 @@ window.mime = mime;
     }
     catch (e) {}
 
-    window.Manager = new Manager(file_systems);
+    window.Manager = new Manager(file_systems, Configuration.fileSystem);
 
     dispatchEvent(new CustomEvent('klickbait-ready'));
 })().then(() => {}).catch(e => {

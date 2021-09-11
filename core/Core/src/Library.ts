@@ -1,6 +1,5 @@
 import Components from "./Components";
 import Console from "./Console";
-import FileSystem from "./FileSystem";
 import Form from "./Form";
 import Helper from "./Helper";
 import Info from "./Info";
@@ -18,7 +17,6 @@ export {
     Manager,
     Components,
     Console,
-    FileSystem,
     Form,
     Helper,
     Info,

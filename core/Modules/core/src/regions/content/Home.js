@@ -80,7 +80,7 @@
                 '#second': {
                     image: {
                         '#type': 'v-img',
-                        '#src': '/images/IMG_20210124_142559.jpg'
+                        '#src': 'Images/suc_1.jpg'
                     }
                 }
             };

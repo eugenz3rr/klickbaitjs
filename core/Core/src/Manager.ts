@@ -32,14 +32,22 @@ export default class Manager extends Console {
    *
    */
   public eventManager: EventManager;
+
+  /**
+   * Root modules.
+   */
   public root: string = '/modules/';
 
   /**
+   * Constructor.
    *
-   * @param fileSystems
+   * @param {Array} fileSystems
+   * @param options
    */
-  constructor(fileSystems: Array<FileSystemInterface>) {
+  constructor(fileSystems: Array<FileSystemInterface>, options: any = {}) {
     super(new FileSystemManager(fileSystems));
+
+    this.root = this.fallback(options, 'source', '/modules/');
 
     // Contains all routes.
     this.routeManager = new RouteManager(this.fileSystemManager);

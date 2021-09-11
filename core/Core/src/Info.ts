@@ -40,7 +40,7 @@ export default class Info extends Console {
    * @param info {Object}
    */
   constructor(module: Module, info: any) {
-    super(module.fileSystem);
+    super(module.fileSystemManager);
     
     // Match all items.
     this.name = this.fallback(info, 'name', 'undefined');
