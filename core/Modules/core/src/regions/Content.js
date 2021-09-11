@@ -2,10 +2,9 @@ Module => {
     const data = Manager.componentManager.getAll(['content', 'form']);
     const components = {};
 
-    for (let i = 0; i < data.length; i++) {
-        const component = data[i];
+    data.forEach(component => {
         components[`as-${component.id}`] = component.getComponent();
-    }
+    });
 
     return {
         name: 'Content',
@@ -32,7 +31,6 @@ Module => {
 
             // Load the render array.
             await this.region.load();
-            console.log(this.region)
             this.renderArray = await this.region.regionRaw.build(this.region.module, this.$route);
         },
     };

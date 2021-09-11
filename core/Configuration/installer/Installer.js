@@ -2,7 +2,6 @@ const fs = require("fs-extra");
 const write = require("write");
 const watch = require('watch');
 const glob = require("glob");
-const path = require("path");
 const {stringify} = require("javascript-stringify");
 let dirs = [];
 
@@ -36,14 +35,14 @@ const compile_installer = async () => {
     }
     code += '\n     }\n}';
 
-    await write(`${__dirname}/../../core/source-files/Installer.ts`, code);
+    await write(`${__dirname}/../../FileSystem/source-files/Installer.ts`, code);
 };
 
 const getDirectories = (src, callback) => {
     glob(src + '/**/*', callback);
 };
 
-getDirectories(`${__dirname}/../../modules`, async (err, res) => {
+getDirectories(`${__dirname}/../../Modules`, async (err, res) => {
     if (err) {
         return;
     }
@@ -78,8 +77,8 @@ getDirectories(`${__dirname}/../../modules`, async (err, res) => {
         console.log('Installer disabled.');
         console.log('Removing Installer.ts file.');
         try {
-            await fs.remove(`${__dirname}/../../core/source-files/Installer.ts`);
-            await fs.remove(`${__dirname}/../../core/src/Installer.js`);
+            await fs.remove(`${__dirname}/../../Core/source-files/Installer.ts`);
+            await fs.remove(`${__dirname}/../../Core/src/Installer.js`);
             console.log('Installer removed. Bye');
 
         } catch (e) {}
@@ -89,7 +88,7 @@ getDirectories(`${__dirname}/../../modules`, async (err, res) => {
     }
 
     await compile_installer().then().catch(console.log);
-    watch.createMonitor(`${__dirname}/../../modules`, function (monitor) {
+    watch.createMonitor(`${__dirname}/../../Modules`, function (monitor) {
         monitor.on("created", function (f, stat) {
             compile_installer().then(console.log).catch(console.log);
         });

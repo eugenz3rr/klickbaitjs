@@ -1,28 +1,23 @@
-import mime from 'mime-types';
-import topSort from 'toposort';
-import CacheFileSystem from "./FileSystems/CacheFileSystem";
 import ReadOnlyCacheFileSystem from "./FileSystems/ReadOnlyCacheFileSystem";
 import PermanentFileSystem from "./FileSystems/PermanentFileSystem";
+import CacheFileSystem from "./FileSystems/CacheFileSystem";
 import Installer from "./Installer";
-import Manager from "../../common/lib/Manager";
+import Manager from "../../Core/lib/Manager";
 
-window.mime = mime;
-window.topSort = topSort;
+import topSort from 'toposort';
+import mime from 'mime-types';
 
-// This import is managed via webpack.
-// ca-app-pub-4637983949499079~2000555188
-// admob.setOptions({
-//     publisherId:           "ca-app-pub-3940256099942544/6300978111",  // Required
-//     autoShowBanner:        true,                                      // Optional
-//     autoShowRInterstitial: false,                                     // Optional
-//     autoShowRewarded:      false,                                     // Optional
-// });
-//
-// admob.createBannerView();
 window.file_systems = [];
+window.topSort = topSort;
+window.mime = mime;
 
+// Instantiate filesystems and execute the manager.
 (async () => {
 
+    /*
+     * Cache should always work
+     * and should not fail on construct.
+     */
     let cache = new CacheFileSystem();
     file_systems.push(cache);
 

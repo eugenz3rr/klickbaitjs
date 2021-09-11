@@ -2,8 +2,8 @@
   "name": "installation",
   "version": "1.0.0",
   "scripts": {
-    "klickbait:install": "npm install && cd vue && npm install && cd ../common && npm install && cd ../core && npm install",
-    "klickbait:dev": "concurrently --kill-others \"node configuration/installer/Installer.js\" \"http-server\" \"npm run dev --prefix vue\" \"npm run dev --prefix core\" \"npm run dev --prefix common\"",
+    "klickbait:install": "npm install && cd vue && npm install && cd ../core/Core && npm install && cd ../FileSystem && npm install",
+    "klickbait:dev": "concurrently --kill-others \"node core/Configuration/installer/Installer.js\" \"http-server\" \"npm run dev --prefix vue\" \"npm run dev --prefix core/FileSystem\" \"npm run dev --prefix core/Core\"",
     "klickbait:build": "concurrently \"npm run build --prefix core\" \"npm run build --prefix vue\"",
     "klickbait:show": ""
   },

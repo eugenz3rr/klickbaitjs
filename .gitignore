@@ -111,5 +111,5 @@ Installer.ts
 .idea/
 index.html
 images/
-modules/*
+core/modules/*
 custom/*

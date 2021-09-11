@@ -1,4 +1,4 @@
-const configuration = require('./../../configuration/configuration.json');
+const configuration = require('../../core/Configuration/configuration.json');
 
 // Main application.
 import VueRouter from 'vue-router';
@@ -18,7 +18,6 @@ Vue.use(EventManager);
 let start = async () => {
 
   window.configuration = configuration;
-  window.Helper = Helper;
   const Manager = window.Manager;
 
   const router = new VueRouter({});
@@ -101,7 +100,6 @@ window.addEventListener('klickbait-ready', async () => {
   document.addEventListener('backbutton', e => {
     e.preventDefault();
   }, false);
-  console.log("yes")
 
   await window.Manager.initialize();
   await start();

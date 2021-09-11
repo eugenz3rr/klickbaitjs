@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "node ListFileSystems.js && concurrently \"npm run _dev\" \"tsc -w\"",
+    "dev": "concurrently \"npm run _dev\" \"tsc -w\"",
     "_dev": "cross-env NODE_ENV=development webpack --watch --mode=development",
     "build": "cross-env NODE_ENV=production webpack --mode=production --progress"
   },

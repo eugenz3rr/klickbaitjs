@@ -1,4 +1,4 @@
-const configuration = require('./../configuration/configuration.json');
+const configuration = require('../configuration/configuration.json');
 const file_systems = require('./src/FileSystems/FileSystems.json');
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
